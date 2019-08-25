@@ -1,0 +1,14 @@
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\bin\Debug\netstandard2.0\NTSoftware.Service.Interface.deps.json
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\bin\Debug\netstandard2.0\NTSoftware.Service.Interface.dll
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\bin\Debug\netstandard2.0\NTSoftware.Service.Interface.pdb
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\bin\Debug\netstandard2.0\NTSoftware.Core.Models.dll
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\bin\Debug\netstandard2.0\NTSoftware.Core.Shared.dll
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\bin\Debug\netstandard2.0\NTSoftware.Core.Models.pdb
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\bin\Debug\netstandard2.0\NTSoftware.Core.Shared.pdb
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\obj\Debug\netstandard2.0\NTSoftware.Service.Interface.csprojAssemblyReference.cache
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\obj\Debug\netstandard2.0\NTSoftware.Service.Interface.csproj.CoreCompileInputs.cache
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\obj\Debug\netstandard2.0\NTSoftware.Service.Interface.AssemblyInfoInputs.cache
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\obj\Debug\netstandard2.0\NTSoftware.Service.Interface.AssemblyInfo.cs
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\obj\Debug\netstandard2.0\NTSoftware.Service.Interface.csproj.CopyComplete
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\obj\Debug\netstandard2.0\NTSoftware.Service.Interface.dll
+C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Service.Interface\obj\Debug\netstandard2.0\NTSoftware.Service.Interface.pdb
