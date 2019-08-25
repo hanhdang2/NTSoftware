@@ -1,9 +1,0 @@
-C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Core.Shared\bin\Debug\netstandard2.0\NTSoftware.Core.Shared.deps.json
-C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Core.Shared\bin\Debug\netstandard2.0\NTSoftware.Core.Shared.dll
-C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Core.Shared\bin\Debug\netstandard2.0\NTSoftware.Core.Shared.pdb
-C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Core.Shared\obj\Debug\netstandard2.0\NTSoftware.Core.Shared.csprojAssemblyReference.cache
-C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Core.Shared\obj\Debug\netstandard2.0\NTSoftware.Core.Shared.csproj.CoreCompileInputs.cache
-C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Core.Shared\obj\Debug\netstandard2.0\NTSoftware.Core.Shared.AssemblyInfoInputs.cache
-C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Core.Shared\obj\Debug\netstandard2.0\NTSoftware.Core.Shared.AssemblyInfo.cs
-C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Core.Shared\obj\Debug\netstandard2.0\NTSoftware.Core.Shared.dll
-C:\Users\lhngo\source\repos\NTSoftware\NTSoftware.Core.Shared\obj\Debug\netstandard2.0\NTSoftware.Core.Shared.pdb
