@@ -30,7 +30,7 @@ namespace NTSoftware.Controllers
                 //    return new BadRequestObjectResult(model);
                 //}
 
-                return new ObjectResult(new GenericResult(false, "Login failed!"));
+                return new ObjectResult(new GenericResult(false, ErrorMsg.LOGIN_FAILED));
             }
             catch (Exception ex)
             {

@@ -27,6 +27,7 @@ namespace NTSoftware.Core.Models.Models
         public string FullName { get; set; }
         public string Configuration { get; set; }
         public bool IsEnabled { get; set; }
+        public DateTime ExpiredContract { get; set; }
         public bool IsLockedOut => this.LockoutEnabled && this.LockoutEnd >= DateTimeOffset.UtcNow;
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }

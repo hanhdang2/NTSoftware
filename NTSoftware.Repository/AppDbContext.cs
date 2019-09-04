@@ -16,8 +16,17 @@ namespace NTSoftware.Repository
         public AppDbContext(DbContextOptions options) : base(options)
         { }
         public string CurrentUserId { get; set; }
+        public DbSet<AppRole> AppRole { set; get; }
         public DbSet<AppUser> AppUser { get; set; }
-        protected override void OnModelCreating(ModelBuilder builder)
+        public DbSet<Company> Company { set;get;}
+        public DbSet<Contract> Contract { set;get;}
+        public DbSet<Department> Department { set;get;}
+        public DbSet<EmployeeContract> EmployeeContract { set;get;}
+        public DbSet<EmployeeDepartment> EmployeeDepartment { set;get;}
+        public DbSet<Project> Project { set;get;}
+        public DbSet<User>User {set;get;}
+        public DbSet<Employee> Employee { set;get;}
+     protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             ///const string priceDecimalType = "decimal(18,2)";
