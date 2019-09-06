@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DATA_REQUEST_IN_VALID" xml:space="preserve">
+    <value>Dữ liệu truyền lên không đúng</value>
+  </data>
+  <data name="ERROR_ON_HANDLE_DATA" xml:space="preserve">
+    <value>Lỗi trong quá trình xử lý dữ liệu</value>
+  </data>
   <data name="EXPIRES_TOKEN" xml:space="preserve">
     <value>Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại</value>
   </data>

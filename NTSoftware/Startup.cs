@@ -13,8 +13,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NTSoftware.Core.Models.Models;
+using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared.Helper;
+using NTSoftware.Core.Shared.Interface;
 using NTSoftware.Repository;
+using NTSoftware.Repository.Interface;
+using NTSoftware.Repository.Repository;
+using NTSoftware.Service;
+using NTSoftware.Service.AutoMapper;
+using NTSoftware.Service.Interface;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
@@ -36,16 +43,46 @@ namespace NTSoftware
         {
             services.AddDbContext<AppDbContext>(options =>
                    options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"], b => b.MigrationsAssembly("NTSoftware")));
+
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
+
             // add identity
             services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+            services.AddTransient(typeof(IUnitOfWork), typeof(NTUnitOfWork));
+            services.AddTransient(typeof(IRepository<,>), typeof(NTRepository<,>));
+            services.AddTransient<IContractRepository, ContractRepository>();
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<IProjectRepository, ProjectRepository>();
+            services.AddTransient<IEmployeeContractRepository, EmployeeContractRepository>();
+            services.AddTransient<IEmployeeDepartmentRepository, EmployeeDepartmentRepository>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
 
+            services.AddTransient<IContractService, ContractService>();
+            services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<IAppUserService, AppUserService>();
+            services.AddTransient<IProjectService, ProjectService>();
+            services.AddTransient<IEmployeeContractService, EmployeeContractService>();
+            services.AddTransient<IEmployeeDepartmentService, EmployeeDepartmentService>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IDepartmentService, DepartmentService>();
             // Configure Identity options and password complexity here
             services.Configure<IdentityOptions>(options =>
             {
                 // User settings
-                options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = false;
+                options.User.AllowedUserNameCharacters = "";
 
                 // Password settings
                 options.Password.RequireDigit = true;
@@ -76,6 +113,7 @@ namespace NTSoftware
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
                 };
             });
+          
             // In production, the Angular files will be served from this directory
             // The port to use for https redirection in production
             if (!_env.IsDevelopment() && !string.IsNullOrWhiteSpace(Configuration["HttpsRedirectionPort"]))

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Models.Models.Interface;
+using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,6 @@ namespace NTSoftware.Repository
         public DbSet<EmployeeContract> EmployeeContract { set;get;}
         public DbSet<EmployeeDepartment> EmployeeDepartment { set;get;}
         public DbSet<Project> Project { set;get;}
-        public DbSet<User>User {set;get;}
         public DbSet<Employee> Employee { set;get;}
      protected override void OnModelCreating(ModelBuilder builder)
         {

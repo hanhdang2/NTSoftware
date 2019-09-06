@@ -61,6 +61,24 @@ namespace NTSoftware.Core.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dữ liệu truyền lên không đúng.
+        /// </summary>
+        public static string DATA_REQUEST_IN_VALID {
+            get {
+                return ResourceManager.GetString("DATA_REQUEST_IN_VALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lỗi trong quá trình xử lý dữ liệu.
+        /// </summary>
+        public static string ERROR_ON_HANDLE_DATA {
+            get {
+                return ResourceManager.GetString("ERROR_ON_HANDLE_DATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.
         /// </summary>
         public static string EXPIRES_TOKEN {
