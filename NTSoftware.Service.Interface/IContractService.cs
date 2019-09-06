@@ -14,6 +14,6 @@ namespace NTSoftware.Service.Interface
         ContractViewModel GetById(int id);
         List<ContractViewModel> GetAll();
         PagedResult<ContractViewModel> GetAllPaging(int page, int pageSize);
-        Contract Add(ContractCreateViewModel vm);
+        Contract Add(ContractViewModel vm);
     }
 }

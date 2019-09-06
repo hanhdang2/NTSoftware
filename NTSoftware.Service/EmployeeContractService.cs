@@ -43,5 +43,19 @@ namespace NTSoftware.Service
         {
             throw new NotImplementedException();
         }
+        public EmployeeContract Add(EmployeeContractViewModel vm)
+        {
+            {
+                var entity = _mapper.Map<EmployeeContract>(vm);
+                _iemployeeContractRepo.Add(entity);
+                SaveChanges();
+                return entity;
+            }
+        }
+
+        private void SaveChanges()
+        {
+            _unitOfWork.Commit();
+        }
     }
 }

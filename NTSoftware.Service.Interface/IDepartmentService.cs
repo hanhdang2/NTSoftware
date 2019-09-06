@@ -13,7 +13,7 @@ namespace NTSoftware.Service.Interface
         DepartmentViewModel GetById(int id);
         List<DepartmentViewModel> GetAll();
         PagedResult<DepartmentViewModel> GetAllPaging(int page, int pageSize);
-       // Department Add(DepartmentCreateViewModel vm);
+        Department Add(DepartmentViewModel vm);
        
         #endregion GET
     }

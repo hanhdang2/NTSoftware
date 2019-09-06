@@ -62,6 +62,20 @@ namespace NTSoftware.Service
                 return null;
             }
         }
+        public Department Add(DepartmentViewModel vm)
+        {
+            {
+                var entity = _mapper.Map<Department>(vm);
+                _idepartmentRepo.Add(entity);
+                SaveChanges();
+                return entity;
+            }
+        }
+
+        private void SaveChanges()
+        {
+            _unitOfWork.Commit();
+        }
     }
 
     }

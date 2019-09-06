@@ -63,5 +63,17 @@ namespace NTSoftware.Service
                 return null;
             }
         }
+        public Employee Add(EmployeeViewModel vm)
+        {
+            var entity = _mapper.Map<EmployeeViewModel, Employee>(vm);
+            _iemployeeRepo.Add(entity);
+            SaveChanges();
+            return entity;
+        }
+
+        private void SaveChanges()
+        {
+            _unitOfWork.Commit();
+        }
     }
 }

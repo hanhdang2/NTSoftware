@@ -43,5 +43,17 @@ namespace NTSoftware.Service
         {
             throw new NotImplementedException();
         }
+        public EmployeeDepartment Add(EmployeeDepartmentViewModel vm)
+        {
+             var entity = _mapper.Map<EmployeeDepartmentViewModel,EmployeeDepartment>(vm);
+                _iemployeeDepartmentRepo.Add(entity);
+                SaveChanges();
+             return entity;
+        }
+
+        private void SaveChanges()
+        {
+            _unitOfWork.Commit();
+        }
     }
 }

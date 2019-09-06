@@ -43,5 +43,18 @@ namespace NTSoftware.Service
         {
             throw new NotImplementedException();
         }
+
+        public Project Add(ProjectViewModel vm)
+        {
+            var entity = _mapper.Map<ProjectViewModel, Project>(vm);
+            _iprojectRepo.Add(entity);
+            SaveChanges();
+            return entity;
+        }
+
+        private void SaveChanges()
+        {
+            _unitOfWork.Commit();
+        }
     }
 }

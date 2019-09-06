@@ -62,7 +62,7 @@ namespace NTSoftware.Service
             var data = _icontractRepo.FindById(id);
             return _mapper.Map<Contract, ContractViewModel>(data);
         }
-        public Contract Add(ContractCreateViewModel vm)
+        public Contract Add(ContractViewModel vm)
         {
             {
                 var entity = _mapper.Map<Contract>(vm);

@@ -13,7 +13,7 @@ namespace NTSoftware.Service.Interface
         CompanyViewModel GetById(int id);
         List <CompanyViewModel>GetAll();
         PagedResult<CompanyViewModel> GetAllPaging(int page, int pageSize);
-        Company Add(CompanyCreateViewModel vm);
+        Company Add(CompanyViewModel vm);
         #endregion GET
     }
 }

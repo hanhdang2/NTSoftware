@@ -59,7 +59,7 @@ namespace NTSoftware.Service
 
         public async Task<List<AppUserViewModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _userManager.Users.ProjectTo<AppUserViewModel>().ToListAsync();
         }
 
         public async Task<bool> AddAsync(AppUserViewModel userVm)
