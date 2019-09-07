@@ -1,5 +1,7 @@
 {
-  "demo":{
-    "title":"Xin chào"
-  }
+    "demo": {
+        "title": "Trải nghiệm I18nadasd",
+        "text": "Xin chào {{name}}"
+    },
+    "title":"Tiêu đề"
 }

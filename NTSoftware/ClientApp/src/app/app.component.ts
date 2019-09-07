@@ -1,21 +1,12 @@
-/**
- * @license
- * Copyright Akveo. All Rights Reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- */
-import { Component, OnInit } from '@angular/core';
-import { AnalyticsService } from './@core/utils/analytics.service';
-
+import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { UserService } from './common/services/user.service';
+import { HttpParams } from '@angular/common/http';
 @Component({
-  selector: 'ngx-app',
-  template: '<router-outlet></router-outlet>',
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-
-  constructor(private analytics: AnalyticsService) {
-  }
-
-  ngOnInit(): void {
-    this.analytics.trackPageViews();
-  }
+export class AppComponent {
+  title = 'NTSoftware';
 }

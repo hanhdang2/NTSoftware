@@ -1,0 +1,7 @@
+{
+    "demo": {
+        "title": "Translation demo",
+        "text": "hello {{name}}"
+    },
+    "title":"Title"
+}

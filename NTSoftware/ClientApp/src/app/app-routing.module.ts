@@ -1,61 +1,49 @@
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './layout/login/login.component';
+import { AdminComponent } from './layout/admin/admin.component';
+import { CompanyComponent } from './layout/company/company.component';
+import { EmployeeComponent } from './layout/employee/employee.component';
+
+import { AdminGuard } from './guards/admin.guard';
+import { CompanyGuard } from './guards/company.guard';
+import { EmployeeGuard } from './guards/employee.guard';
 import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
-} from '@nebular/auth';
+  ADMIN_ROUTE_NAME,
+  LOGIN_ROUTE_NAME,
+  COMPANY_ROUTE_NAME,
+  EMPLOYEE_ROUTE_NAME
+} from './constants/routes/index';
 
 const routes: Routes = [
   {
-    path: 'pages',
-    loadChildren: () => import('app/pages/pages.module')
-      .then(m => m.PagesModule),
+    path: '',
+    redirectTo: LOGIN_ROUTE_NAME,
+    pathMatch: 'full'
   },
   {
-    path: 'auth',
-    component: NbAuthComponent,
-    children: [
-      {
-        path: '',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'login',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'register',
-        component: NbRegisterComponent,
-      },
-      {
-        path: 'logout',
-        component: NbLogoutComponent,
-      },
-      {
-        path: 'request-password',
-        component: NbRequestPasswordComponent,
-      },
-      {
-        path: 'reset-password',
-        component: NbResetPasswordComponent,
-      },
-    ],
+    path: LOGIN_ROUTE_NAME,
+    component: LoginComponent
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  {
+    path: ADMIN_ROUTE_NAME,
+    component: AdminComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: COMPANY_ROUTE_NAME,
+    component: CompanyComponent,
+    canActivate: [CompanyGuard]
+  },
+  {
+    path: EMPLOYEE_ROUTE_NAME,
+    component: EmployeeComponent,
+    canActivate: [EmployeeGuard]
+  }
 ];
 
-const config: ExtraOptions = {
-  useHash: false,
-};
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes, config)],
-  exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

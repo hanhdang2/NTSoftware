@@ -1,0 +1,8 @@
+
+export const TOKEN_ADMIN = 'TOKEN_ADMIN';
+export const TOKEN_COMPANY = 'TOKEN_COMPANY';
+export const TOKEN_EMPLOYEE = 'TOKEN_EMPLOYEE';
+
+export const CURRENT_USER = 'CURRENT_USER';
+
+export const LANGUAGE_LOCAL = 'LANGUAGE_LOCAL'

@@ -1,62 +1,38 @@
-/**
- * @license
- * Copyright Akveo. All Rights Reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- */
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { CoreModule } from './@core/core.module';
-import { ThemeModule } from './@theme/theme.module';
-import { AppComponent } from './app.component';
+import { AdminGuard } from './guards/admin.guard';
+import { CompanyGuard } from './guards/company.guard';
+import { EmployeeGuard } from './guards/employee.guard';
 import { AppRoutingModule } from './app-routing.module';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {
-  NbChatModule,
-  NbDatepickerModule,
-  NbDialogModule,
-  NbMenuModule,
-  NbSidebarModule,
-  NbToastrModule,
-  NbWindowModule,
-} from '@nebular/theme';
+import { AppComponent } from './app.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './layout/login/login.component';
+import { AdminComponent } from './layout/admin/admin.component';
+import { CompanyComponent } from './layout/company/company.component';
+import { EmployeeComponent } from './layout/employee/employee.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent, AdminComponent, CompanyComponent, EmployeeComponent],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
     AppRoutingModule,
-
-    ThemeModule.forRoot(),
-
-    NbSidebarModule.forRoot(),
-    NbMenuModule.forRoot(),
-    NbDatepickerModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbWindowModule.forRoot(),
-    NbToastrModule.forRoot(),
-    NbChatModule.forRoot({
-      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-    }),
-    CoreModule.forRoot(),
-
     HttpClientModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-            },
-        }),
+    JwtModule.forRoot({ config: {} }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
-  bootstrap: [AppComponent],
+  providers: [AdminGuard, CompanyGuard, EmployeeGuard],
+  bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
 }
