@@ -13,5 +13,6 @@ namespace NTSoftware.Service.Interface
         List<EmployeeViewModel> GetAll();
         PagedResult<EmployeeViewModel> GetAllPaging(int page, int pageSize);
         Employee Add(EmployeeViewModel vm);
+        void Update(EmployeeViewModel vm);
     }
 }

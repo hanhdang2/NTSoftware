@@ -6,7 +6,8 @@ using System.Text;
 
 namespace NTSoftware.Repository.Interface
 {
-   public interface IEmployeeDepartmentRepository :IRepository<EmployeeDepartment,int>
+   public interface IEmployeeProjectRepository :IRepository<EmployeeProject,Guid>
     {
+
     }
 }

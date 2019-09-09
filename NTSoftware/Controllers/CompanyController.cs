@@ -81,5 +81,29 @@ namespace NTSoftware.Controllers
                 }
             }
         }
+        [HttpPut]
+        [Route("Update")]
+        public IActionResult Update([FromBody]CompanyViewModel Vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult(new GenericResult(false, allErrors));
+            }
+            else
+            {
+                try
+                {
+                       _icompanyService.Update(Vm);
+
+                    return new OkObjectResult(new GenericResult( new Company() ,true, ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
+                }
+                catch (Exception ex)
+                {
+                    return new OkObjectResult(new GenericResult(new Company(),false, ErrorMsg.ERROR_ON_HANDLE_DATA,ErrorCode.ERROR_HANDLE_DATA));
+                }
+            }
+        }
+
     }
 }

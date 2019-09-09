@@ -13,18 +13,21 @@ namespace NTSoftware.Core.Models.Models
     {
         public class AppUser : IdentityUser,IDomainEntity
         {
-            public int UserId { set; get; }
-            public string Token { get; set; }
-            public string Status { set; get; }
+            public Guid UserId { set; get; }
+            public DateTime EndDate { get; set; }
+            public Status Status { set; get; }
             public string Password { get; set; }
-            public string UserType { get; set; }
+            public string Token { get; set; }
+            public Roles UserType { get; set; }
             public bool IsLockedOut => this.LockoutEnabled && this.LockoutEnd >= DateTimeOffset.UtcNow;
             public string CreatedBy { get; set; }
             public string UpdatedBy { get; set; }
             public DateTime CreatedDate { get; set; }
             public DateTime UpdatedDate { get; set; }
-
-            /// <summary>
+            public int UserEmployeeID { get; set; }
+            public int UserAdminId { get; set; }
+            public bool DeleteFlag { get; set; }
+           // <summary>
             /// Navigation property for the roles this user belongs to.
             /// </summary>
             public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }

@@ -35,7 +35,7 @@ namespace NTSoftware.Controllers
                 try
                 {
                     var data = _iemployeeService.GetById(id);
-                    return new OkObjectResult(new GenericResult(data, true,ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
+                    return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
                 catch (Exception ex)
                 {
@@ -50,7 +50,7 @@ namespace NTSoftware.Controllers
             try
             {
                 var data = _iemployeeService.GetAll();
-                return new OkObjectResult(new GenericResult(data,true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
             }
             catch (Exception ex)
             {
@@ -73,6 +73,29 @@ namespace NTSoftware.Controllers
                     var data = _iemployeeService.Add(Vm);
 
                     return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                }
+                catch (Exception ex)
+                {
+                    return new OkObjectResult(new GenericResult(new Employee(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                }
+            }
+        }
+        [HttpPut]
+        [Route("Update")]
+        public IActionResult Update([FromBody]EmployeeViewModel Vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult(new GenericResult(false, allErrors));
+            }
+            else
+            {
+                try
+                {
+                    _iemployeeService.Update(Vm);
+
+                    return new OkObjectResult(new GenericResult(new Employee(), true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
                 catch (Exception ex)
                 {

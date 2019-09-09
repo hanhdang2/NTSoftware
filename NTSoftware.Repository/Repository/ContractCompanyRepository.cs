@@ -6,10 +6,10 @@ using System.Text;
 
 namespace NTSoftware.Repository.Repository
 {
-   public class ContractRepository :NTRepository<Contract,int>,IContractRepository
+   public class ContractCompanyRepository :NTRepository<ContractCompany,int>,IContractCompanyRepository
     {
         private AppDbContext _appContext;
-        public ContractRepository(AppDbContext context) : base(context)
+        public ContractCompanyRepository(AppDbContext context) : base(context)
         {
             _appContext = context;
         }

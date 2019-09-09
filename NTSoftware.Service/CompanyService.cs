@@ -72,10 +72,17 @@ namespace NTSoftware.Service
             SaveChanges();
             return entity;
         }
+        public void Update(CompanyViewModel Vm)
+        {
+            var data = _mapper.Map<Company>(Vm);
+            _icompanyRepo.Update(data);
+            SaveChanges();
+        }
 
         private void SaveChanges()
         {
             _unitOfWork.Commit();
         }
+
     }
 }

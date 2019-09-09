@@ -7,14 +7,16 @@ using System.Text;
 namespace NTSoftware.Core.Models.Models
 {
     [Table("Company")]
-   public class Company:DomainEntity<int>
+    public class Company : DomainEntity<int>
     {
         public string NameCompany { set; get; }
         public string Logo { set; get; }
         public int PhoneNumber { set; get; }
         public string Email { set; get; }
         public string Address { set; get; }
-        public int RepresentativeId { set; get; }
+        public Guid RepresentativeId { set; get; }
+        public Guid  UpdatePersonID{ set;get;}
+      
 
     }
 }

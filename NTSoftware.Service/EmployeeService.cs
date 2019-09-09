@@ -75,5 +75,12 @@ namespace NTSoftware.Service
         {
             _unitOfWork.Commit();
         }
+
+        public void Update(EmployeeViewModel vm)
+        {
+            var data = _mapper.Map<Employee>(vm);
+            _iemployeeRepo.Update(data);
+            SaveChanges();
+        }
     }
 }

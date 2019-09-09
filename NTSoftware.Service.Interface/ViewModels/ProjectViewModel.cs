@@ -6,12 +6,12 @@ namespace NTSoftware.Service.Interface.ViewModels
 {
     public class ProjectViewModel
     {
+        public int Id { set; get; }
         public string ProjectName { set; get; }
         public string Describe { set; get; }
         public DateTime StartDate { set; get; }
         public DateTime EndDate { set; get; }
-        public int ManagerId { set; get; }
-        public int DepartmentId { set; get; }
+        public int CompanyId { set; get; }
     }
     public class ProjectCreateViewModel
     {
@@ -19,7 +19,6 @@ namespace NTSoftware.Service.Interface.ViewModels
         public string Describe { set; get; }
         public DateTime StartDate { set; get; }
         public DateTime EndDate { set; get; }
-        public int ManagerId { set; get; }
-        public int DepartmentId { set; get; }
+        public int CompanyId { set; get; }
     }
 }

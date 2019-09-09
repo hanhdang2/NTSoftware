@@ -13,7 +13,7 @@ namespace NTSoftware.Core.Models.Models
         public string Describe { set; get; }
         public DateTime StartDate { set; get; }
         public DateTime EndDate { set; get; }
-        public int ManagerId { set; get; }
-        public int DepartmentId { set; get; }
+        public int CompanyId { set; get; }
+        
     }
 }

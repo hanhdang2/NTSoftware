@@ -15,8 +15,7 @@ namespace NTSoftware.Service.Interface.ViewModels
         public string Address { set; get; }
         public int PhoneNumber { set; get; }
         public string Email { set; get; }
-        public string Position { set; get; }
-        public int UserId { set; get; }
+        public int DepartmentId { set; get; }
     }
     public class EmployeeCreateViewModel
     {
@@ -28,7 +27,6 @@ namespace NTSoftware.Service.Interface.ViewModels
         public string Address { set; get; }
         public int PhoneNumber { set; get; }
         public string Email { set; get; }
-        public string Position { set; get; }
-        public int UserId { set; get; }
+        public int DepartmentId { set; get; }
     }
 }

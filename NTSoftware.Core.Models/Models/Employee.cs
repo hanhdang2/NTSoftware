@@ -17,8 +17,9 @@ namespace NTSoftware.Core.Models.Models
         public string Address { set; get; }
         public int PhoneNumber { set; get; }
         public string Email { set; get; }
-        public string Position { set; get; }
-        public int UserId { set; get; }
+        public int DepartmentId { set; get; }
+       
+
 
     }
 }

@@ -16,33 +16,27 @@ namespace NTSoftware.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeDepartmentController : BaseController
+    public class EmployeeProjectController : BaseController
     {
-        private IEmployeeDepartmentService _iemployeeDepartmentService;
-        public EmployeeDepartmentController(IEmployeeDepartmentService iemployeeDepartmentService)
+        private IEmployeeProjectService _iemployeeProjectService;
+        public EmployeeProjectController(IEmployeeProjectService iemployeeProjectService)
         {
-            _iemployeeDepartmentService = iemployeeDepartmentService;
+            _iemployeeProjectService = iemployeeProjectService;
         }
         [HttpGet]
         [Route("GetById/{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Guid id)
         {
-            if (id == 0)
-            {
-                return new BadRequestObjectResult(new GenericResult(new EmployeeDepartment(), false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
-            }
-            else
-            {
+        
                 try
                 {
-                    var data = _iemployeeDepartmentService.GetById(id);
+                    var data = _iemployeeProjectService.GetById(id);
                     return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new EmployeeDepartment(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                    return new OkObjectResult(new GenericResult(new EmployeeProject(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
                 }
-            }
         }
         [HttpGet]
         [Route("GetAll")]
@@ -50,17 +44,17 @@ namespace NTSoftware.Controllers
         {
             try
             {
-                var data = _iemployeeDepartmentService.GetAll();
+                var data = _iemployeeProjectService.GetAll();
                 return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(new List<EmployeeDepartment>(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                return new OkObjectResult(new GenericResult(new List<EmployeeProject>(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
         [HttpPost]
         [Route("Add")]
-        public IActionResult Add([FromBody] EmployeeDepartmentViewModel Vm)
+        public IActionResult Add([FromBody] EmployeeProjectViewModel Vm)
         {
             if (!ModelState.IsValid)
             {
@@ -71,13 +65,13 @@ namespace NTSoftware.Controllers
             {
                 try
                 {
-                    var data = _iemployeeDepartmentService.Add(Vm);
+                    var data = _iemployeeProjectService.Add(Vm);
 
                     return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new EmployeeDepartment(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                    return new OkObjectResult(new GenericResult(new EmployeeProject(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
                 }
             }
         }

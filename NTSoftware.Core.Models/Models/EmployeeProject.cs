@@ -6,12 +6,11 @@ using System.Text;
 
 namespace NTSoftware.Core.Models.Models
 {
-    [Table("EmployeeDapartment")]
-    public class EmployeeDepartment:DomainEntity<int>
+    public class EmployeeProject : DomainEntity<Guid>
     {
-        public int EmployeeId { set; get; }
-        public int DapartmentId { set; get; }
+        public int ProjectId { set; get; }
+        public DateTime OutDate { set; get; }
         public DateTime StartDate { set; get; }
-        public DateTime EndDate { set; get; }
+
     }
 }
