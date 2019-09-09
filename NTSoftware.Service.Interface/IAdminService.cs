@@ -7,12 +7,11 @@ using System.Text;
 
 namespace NTSoftware.Service.Interface
 {
-   public interface IProjectService
+    public interface IAdminService
     {
-       
-        ProjectViewModel GetById(int id);
-        List<ProjectViewModel> GetAll();
-        PagedResult<ProjectViewModel> GetAllPaging(int page, int pageSize);
-        Project Add(ProjectViewModel vm);
+        AdminViewModel GetById(Guid id);
+        List<AdminViewModel> GetAll();
+        PagedResult<AdminViewModel> GetAllPaging(int page, int pageSize);
+        Admin Add(AdminViewModel vm);
     }
 }

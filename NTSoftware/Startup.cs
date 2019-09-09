@@ -61,20 +61,20 @@ namespace NTSoftware
                 .AddDefaultTokenProviders();
             services.AddTransient(typeof(IUnitOfWork), typeof(NTUnitOfWork));
             services.AddTransient(typeof(IRepository<,>), typeof(NTRepository<,>));
-            services.AddTransient<IContractRepository, ContractRepository>();
+            services.AddTransient<IContractCompanyRepository, ContractCompanyRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();
             services.AddTransient<IEmployeeContractRepository, EmployeeContractRepository>();
-            services.AddTransient<IEmployeeDepartmentRepository, EmployeeDepartmentRepository>();
+            services.AddTransient<IEmployeeProjectRepository, EmployeeProjectRepository>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
 
-            services.AddTransient<IContractService, ContractService>();
+            services.AddTransient<IContractCompanyService, ContractCompanyService>();
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IAppUserService, AppUserService>();
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IEmployeeContractService, EmployeeContractService>();
-            services.AddTransient<IEmployeeDepartmentService, EmployeeDepartmentService>();
+            services.AddTransient<IEmployeeProjectService, EmployeeProjectService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
             // Configure Identity options and password complexity here

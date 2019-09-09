@@ -44,12 +44,12 @@ namespace NTSoftware.Controllers
                     }
                     else
                     {
-                        return new OkObjectResult(new GenericResult(new List <AppUser>(),false,ErrorMsg.ERROR_ON_HANDLE_DATA,ErrorCode.HANDLE_ERROR_CODE));
+                        return new OkObjectResult(new GenericResult(new AppUser(),false,ErrorMsg.ERROR_ON_HANDLE_DATA,ErrorCode.HANDLE_ERROR_CODE));
                     }
                 }
                 catch (Exception)
                 {
-                    return new BadRequestObjectResult(new GenericResult(new List<AppUser>(), false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                    return new BadRequestObjectResult(new GenericResult(new AppUser(), false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
                     throw;
                 }
             }
@@ -70,11 +70,11 @@ namespace NTSoftware.Controllers
                 {
                      _iuserService.UpdateAsync(Vm);
 
-                    return new OkObjectResult(new GenericResult(new List<AppUser>(), true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                    return new OkObjectResult(new GenericResult(new AppUser(), true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new List<AppUser>(), false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                    return new OkObjectResult(new GenericResult(new AppUser(), false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
                 }
             }
         }

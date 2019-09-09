@@ -8,10 +8,12 @@ namespace NTSoftware.Service.Interface.ViewModels
     public class AppUserViewModel
     {
         public int UserId { set; get; }
-        public string UserName { set; get; }
+        public DateTime EndDate { get; set; }
         public string Status { set; get; }
-        public string Email { set; get; }
         public string Password { get; set; }
-        public string UserType { get; set; }
+        public Roles UserType { get; set; }
+        public int UserEmployeeID { get; set; }
+        public int UserAdminId { get; set; }
+        public string Token { get; set; }
     }
 }

@@ -14,7 +14,7 @@ using System.Text;
 namespace NTSoftware.Service
 {
     public class CompanyService : ICompanyService
-    {
+    { 
         #region Contructor
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -65,17 +65,24 @@ namespace NTSoftware.Service
             return _mapper.Map<Company, CompanyViewModel>(model);
         }
 
-        public Company Add(CompanyCreateViewModel Vm)
+        public Company Add(CompanyViewModel Vm)
         {
             var entity = _mapper.Map<Company>(Vm);
             _icompanyRepo.Add(entity);
             SaveChanges();
             return entity;
         }
+        public void Update(CompanyViewModel Vm)
+        {
+            var data = _mapper.Map<Company>(Vm);
+            _icompanyRepo.Update(data);
+            SaveChanges();
+        }
 
         private void SaveChanges()
         {
             _unitOfWork.Commit();
         }
+
     }
 }

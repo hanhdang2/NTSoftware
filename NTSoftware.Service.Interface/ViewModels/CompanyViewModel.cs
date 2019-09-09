@@ -12,7 +12,8 @@ namespace NTSoftware.Service.Interface.ViewModels
         public int PhoneNumber { set; get; }
         public string Email { set; get; }
         public string Address { set; get; }
-        public int RepresentativeId { set; get; }
+        public Guid RepresentativeId { set; get; }
+        public Guid UpdatePersonID { set; get; }
     }
     public class CompanyCreateViewModel
     {
@@ -21,6 +22,7 @@ namespace NTSoftware.Service.Interface.ViewModels
         public int PhoneNumber { set; get; }
         public string Email { set; get; }
         public string Address { set; get; }
-        public int RepresentativeId { set; get; }
+        public Guid RepresentativeId { set; get; }
+        public Guid UpdatePersonID { set; get; }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NTSoftware.Repository.Interface
 {
-    public interface IContractRepository : IRepository<Contract, int>
+    public interface IContractCompanyRepository : IRepository<ContractCompany, int>
     {
         
     }

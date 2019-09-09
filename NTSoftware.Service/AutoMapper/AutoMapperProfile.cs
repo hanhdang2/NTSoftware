@@ -13,16 +13,17 @@ namespace NTSoftware.Service.AutoMapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<Contract, ContractViewModel>().ReverseMap();
+            CreateMap<ContractCompany, ContractCompanyViewModel>().ReverseMap();
             CreateMap<Company, CompanyViewModel>().ReverseMap();
             CreateMap<Employee,EmployeeViewModel>().ReverseMap();
             CreateMap<Project, ProjectViewModel>().ReverseMap();
             CreateMap<Department, DepartmentViewModel>().ReverseMap();
             CreateMap<AppUser, AppUserViewModel>().ReverseMap();
             CreateMap<AppUserViewModel, AppUser>().ReverseMap();
-
+            CreateMap<AdminViewModel, Admin>().ReverseMap();
             CreateMap<EmployeeContract, EmployeeContractViewModel>().ReverseMap();
-            CreateMap<EmployeeDepartment, EmployeeDepartmentViewModel>().ReverseMap();
+            CreateMap<EmployeeProject, EmployeeProjectViewModel>().ReverseMap();
+            CreateMap<RuleViewModel, Rule>().ReverseMap();
         }
     }
 }

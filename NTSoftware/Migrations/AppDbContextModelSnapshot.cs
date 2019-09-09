@@ -440,8 +440,7 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("DepartmentId");
 
-                    b.Property<string>("Describe")
-                        .HasColumnType("text");
+                    b.Property<string>("Describe");
 
                     b.Property<DateTime>("EndDate");
 

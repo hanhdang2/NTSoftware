@@ -9,6 +9,7 @@ using NTSoftware.Core.Shared;
 using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Service.Interface;
+using NTSoftware.Service.Interface.ViewModels;
 
 namespace NTSoftware.Controllers
 {
@@ -16,10 +17,10 @@ namespace NTSoftware.Controllers
     [ApiController]
     public class ContractController : BaseController
     {
-        private IContractService _icontractService;
-     public ContractController(IContractService icontractService)
+        private IContractCompanyService _icontractCompanyService;
+        public ContractController(IContractCompanyService icontractConpanyService)
         {
-            _icontractService = icontractService;
+            _icontractCompanyService = icontractConpanyService;
         }
         [HttpGet]
         [Route("GetById/{id}")]
@@ -27,18 +28,18 @@ namespace NTSoftware.Controllers
         {
             if (id == 0)
             {
-                return new BadRequestObjectResult(new GenericResult(new List<Contract>(), false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
+                return new BadRequestObjectResult(new GenericResult(new ContractCompany(), false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
             }
             else
             {
                 try
                 {
-                    var data = _icontractService.GetById(id);
+                    var data = _icontractCompanyService.GetById(id);
                     return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new List<Contract>(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                    return new OkObjectResult(new GenericResult(new ContractCompany(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
 
                 }
             }
@@ -49,12 +50,58 @@ namespace NTSoftware.Controllers
         {
             try
             {
-                var data = _icontractService.GetAll();
+                var data = _icontractCompanyService.GetAll();
                 return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(new List<Contract>(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                return new OkObjectResult(new GenericResult(new List<ContractCompany>(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+            }
+        }
+        [HttpPost]
+        [Route("Add")]
+        public IActionResult Add([FromBody] ContractCompanyViewModel Vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
+            }
+            else
+            {
+                try
+                {
+                    var data = _icontractCompanyService.Add(Vm);
+
+                    return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                }
+                catch (Exception ex)
+                {
+                    return new OkObjectResult(new GenericResult(new ContractCompany(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                }
+            }
+        }
+        [HttpPut]
+        [Route("Update")]
+        public IActionResult Update([FromBody]ContractCompanyViewModel Vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult(new GenericResult(false, allErrors));
+            }
+            else
+            {
+                try
+                {
+                    _icontractCompanyService.Update(Vm);
+
+                    return new OkObjectResult(new GenericResult(new ContractCompany(), true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                }
+                catch (Exception ex)
+                {
+                    return new OkObjectResult(new GenericResult(new ContractCompany(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                }
             }
         }
     }
