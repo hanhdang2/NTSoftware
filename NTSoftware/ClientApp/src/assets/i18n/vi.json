@@ -1,11 +1,52 @@
 {
-  "authen":{
+  "auth":{
     "login":{
       "title":"Đăng nhập",
       "buttonLogin":"Đăng nhập",
-      "fogotPassword":"Quên mật khẩu",
+      "email":"Email đăng nhập:",
+      "ohSnap":"Ồ không!",
+      "hooray":"Tuyệt vời",
+      "emailEmpty":"Email không được trống",
+      "notEmail":"Email sai định dạng",
+      "password":"Mật khẩu",
+      "passwordEmpty":"Mật khẩu không được trống",
+      "passwordFrom":"Mật khẩu phải từ ",
+      "passwordTo":" đến",
+      "character":"ký tự",
+      "forgotPassword":"Quên mật khẩu",
       "rememberMe":"Nhớ mật khẩu",
       "greeting":"Xin chào! Đăng nhập với email của bạn để tiếp tục"
+    },
+    "requestPassword":{
+      "title":"Quên mật khẩu",
+      "ohSnap":"Ồ không!",
+      "hooray":"Tuyệt vời",
+      "guide":"Nhập địa chỉ email của bạn và chúng tôi sẽ gửi mã xác nhận đến địa chỉ email của bạn",
+      "yourEmail":"Địa chỉ email của bạn:",
+      "email":"Email",
+      "emailEmpty":"Email không được trống",
+      "notEmail":"Email sai định dạng",
+      "sendEmail":"Gửi",
+      "backToLogin":"Trở về đăng nhập"
+    },
+    "resetPassword":{
+      "title":"Đổi mật khẩu",
+      "ohSnap":"Ồ không!",
+      "hooray":"Tuyệt vời",
+      "guide":"Chúng tôi đã gửi một mã xác nhận đến địa chỉ email {{email}}. Vui lòng kiểm tra hộp thư đến!",
+      "newPassword":"Mật khẩu mới",
+      "newPasswordEmpty":"Mật khẩu mới không được trống",
+      "confirmPassword":"Nhập lại mật khẩu",
+      "confirmPasswordEmpty":"Mật khẩu mới không được trống",
+      "changePassword":"Đổi mật khẩu",
+      "backToLogin":"Trở về đăng nhập",
+      "passwordEmpty":"Mật khẩu không được trống",
+      "passwordFrom":"Mật khẩu phải từ ",
+      "passwordTo":" đến",
+      "character":"ký tự",
+      "notConfirm":"Xác nhận mật khẩu không khớp",
+      "QRCode":"Mã xác nhận",
+      "codeEmpty":"Mã xác nhận không được trống"
     }
   }
 }

@@ -4,7 +4,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'auth',
-    pathMatch:' full'
+    pathMatch: 'full'
   },
   {
     path: 'auth',

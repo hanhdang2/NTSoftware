@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AuthService } from './common/services/auth.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import {
   NbPasswordAuthStrategy,
@@ -19,6 +20,9 @@ import {
 } from '@nebular/auth';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+export function getToken() {
+  return localStorage.getItem('currentUser');
+}
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -31,15 +35,30 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NbAuthModule.forRoot({
       strategies: [
         NbPasswordAuthStrategy.setup({
-          name: 'email'
+          name: 'email',
         })
       ],
-      forms: {}
+      forms: {
+        validation: {
+          password: {
+            required: true,
+            minLength: 4,
+            maxLength: 50,
+          },
+          code:{
+            required: true,
+          }
+        },
+      }
     }),
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
-    JwtModule.forRoot({}),
+    JwtModule.forRoot({config: {
+      throwNoTokenError: false,
+      tokenGetter: getToken,
+      whitelistedDomains: ['localhost:4567']
+    }}),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -48,9 +67,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       }
     })
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
-  exports:[TranslateModule]
+  exports: [TranslateModule]
 })
 export class AppModule {}
 export function HttpLoaderFactory(http: HttpClient) {
