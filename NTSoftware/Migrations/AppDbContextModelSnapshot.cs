@@ -139,77 +139,6 @@ namespace NTSoftware.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("NTSoftware.Core.Models.Models.AppUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Configuration");
-
-                    b.Property<string>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("FullName");
-
-                    b.Property<bool>("IsEnabled");
-
-                    b.Property<string>("JobTitle");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<int>("Role");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("Token");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UpdatedBy");
-
-                    b.Property<DateTime>("UpdatedDate");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-                });
-
             modelBuilder.Entity("NTSoftware.Core.Models.Models.Company", b =>
                 {
                     b.Property<int>("Id")
@@ -395,7 +324,7 @@ namespace NTSoftware.Migrations
                     b.ToTable("EmployeeContract");
                 });
 
-            modelBuilder.Entity("NTSoftware.Core.Models.Models.EmployeeDapartment", b =>
+            modelBuilder.Entity("NTSoftware.Core.Models.Models.EmployeeDepartment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -426,6 +355,75 @@ namespace NTSoftware.Migrations
                     b.ToTable("EmployeeDapartment");
                 });
 
+            modelBuilder.Entity("NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models.AppUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("Status");
+
+                    b.Property<string>("Token");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UpdatedBy");
+
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("UserType");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("NTSoftware.Core.Models.Models.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -437,11 +435,13 @@ namespace NTSoftware.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int>("DeleteFlag");
+                    b.Property<byte>("DeleteFlag")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("DepartmentId");
 
-                    b.Property<string>("Describe");
+                    b.Property<string>("Describe")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("EndDate");
 
@@ -461,37 +461,6 @@ namespace NTSoftware.Migrations
                     b.ToTable("Project");
                 });
 
-            modelBuilder.Entity("NTSoftware.Core.Models.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(256);
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<int>("DeleteFlag");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("Password");
-
-                    b.Property<string>("Status");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(256);
-
-                    b.Property<DateTime>("UpdatedDate");
-
-                    b.Property<string>("UserType");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("NTSoftware.Core.Models.Models.AppRole")
@@ -502,7 +471,7 @@ namespace NTSoftware.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("NTSoftware.Core.Models.Models.AppUser")
+                    b.HasOne("NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models.AppUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -510,7 +479,7 @@ namespace NTSoftware.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("NTSoftware.Core.Models.Models.AppUser")
+                    b.HasOne("NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -523,7 +492,7 @@ namespace NTSoftware.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NTSoftware.Core.Models.Models.AppUser")
+                    b.HasOne("NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models.AppUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -531,7 +500,7 @@ namespace NTSoftware.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("NTSoftware.Core.Models.Models.AppUser")
+                    b.HasOne("NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

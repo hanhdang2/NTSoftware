@@ -36,7 +36,8 @@ namespace NTSoftware.Repository
 
             builder.Entity<AppRole>().HasMany(r => r.Claims).WithOne().HasForeignKey(c => c.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<AppRole>().HasMany(r => r.Users).WithOne().HasForeignKey(r => r.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
-
+            builder.Entity<Project>().Property(x => x.DeleteFlag).HasColumnType("tinyint");
+            builder.Entity<Project>().Property(x => x.Describe).HasColumnType("text");
         }
         public override int SaveChanges()
         {

@@ -1,26 +1,45 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AdminGuard } from './guards/admin.guard';
-import { CompanyGuard } from './guards/company.guard';
-import { EmployeeGuard } from './guards/employee.guard';
+import {
+  NbThemeModule,
+  NbLayoutModule,
+  NbCardModule,
+  NbIconModule
+} from '@nebular/theme';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './layout/login/login.component';
-import { AdminComponent } from './layout/admin/admin.component';
-import { CompanyComponent } from './layout/company/company.component';
-import { EmployeeComponent } from './layout/employee/employee.component';
-
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {
+  NbPasswordAuthStrategy,
+  NbAuthModule,
+  NbAuthService
+} from '@nebular/auth';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
-  declarations: [AppComponent, LoginComponent, AdminComponent, CompanyComponent, EmployeeComponent],
+  declarations: [AppComponent],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    JwtModule.forRoot({ config: {} }),
+    NbEvaIconsModule,
+    NbCardModule,
+    NbIconModule,
+    NbAuthModule.forRoot({
+      strategies: [
+        NbPasswordAuthStrategy.setup({
+          name: 'email'
+        })
+      ],
+      forms: {}
+    }),
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({ name: 'default' }),
+    NbLayoutModule,
+    JwtModule.forRoot({}),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -29,8 +48,9 @@ import { EmployeeComponent } from './layout/employee/employee.component';
       }
     })
   ],
-  providers: [AdminGuard, CompanyGuard, EmployeeGuard],
-  bootstrap: [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent],
+  exports:[TranslateModule]
 })
 export class AppModule {}
 export function HttpLoaderFactory(http: HttpClient) {

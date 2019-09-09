@@ -1,7 +1,11 @@
 {
-    "demo": {
-        "title": "Trải nghiệm I18nadasd",
-        "text": "Xin chào {{name}}"
-    },
-    "title":"Tiêu đề"
+  "authen":{
+    "login":{
+      "title":"Đăng nhập",
+      "buttonLogin":"Đăng nhập",
+      "fogotPassword":"Quên mật khẩu",
+      "rememberMe":"Nhớ mật khẩu",
+      "greeting":"Xin chào! Đăng nhập với email của bạn để tiếp tục"
+    }
+  }
 }
