@@ -26,3 +26,5 @@ NTSoftware.Service.Interface/bin/
 NTSoftware.Service.Interface/obj/
 
 NTSoftware/Migrations/
+
+.vs/
