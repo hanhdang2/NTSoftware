@@ -37,7 +37,7 @@ namespace NTSoftware.Core.Shared.Dtos
         {
             Data = data;
             Success = success;
-            Message = Message;
+            Message = message;
             ErrorCode = errorCode;
         }
         public object Data { get; set; }
