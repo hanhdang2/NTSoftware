@@ -41,7 +41,26 @@ namespace NTSoftware.Service
 
         public PagedResult<EmployeeProjectViewModel> GetAllPaging(int page, int pageSize)
         {
-            throw new NotImplementedException();
+            var query = _iemployeeProjectRepo.FindAll().ToList();
+            int totalRow = query.Count();
+
+            try
+            {
+                var data = _mapper.Map<List<EmployeeProject>, List<EmployeeProjectViewModel>>(query);
+
+                var paginationSet = new PagedResult<EmployeeProjectViewModel>()
+                {
+                    Results = data,
+                    CurrentPage = page,
+                    RowCount = totalRow,
+                    PageSize = pageSize
+                };
+                return paginationSet;
+            }
+            catch
+            {
+                return null;
+            }
         }
         public EmployeeProject Add(EmployeeProjectViewModel vm)
         {

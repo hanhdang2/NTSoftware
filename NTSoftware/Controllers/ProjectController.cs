@@ -44,6 +44,20 @@ namespace NTSoftware.Controllers
         }
     }
         [HttpGet]
+        [Route("GetAllPaging")]
+        public IActionResult GetAllPaging(int page, int pageSize)
+        {
+            try
+            {
+                var data = _iprojectService.GetAllPaging(page, pageSize);
+                return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+            }
+            catch (Exception ex)
+            {
+                return new OkObjectResult(new GenericResult(new Project(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+            }
+        }
+        [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAll()
         {

@@ -57,6 +57,20 @@ namespace NTSoftware.Controllers
                 return new OkObjectResult(new GenericResult(new List<Employee>(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
+        [HttpGet]
+        [Route("GetAllPaging")]
+        public IActionResult GetAllPaging(int page, int pageSize)
+        {
+            try
+            {
+                var data = _iemployeeService.GetAllPaging(page, pageSize);
+                return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+            }
+            catch (Exception ex)
+            {
+                return new OkObjectResult(new GenericResult(new Employee(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+            }
+        }
         [HttpPost]
         [Route("Add")]
         public IActionResult Add([FromBody] EmployeeViewModel Vm)

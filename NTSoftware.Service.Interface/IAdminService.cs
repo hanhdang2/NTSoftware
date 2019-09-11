@@ -9,9 +9,10 @@ namespace NTSoftware.Service.Interface
 {
     public interface IAdminService
     {
-        AdminViewModel GetById(Guid id);
+        AdminViewModel GetById(int id);
         List<AdminViewModel> GetAll();
         PagedResult<AdminViewModel> GetAllPaging(int page, int pageSize);
         Admin Add(AdminViewModel vm);
+        void Update(AdminViewModel vm);
     }
 }

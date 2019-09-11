@@ -4,51 +4,47 @@ using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Core.Shared.Interface;
 using NTSoftware.Repository;
 using NTSoftware.Repository.Interface;
-using NTSoftware.Service.Interface;
 using NTSoftware.Service.Interface.ViewModels;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 
 namespace NTSoftware.Service
 {
-   public class ProjectService :IProjectService
+    public class RuleService: IRuleService
     {
+        #region Contructor
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IProjectRepository _iprojectRepo;
+        private IRuleRepository _iruleRepo;
         private readonly AppDbContext _dbContext;
-        public ProjectService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IProjectRepository iprojectRepo)
+
+        public RuleService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IRuleRepository iruleRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _iprojectRepo = iprojectRepo;
+            _iruleRepo = iruleRepo;
             _dbContext = dbContext;
         }
-
-        public ProjectViewModel GetById(int id)
+        #endregion Contructor
+        public List<RuleViewModel> GetAll()
         {
-            var data = _iprojectRepo.FindById(id);
-            return _mapper.Map<Project, ProjectViewModel>(data);
+            var data = _iruleRepo.FindAll().ToList();
+            return _mapper.Map<List<Rule>, List<RuleViewModel>>(data);
         }
 
-        public List<ProjectViewModel> GetAll()
+        public PagedResult<RuleViewModel> GetAllPaging(int page, int pageSize)
         {
-            var model = _iprojectRepo.FindAll().ToList();
-            return _mapper.Map<List<Project>, List<ProjectViewModel>>(model);
-        }
-
-        public PagedResult<ProjectViewModel> GetAllPaging(int page, int pageSize)
-        {
-            var query = _iprojectRepo.FindAll().ToList();
+            var query = _iruleRepo.FindAll().ToList();
             int totalRow = query.Count();
 
             try
             {
-                var data = _mapper.Map<List<Project>, List<ProjectViewModel>>(query);
+                var data = _mapper.Map<List<Rule>, List<RuleViewModel>>(query);
 
-                var paginationSet = new PagedResult<ProjectViewModel>()
+                var paginationSet = new PagedResult<RuleViewModel>()
                 {
                     Results = data,
                     CurrentPage = page,
@@ -63,12 +59,24 @@ namespace NTSoftware.Service
             }
         }
 
-        public Project Add(ProjectViewModel vm)
+        public RuleViewModel GetById(int id)
         {
-            var entity = _mapper.Map<ProjectViewModel, Project>(vm);
-            _iprojectRepo.Add(entity);
+            var model = _iruleRepo.FindById(id);
+            return _mapper.Map<Rule, RuleViewModel>(model);
+        }
+
+        public Rule Add(RuleViewModel Vm)
+        {
+            var entity = _mapper.Map<Rule>(Vm);
+            _iruleRepo.Add(entity);
             SaveChanges();
             return entity;
+        }
+        public void Update(RuleViewModel Vm)
+        {
+            var data = _mapper.Map<Rule>(Vm);
+            _iruleRepo.Update(data);
+            SaveChanges();
         }
 
         private void SaveChanges()

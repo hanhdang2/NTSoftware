@@ -8,7 +8,7 @@ namespace NTSoftware.Service.Interface.ViewModels
 {
     public interface IRuleService
     {
-        RuleViewModel GetById(Guid id);
+        RuleViewModel GetById(int id);
         List<RuleViewModel> GetAll();
         PagedResult<RuleViewModel> GetAllPaging(int page, int pageSize);
         Rule Add(RuleViewModel vm);

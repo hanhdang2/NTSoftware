@@ -41,7 +41,26 @@ namespace NTSoftware.Service
 
         public PagedResult<EmployeeContractViewModel> GetAllPaging(int page, int pageSize)
         {
-            throw new NotImplementedException();
+            var query = _iemployeeContractRepo.FindAll().ToList();
+            int totalRow = query.Count();
+
+            try
+            {
+                var data = _mapper.Map<List<EmployeeContract>, List<EmployeeContractViewModel>>(query);
+
+                var paginationSet = new PagedResult<EmployeeContractViewModel>()
+                {
+                    Results = data,
+                    CurrentPage = page,
+                    RowCount = totalRow,
+                    PageSize = pageSize
+                };
+                return paginationSet;
+            }
+            catch
+            {
+                return null;
+            }
         }
         public EmployeeContract Add(EmployeeContractViewModel vm)
         {

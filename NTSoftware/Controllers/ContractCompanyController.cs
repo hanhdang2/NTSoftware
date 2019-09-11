@@ -81,6 +81,20 @@ namespace NTSoftware.Controllers
                 }
             }
         }
+        [HttpGet]
+        [Route("GetAllPaging")]
+        public IActionResult GetAllPaging(int page, int pageSize)
+        {
+            try
+            {
+                var data = _icontractCompanyService.GetAllPaging(page, pageSize);
+                return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+            }
+            catch (Exception ex)
+            {
+                return new OkObjectResult(new GenericResult(new ContractCompany(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+            }
+        }
         [HttpPut]
         [Route("Update")]
         public IActionResult Update([FromBody]ContractCompanyViewModel Vm)

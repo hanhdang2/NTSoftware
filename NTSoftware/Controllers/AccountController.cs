@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +11,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using NTSoftware.Core.Models.Enum;
 using NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared;
+using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Core.Shared.Dtos;
+using NTSoftware.Service.Interface;
 using NTSoftware.Service.Interface.ViewModels;
 
 namespace NTSoftware.Controllers
@@ -24,18 +30,97 @@ namespace NTSoftware.Controllers
     public class AccountController : BaseController
     {
         #region Constructor
+
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IConfiguration _config;
+        private readonly IEmailSender _emailSender;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration config)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration config, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _config = config;
+            _emailSender = emailSender;
         }
+
         #endregion Constructor
 
+        #region Post
+
+        [HttpPost]
+        [Route("RequestPasword")]
+        public async Task<IActionResult> RequestPasword([FromBody] ResetViewModel vm)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(vm.Email);
+                if (user == null)
+                {
+                    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.NO_EMAIL, ErrorCode.NO_EMAIL_CODE));
+                }
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                await _emailSender.SendEmailAsync("ngokprao121@gmail.com", "bcasjcva", "ádasd");
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+            }
+
+        }
+
+        #endregion  Post
+
+        #region Put
+
+        [HttpPut]
+        [Route("ChangePasswordWithCode")]
+        public async Task<IActionResult> ChangePasswordWithCode([FromBody] ResetViewModel vm)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(vm.Email);
+                if (user == null)
+                {
+                    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.NO_EMAIL, ErrorCode.NO_EMAIL_CODE));
+                }
+
+                var result = await _userManager.ResetPasswordAsync(user, vm.code, vm.password);
+                if (result.Succeeded)
+                {
+                    return new OkObjectResult(new GenericResult(result, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                }
+                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+            }
+
+        }
+
+        [HttpPut]
+        [Route("ChangePassword")]
+        public async Task<IActionResult> UpdatePassword([FromBody]ChangePasswordViewModel Inforvm)
+        {
+            var user = await _userManager.FindByIdAsync(Inforvm.Id.ToString());
+            if (user == null)
+                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+            if (await _userManager.CheckPasswordAsync(user, Inforvm.OldPassword))
+            {
+                var result = await _userManager.ChangePasswordAsync(user, Inforvm.OldPassword, Inforvm.NewPassword);
+                if (result.Succeeded)
+                {
+                    return new OkObjectResult(new GenericResult(result, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                }
+                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+            };
+            return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+        }
+
+        #endregion Put
 
         #region Login Admin
         [HttpPost]
@@ -55,13 +140,13 @@ namespace NTSoftware.Controllers
                     var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
                     if (result.IsLockedOut)
                     {
-                        return new ObjectResult(new GenericResult(false, ErrorMsg.LOGIN_FAILED));
+                        return new ObjectResult(new GenericResult(null,false, ErrorMsg.LOGIN_FAILED,ErrorCode.HAS_ERROR_CODE));
                     }
                     else if (!result.Succeeded)
                     {
                         return new BadRequestObjectResult(result.ToString());
                     }
-                   
+
                     var claims = new[]
                     {
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
@@ -82,17 +167,17 @@ namespace NTSoftware.Controllers
                     var token_access = new JwtSecurityTokenHandler().WriteToken(token);
                     if (model.isSave)
                     {
-                        user.Token = token.ToString();         
+                        user.Token = token.ToString();
                         var data = await _userManager.UpdateAsync(user);
                         // cập nhật trường token bên với giá trị là token bên trên
                     }
-                    return new ObjectResult(new GenericResult(true, token_access));
+                    return new ObjectResult(new GenericResult(token_access, true,ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
                 }
-                    return new ObjectResult(new GenericResult(false, ErrorMsg.LOGIN_FAILED));
+                return new ObjectResult(new GenericResult(null,false, ErrorMsg.LOGIN_FAILED,ErrorCode.HAS_ERROR_CODE));
             }
             catch (Exception ex)
             {
-                return new ObjectResult(new GenericResult(false, ex.Message));
+                return new ObjectResult(new GenericResult(null,false, ErrorMsg.LOGIN_FAILED,ErrorCode.HAS_ERROR_CODE));
             }
 
 

@@ -11,9 +11,10 @@ namespace NTSoftware.Core.Models.Models
  
     namespace NTSoftware.Core.Models.Models
     {
-        public class AppUser : IdentityUser,IDomainEntity
+        public class AppUser : IdentityUser<Guid>,IDomainEntity
         {
-            public Guid UserId { set; get; }
+         
+           
             public DateTime EndDate { get; set; }
             public Status Status { set; get; }
             public string Password { get; set; }
@@ -27,15 +28,16 @@ namespace NTSoftware.Core.Models.Models
             public int UserEmployeeID { get; set; }
             public int UserAdminId { get; set; }
             public bool DeleteFlag { get; set; }
+         
            // <summary>
             /// Navigation property for the roles this user belongs to.
             /// </summary>
-            public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+            public virtual ICollection<IdentityUserRole<Guid>> Roles { get; set; }
 
             /// <summary>
             /// Navigation property for the claims this user possesses.
             /// </summary>
-            public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+            public virtual ICollection<IdentityUserClaim<Guid>> Claims { get; set; }
         }
     }
 

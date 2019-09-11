@@ -13,42 +13,38 @@ using System.Text;
 
 namespace NTSoftware.Service
 {
-   public class ProjectService :IProjectService
+   public class AdminService :IAdminService
     {
+        #region Contructor
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IProjectRepository _iprojectRepo;
+        private IAdminRepository _iadminRepo;
         private readonly AppDbContext _dbContext;
-        public ProjectService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IProjectRepository iprojectRepo)
+
+        public AdminService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IAdminRepository iadminRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _iprojectRepo = iprojectRepo;
+            _iadminRepo = iadminRepo;
             _dbContext = dbContext;
         }
-
-        public ProjectViewModel GetById(int id)
+        #endregion Contructor
+        public List<AdminViewModel> GetAll()
         {
-            var data = _iprojectRepo.FindById(id);
-            return _mapper.Map<Project, ProjectViewModel>(data);
+            var data = _iadminRepo.FindAll().ToList();
+            return _mapper.Map<List<Admin>, List<AdminViewModel>>(data);
         }
 
-        public List<ProjectViewModel> GetAll()
+        public PagedResult<AdminViewModel> GetAllPaging(int page, int pageSize)
         {
-            var model = _iprojectRepo.FindAll().ToList();
-            return _mapper.Map<List<Project>, List<ProjectViewModel>>(model);
-        }
-
-        public PagedResult<ProjectViewModel> GetAllPaging(int page, int pageSize)
-        {
-            var query = _iprojectRepo.FindAll().ToList();
+            var query = _iadminRepo.FindAll().ToList();
             int totalRow = query.Count();
 
             try
             {
-                var data = _mapper.Map<List<Project>, List<ProjectViewModel>>(query);
+                var data = _mapper.Map<List<Admin>, List<AdminViewModel>>(query);
 
-                var paginationSet = new PagedResult<ProjectViewModel>()
+                var paginationSet = new PagedResult<AdminViewModel>()
                 {
                     Results = data,
                     CurrentPage = page,
@@ -63,12 +59,24 @@ namespace NTSoftware.Service
             }
         }
 
-        public Project Add(ProjectViewModel vm)
+        public AdminViewModel GetById(int id)
         {
-            var entity = _mapper.Map<ProjectViewModel, Project>(vm);
-            _iprojectRepo.Add(entity);
+            var model = _iadminRepo.FindById(id);
+            return _mapper.Map<Admin, AdminViewModel>(model);
+        }
+
+        public Admin Add(AdminViewModel Vm)
+        {
+            var entity = _mapper.Map<Admin>(Vm);
+            _iadminRepo.Add(entity);
             SaveChanges();
             return entity;
+        }
+        public void Update(AdminViewModel Vm)
+        {
+            var data = _mapper.Map<Admin>(Vm);
+            _iadminRepo.Update(data);
+            SaveChanges();
         }
 
         private void SaveChanges()

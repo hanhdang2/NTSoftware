@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NTSoftware.Core.Models.Models
 {
-    public class AppRole : IdentityRole, IDomainEntity
+    public class AppRole : IdentityRole<Guid>, IDomainEntity
     {
         public AppRole()
         {
@@ -25,11 +25,11 @@ namespace NTSoftware.Core.Models.Models
         public string UpdatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
-        public virtual ICollection<IdentityUserRole<string>> Users { get; set; }
+        public virtual ICollection<IdentityUserRole<Guid>> Users { get; set; }
 
         /// <summary>
         /// Navigation property for claims in this role.
         /// </summary>
-        public virtual ICollection<IdentityRoleClaim<string>> Claims { get; set; }
+        public virtual ICollection<IdentityRoleClaim<Guid>> Claims { get; set; }
     }
 }

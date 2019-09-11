@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace NTSoftware.Repository
 {
-    public class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public AppDbContext(DbContextOptions options) : base(options)
         { }

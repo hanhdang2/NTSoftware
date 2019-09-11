@@ -106,6 +106,15 @@ namespace NTSoftware.Core.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Không có email.
+        /// </summary>
+        public static string NO_EMAIL {
+            get {
+                return ResourceManager.GetString("NO_EMAIL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thành công.
         /// </summary>
         public static string SUCCEED {

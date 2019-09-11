@@ -15,12 +15,12 @@ namespace NTSoftware.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyController : BaseController
+    public class AdminController : ControllerBase
     {
-        private ICompanyService _icompanyService;
-    public CompanyController(ICompanyService icompanyService)
+        private IAdminService _iadminService;
+        public AdminController(IAdminService iadminService)
         {
-            _icompanyService = icompanyService;
+            _iadminService = iadminService;
         }
 
         [HttpGet]
@@ -29,18 +29,18 @@ namespace NTSoftware.Controllers
         {
             if (id == 0)
             {
-                return new BadRequestObjectResult(new GenericResult( new Company(), false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
+                return new BadRequestObjectResult(new GenericResult(new Admin(), false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
             }
             else
             {
                 try
                 {
-                    var data = _icompanyService.GetById(id);
+                    var data = _iadminService.GetById(id);
                     return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new Company(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                    return new OkObjectResult(new GenericResult(new Admin(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
                 }
             }
         }
@@ -50,34 +50,34 @@ namespace NTSoftware.Controllers
         {
             try
             {
-                var data = _icompanyService.GetAll();
+                var data = _iadminService.GetAll();
                 return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(new List<Company>(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                return new OkObjectResult(new GenericResult(new List<Admin>(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
         [HttpPost]
         [Route("Add")]
-        public IActionResult Add([FromBody] CompanyViewModel Vm)
+        public IActionResult Add([FromBody] AdminViewModel Vm)
         {
             if (!ModelState.IsValid)
             {
                 var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(new GenericResult(allErrors,false,ErrorMsg.DATA_REQUEST_IN_VALID,ErrorCode.DATA_REQUEST_IN_VALID));
+                return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
             }
             else
             {
                 try
                 {
-                   var data= _icompanyService.Add(Vm);
+                    var data = _iadminService.Add(Vm);
 
-                    return new OkObjectResult(new GenericResult(data ,true, ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
+                    return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new Company(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                    return new OkObjectResult(new GenericResult(new Admin(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
                 }
             }
         }
@@ -87,17 +87,17 @@ namespace NTSoftware.Controllers
         {
             try
             {
-                var data = _icompanyService.GetAllPaging(page, pageSize);
-                return new OkObjectResult(new GenericResult(data, true,ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
+                var data = _iadminService.GetAllPaging(page, pageSize);
+                return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(new Company(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                return new OkObjectResult(new GenericResult(new Admin(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
         [HttpPut]
         [Route("Update")]
-        public IActionResult Update([FromBody]CompanyViewModel Vm)
+        public IActionResult Update([FromBody]AdminViewModel Vm)
         {
             if (!ModelState.IsValid)
             {
@@ -108,16 +108,15 @@ namespace NTSoftware.Controllers
             {
                 try
                 {
-                       _icompanyService.Update(Vm);
+                    _iadminService.Update(Vm);
 
-                    return new OkObjectResult(new GenericResult( new Company() ,true, ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
+                    return new OkObjectResult(new GenericResult(new Admin(), true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new Company(),false, ErrorMsg.ERROR_ON_HANDLE_DATA,ErrorCode.ERROR_HANDLE_DATA));
+                    return new OkObjectResult(new GenericResult(new Admin(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
                 }
             }
         }
-
     }
 }

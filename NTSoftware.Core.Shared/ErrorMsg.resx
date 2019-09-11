@@ -132,6 +132,9 @@
   <data name="LOGIN_FAILED" xml:space="preserve">
     <value>Tài khoản hoặc mật khẩu không chính xác</value>
   </data>
+  <data name="NO_EMAIL" xml:space="preserve">
+    <value>Không có email</value>
+  </data>
   <data name="SUCCEED" xml:space="preserve">
     <value>Thành công</value>
   </data>

@@ -6,7 +6,8 @@ using System.Text;
 
 namespace NTSoftware.Repository.Interface
 {
-   public  interface IAdminRepository : IRepository<Admin,int>
+    public interface IAdminRepository : IRepository<Admin, int>
     {
+       
     }
 }
