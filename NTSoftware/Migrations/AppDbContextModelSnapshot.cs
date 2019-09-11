@@ -19,7 +19,7 @@ namespace NTSoftware.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,8 +29,7 @@ namespace NTSoftware.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired();
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("Id");
 
@@ -39,7 +38,7 @@ namespace NTSoftware.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,8 +48,7 @@ namespace NTSoftware.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -59,7 +57,7 @@ namespace NTSoftware.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -67,8 +65,7 @@ namespace NTSoftware.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -77,11 +74,11 @@ namespace NTSoftware.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -90,9 +87,9 @@ namespace NTSoftware.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -105,9 +102,50 @@ namespace NTSoftware.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("NTSoftware.Core.Models.Models.Admin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address");
+
+                    b.Property<DateTime>("Birthday");
+
+                    b.Property<string>("CMT");
+
+                    b.Property<int>("CompanyId");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<int>("DeleteFlag");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("EmployeeKey");
+
+                    b.Property<string>("Gender");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admin");
+                });
+
             modelBuilder.Entity("NTSoftware.Core.Models.Models.AppRole", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
@@ -162,7 +200,9 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("PhoneNumber");
 
-                    b.Property<int>("RepresentativeId");
+                    b.Property<Guid>("RepresentativeId");
+
+                    b.Property<Guid>("UpdatePersonID");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
@@ -174,17 +214,13 @@ namespace NTSoftware.Migrations
                     b.ToTable("Company");
                 });
 
-            modelBuilder.Entity("NTSoftware.Core.Models.Models.Contract", b =>
+            modelBuilder.Entity("NTSoftware.Core.Models.Models.ContractCompany", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CompanyID");
-
-                    b.Property<string>("Content");
-
-                    b.Property<int>("ContractNumber");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
@@ -197,9 +233,13 @@ namespace NTSoftware.Migrations
 
                     b.Property<DateTime>("EndDate");
 
+                    b.Property<int>("RuleId");
+
+                    b.Property<int>("Source");
+
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<string>("Status");
+                    b.Property<Guid>("UpdatePersonId");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
@@ -210,7 +250,7 @@ namespace NTSoftware.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contracts");
+                    b.ToTable("ContractCompany");
                 });
 
             modelBuilder.Entity("NTSoftware.Core.Models.Models.Department", b =>
@@ -231,10 +271,6 @@ namespace NTSoftware.Migrations
                     b.Property<int>("DeleteFlag");
 
                     b.Property<string>("Describe");
-
-                    b.Property<string>("Email");
-
-                    b.Property<int>("ManagerId");
 
                     b.Property<string>("Name");
 
@@ -269,6 +305,8 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("DeleteFlag");
 
+                    b.Property<int>("DepartmentId");
+
                     b.Property<string>("Email");
 
                     b.Property<int>("EmployeeKey");
@@ -279,14 +317,10 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("PhoneNumber");
 
-                    b.Property<string>("Position");
-
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
 
                     b.Property<DateTime>("UpdatedDate");
-
-                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -299,6 +333,8 @@ namespace NTSoftware.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CompanyId");
+
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
@@ -310,9 +346,13 @@ namespace NTSoftware.Migrations
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<int>("ProjectId");
+                    b.Property<int>("RuleId");
+
+                    b.Property<string>("Source");
 
                     b.Property<DateTime>("StrartDate");
+
+                    b.Property<Guid>("UpdatePersonId");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
@@ -324,24 +364,21 @@ namespace NTSoftware.Migrations
                     b.ToTable("EmployeeContract");
                 });
 
-            modelBuilder.Entity("NTSoftware.Core.Models.Models.EmployeeDepartment", b =>
+            modelBuilder.Entity("NTSoftware.Core.Models.Models.EmployeeProject", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int>("DapartmentId");
-
                     b.Property<int>("DeleteFlag");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<DateTime>("OutDate");
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<int>("ProjectId");
 
                     b.Property<DateTime>("StartDate");
 
@@ -352,12 +389,12 @@ namespace NTSoftware.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmployeeDapartment");
+                    b.ToTable("EmployeeProject");
                 });
 
             modelBuilder.Entity("NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models.AppUser", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
@@ -369,10 +406,14 @@ namespace NTSoftware.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<bool>("DeleteFlag");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<DateTime>("EndDate");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -394,7 +435,8 @@ namespace NTSoftware.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<string>("Status");
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Token");
 
@@ -404,12 +446,15 @@ namespace NTSoftware.Migrations
 
                     b.Property<DateTime>("UpdatedDate");
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserAdminId");
+
+                    b.Property<int>("UserEmployeeID");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<string>("UserType");
+                    b.Property<byte>("UserType")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -430,6 +475,8 @@ namespace NTSoftware.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CompanyId");
+
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
@@ -437,13 +484,9 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("DeleteFlag");
 
-                    b.Property<int>("DepartmentId");
-
                     b.Property<string>("Describe");
 
                     b.Property<DateTime>("EndDate");
-
-                    b.Property<int>("ManagerId");
 
                     b.Property<string>("ProjectName");
 
@@ -459,7 +502,35 @@ namespace NTSoftware.Migrations
                     b.ToTable("Project");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("NTSoftware.Core.Models.Models.Rule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyId");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<int>("DeleteFlag");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rule");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("NTSoftware.Core.Models.Models.AppRole")
                         .WithMany("Claims")
@@ -467,7 +538,7 @@ namespace NTSoftware.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models.AppUser")
                         .WithMany("Claims")
@@ -475,7 +546,7 @@ namespace NTSoftware.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models.AppUser")
                         .WithMany()
@@ -483,7 +554,7 @@ namespace NTSoftware.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
                     b.HasOne("NTSoftware.Core.Models.Models.AppRole")
                         .WithMany("Users")
@@ -496,7 +567,7 @@ namespace NTSoftware.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models.AppUser")
                         .WithMany()

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ using NTSoftware.Repository.Repository;
 using NTSoftware.Service;
 using NTSoftware.Service.AutoMapper;
 using NTSoftware.Service.Interface;
+using NTSoftware.Service.Interface.ViewModels;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
@@ -68,7 +70,16 @@ namespace NTSoftware
             services.AddTransient<IEmployeeProjectRepository, EmployeeProjectRepository>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<IAdminRepository, AdminRepository>();
+            services.AddTransient<IRuleRepository, RuleRepository>();
 
+
+
+
+            services.AddTransient<ISmsSenderService, AuthMessageSenderService>();
+            services.AddTransient<IEmailSender, AuthMessageSenderService>();
+            services.AddTransient<IAdminService, AdminService>();
+            services.AddTransient<IRuleService, RuleService>();
             services.AddTransient<IContractCompanyService, ContractCompanyService>();
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IAppUserService, AppUserService>();
@@ -77,6 +88,8 @@ namespace NTSoftware
             services.AddTransient<IEmployeeProjectService, EmployeeProjectService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
+
+            services.Configure<EmailSettingViewModel>(Configuration.GetSection("EmailSettings"));
             // Configure Identity options and password complexity here
             services.Configure<IdentityOptions>(options =>
             {
