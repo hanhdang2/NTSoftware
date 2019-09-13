@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
+using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Service.Interface;
 using NTSoftware.Service.Interface.ViewModels;
 using System;
@@ -11,8 +12,9 @@ using System.Threading.Tasks;
 
 namespace NTSoftware.Service
 {
-    public class AuthMessageSenderService :IEmailSender , ISmsSenderService
+    public class AuthMessageSenderService : IEmailSender, ISmsSenderService
     {
+
         public AuthMessageSenderService(IOptions<EmailSettingViewModel> emailSettings)
         {
             _emailSettings = emailSettings.Value;
@@ -29,34 +31,28 @@ namespace NTSoftware.Service
 
         public async Task Execute(string email, string subject, string message)
         {
-            try
-            {
-                string toEmail = string.IsNullOrEmpty(email)
-                                 ? _emailSettings.ToEmail
-                                 : email;
-                MailMessage mail = new MailMessage()
-                {
-                    From = new MailAddress(_emailSettings.UsernameEmail, "Muhammad Hassan Tariq")
-                };
-                mail.To.Add(new MailAddress(toEmail));
-                mail.CC.Add(new MailAddress(_emailSettings.CcEmail));
 
-                mail.Subject = "Personal Management System - " + subject;
-                mail.Body = message;
-                mail.IsBodyHtml = true;
-                mail.Priority = MailPriority.High;
-
-                using (SmtpClient smtp = new SmtpClient(_emailSettings.SecondayDomain, _emailSettings.SecondaryPort))
-                {
-                    smtp.Credentials = new NetworkCredential(_emailSettings.UsernameEmail, _emailSettings.UsernamePassword);
-                    smtp.EnableSsl = true;
-                    await smtp.SendMailAsync(mail);
-                }
-            }
-            catch (Exception ex)
+            string toEmail = string.IsNullOrEmpty(email)
+                             ? _emailSettings.ToEmail
+                             : email;
+            MailMessage mail = new MailMessage()
             {
-                //do something here
+                From = new MailAddress(_emailSettings.UsernameEmail, EmailConfig.USERNAME_EMAIL_SENDER)
+            };
+            mail.To.Add(new MailAddress(toEmail));
+
+            mail.Subject = EmailConfig.DEFAULT_SUBJECT + subject;
+            mail.Body = message;
+            mail.IsBodyHtml = true;
+            mail.Priority = MailPriority.High;
+
+            using (SmtpClient smtp = new SmtpClient(_emailSettings.SecondayDomain, _emailSettings.SecondaryPort))
+            {
+                smtp.Credentials = new NetworkCredential(_emailSettings.UsernameEmail, _emailSettings.UsernamePassword);
+                smtp.EnableSsl = true;
+                await smtp.SendMailAsync(mail);
             }
+
         }
     }
 }

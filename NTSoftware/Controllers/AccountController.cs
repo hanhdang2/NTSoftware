@@ -54,15 +54,16 @@ namespace NTSoftware.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(vm.Email);
-                if (user == null)
-                {
-                    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.NO_EMAIL, ErrorCode.NO_EMAIL_CODE));
-                }
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                await _emailSender.SendEmailAsync("ngokprao121@gmail.com", "bcasjcva", "ádasd");
+                //var user = await _userManager.FindByNameAsync(vm.Email);
+                //if (user == null)
+                //{
+                //    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.NOT_EXIST_EMAIL, ErrorCode.NO_EMAIL_CODE));
+                //}
+                //var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                await _emailSender.SendEmailAsync("ngokprao121@gmail.com", "bcasjcva", "<h1>hello</h1> <img src='https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' /> ");
+   
 
-                return null;
+                return new OkObjectResult(new GenericResult(null, true, ErrorMsg.SEND_MAIL_SUCCESS, ErrorCode.SEND_EMAIL_SUCCESS));
             }
             catch (Exception ex)
             {
@@ -84,7 +85,7 @@ namespace NTSoftware.Controllers
                 var user = await _userManager.FindByNameAsync(vm.Email);
                 if (user == null)
                 {
-                    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.NO_EMAIL, ErrorCode.NO_EMAIL_CODE));
+                    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.NOT_EXIST_EMAIL, ErrorCode.NO_EMAIL_CODE));
                 }
 
                 var result = await _userManager.ResetPasswordAsync(user, vm.code, vm.password);
@@ -140,7 +141,7 @@ namespace NTSoftware.Controllers
                     var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
                     if (result.IsLockedOut)
                     {
-                        return new ObjectResult(new GenericResult(null,false, ErrorMsg.LOGIN_FAILED,ErrorCode.HAS_ERROR_CODE));
+                        return new ObjectResult(new GenericResult(null, false, ErrorMsg.LOGIN_FAILED, ErrorCode.HAS_ERROR_CODE));
                     }
                     else if (!result.Succeeded)
                     {
@@ -171,13 +172,13 @@ namespace NTSoftware.Controllers
                         var data = await _userManager.UpdateAsync(user);
                         // cập nhật trường token bên với giá trị là token bên trên
                     }
-                    return new ObjectResult(new GenericResult(token_access, true,ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
+                    return new ObjectResult(new GenericResult(token_access, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
-                return new ObjectResult(new GenericResult(null,false, ErrorMsg.LOGIN_FAILED,ErrorCode.HAS_ERROR_CODE));
+                return new ObjectResult(new GenericResult(null, false, ErrorMsg.LOGIN_FAILED, ErrorCode.HAS_ERROR_CODE));
             }
             catch (Exception ex)
             {
-                return new ObjectResult(new GenericResult(null,false, ErrorMsg.LOGIN_FAILED,ErrorCode.HAS_ERROR_CODE));
+                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.LOGIN_FAILED, ErrorCode.HAS_ERROR_CODE));
             }
 
 

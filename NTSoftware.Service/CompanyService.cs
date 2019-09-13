@@ -14,35 +14,37 @@ using System.Text;
 namespace NTSoftware.Service
 {
     public class CompanyService : ICompanyService
-    { 
+    {
         #region Contructor
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private ICompanyRepository _icompanyRepo;
+        private ICompanyRepository _icompanyRepository;
         private readonly AppDbContext _dbContext;
 
         public CompanyService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, ICompanyRepository icompanyRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _icompanyRepo = icompanyRepo;
+            _icompanyRepository = icompanyRepo;
             _dbContext = dbContext;
         }
         #endregion Contructor
         public List<CompanyViewModel> GetAll()
         {
-            var data = _icompanyRepo.FindAll().ToList();
-            return _mapper.Map<List <Company>, List<CompanyViewModel>>(data);
+            var data = _icompanyRepository.FindAll().ToList();
+            return _mapper.Map<List<Company>, List<CompanyViewModel>>(data);
         }
 
-        public PagedResult<CompanyViewModel> GetAllPaging(int page, int pageSize)
+        public PagedResult<CompanyViewModel> GetAllPaging(int page, int pageSize, string namecompany, 
+            string phonenumber, string address,
+            string representativename, string positionrepresentative)
         {
-            var query = _icompanyRepo.FindAll().ToList();
+            var query = _icompanyRepository.Find(x => x.NameCompany == namecompany && x.PhoneNumber == phonenumber && x.Address == address && x.RepresentativeName == representativename && x.PositionRepresentative == positionrepresentative);
             int totalRow = query.Count();
 
             try
             {
-                var data = _mapper.Map<List<Company>, List<CompanyViewModel>>(query);
+                var data = _mapper.Map<List<Company>, List<CompanyViewModel>>(query.ToList());
 
                 var paginationSet = new PagedResult<CompanyViewModel>()
                 {
@@ -61,21 +63,21 @@ namespace NTSoftware.Service
 
         public CompanyViewModel GetById(int id)
         {
-            var model = _icompanyRepo.FindById(id);
+            var model = _icompanyRepository.FindById(id);
             return _mapper.Map<Company, CompanyViewModel>(model);
         }
 
         public Company Add(CompanyViewModel Vm)
         {
             var entity = _mapper.Map<Company>(Vm);
-            _icompanyRepo.Add(entity);
+            _icompanyRepository.Add(entity);
             SaveChanges();
             return entity;
         }
         public void Update(CompanyViewModel Vm)
         {
             var data = _mapper.Map<Company>(Vm);
-            _icompanyRepo.Update(data);
+            _icompanyRepository.Update(data);
             SaveChanges();
         }
 

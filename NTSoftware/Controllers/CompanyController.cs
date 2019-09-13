@@ -83,11 +83,11 @@ namespace NTSoftware.Controllers
         }
         [HttpGet]
         [Route("GetAllPaging")]
-        public IActionResult GetAllPaging(int page, int pageSize)
+        public IActionResult GetAllPaging(int page, int pageSize, string namecompany, string phonenumber, string address, string representativename, string positionrepresentative)
         {
             try
             {
-                var data = _icompanyService.GetAllPaging(page, pageSize);
+                var data = _icompanyService.GetAllPaging(page, pageSize,namecompany,phonenumber,address,representativename,positionrepresentative);
                 return new OkObjectResult(new GenericResult(data, true,ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
             }
             catch (Exception ex)

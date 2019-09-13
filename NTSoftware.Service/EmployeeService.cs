@@ -17,32 +17,32 @@ namespace NTSoftware.Service
     {
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IEmployeeRepository _iemployeeRepo;
+        private IEmployeeRepository _iemployeeRepository;
         private readonly AppDbContext _dbContext;
         public EmployeeService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IEmployeeRepository iemployeeRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _iemployeeRepo = iemployeeRepo;
+            _iemployeeRepository = iemployeeRepo;
             _dbContext = dbContext;
         }
 
         public EmployeeViewModel GetById(int id)
         {
-            var data = _iemployeeRepo.FindById(id);
+            var data = _iemployeeRepository.FindById(id);
             return _mapper.Map<Employee, EmployeeViewModel>(data);
         }
 
         public List<EmployeeViewModel> GetAll()
         {
-            var model = _iemployeeRepo.FindAll().ToList();
+            var model = _iemployeeRepository.FindAll().ToList();
             return _mapper.Map<List<Employee>, List<EmployeeViewModel>>(model);
         }
 
         public PagedResult<EmployeeViewModel> GetAllPaging(int page, int pageSize)
         {
 
-            var query = _iemployeeRepo.FindAll().ToList();
+            var query = _iemployeeRepository.FindAll().ToList();
             int totalRow = query.Count();
 
             try
@@ -66,7 +66,7 @@ namespace NTSoftware.Service
         public Employee Add(EmployeeViewModel vm)
         {
             var entity = _mapper.Map<EmployeeViewModel, Employee>(vm);
-            _iemployeeRepo.Add(entity);
+            _iemployeeRepository.Add(entity);
             SaveChanges();
             return entity;
         }
@@ -79,7 +79,7 @@ namespace NTSoftware.Service
         public void Update(EmployeeViewModel vm)
         {
             var data = _mapper.Map<Employee>(vm);
-            _iemployeeRepo.Update(data);
+            _iemployeeRepository.Update(data);
             SaveChanges();
         }
     }

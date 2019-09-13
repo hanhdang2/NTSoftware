@@ -18,31 +18,31 @@ namespace NTSoftware.Service
         #region Contructor
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IAdminRepository _iadminRepo;
+        private IAdminRepository _iadminRepository;
         private readonly AppDbContext _dbContext;
 
         public AdminService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IAdminRepository iadminRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _iadminRepo = iadminRepo;
+            _iadminRepository = iadminRepo;
             _dbContext = dbContext;
         }
         #endregion Contructor
         public List<AdminViewModel> GetAll()
         {
-            var data = _iadminRepo.FindAll().ToList();
+            var data = _iadminRepository.FindAll().ToList();
             return _mapper.Map<List<Admin>, List<AdminViewModel>>(data);
         }
 
-        public PagedResult<AdminViewModel> GetAllPaging(int page, int pageSize)
+        public PagedResult<AdminViewModel> GetAllPaging(int page, int pageSize, string name, int companyId, string cmt, string phonenumber)
         {
-            var query = _iadminRepo.FindAll().ToList();
+            var query = _iadminRepository.Find(x=> x.Name == name && x.CompanyId == companyId && x.CMT == cmt && x.PhoneNumber == phonenumber);
             int totalRow = query.Count();
 
             try
             {
-                var data = _mapper.Map<List<Admin>, List<AdminViewModel>>(query);
+                var data = _mapper.Map<List<Admin>, List<AdminViewModel>>(query.ToList());
 
                 var paginationSet = new PagedResult<AdminViewModel>()
                 {
@@ -61,21 +61,21 @@ namespace NTSoftware.Service
 
         public AdminViewModel GetById(int id)
         {
-            var model = _iadminRepo.FindById(id);
+            var model = _iadminRepository.FindById(id);
             return _mapper.Map<Admin, AdminViewModel>(model);
         }
 
         public Admin Add(AdminViewModel Vm)
         {
             var entity = _mapper.Map<Admin>(Vm);
-            _iadminRepo.Add(entity);
+            _iadminRepository.Add(entity);
             SaveChanges();
             return entity;
         }
         public void Update(AdminViewModel Vm)
         {
             var data = _mapper.Map<Admin>(Vm);
-            _iadminRepo.Update(data);
+            _iadminRepository.Update(data);
             SaveChanges();
         }
 

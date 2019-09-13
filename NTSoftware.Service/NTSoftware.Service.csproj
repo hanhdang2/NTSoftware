@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NTSoftware.Core.Models\NTSoftware.Core.Models.csproj" />
     <ProjectReference Include="..\NTSoftware.Core.Shared\NTSoftware.Core.Shared.csproj" />
     <ProjectReference Include="..\NTSoftware.Repository.Interface\NTSoftware.Repository.Interface.csproj" />
     <ProjectReference Include="..\NTSoftware.Repository\NTSoftware.Repository.csproj" />
@@ -13,7 +14,10 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.9.1" />
+    <PackageReference Include="DocX" Version="1.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="2.2.5" />
+    <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1003" />
   </ItemGroup>
 
 </Project>

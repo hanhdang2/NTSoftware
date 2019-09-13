@@ -11,7 +11,7 @@ namespace NTSoftware.Service.Interface
     {
         AdminViewModel GetById(int id);
         List<AdminViewModel> GetAll();
-        PagedResult<AdminViewModel> GetAllPaging(int page, int pageSize);
+        PagedResult<AdminViewModel> GetAllPaging(int page, int pageSize,string name,int companyId,string cmt,string phonenumber);
         Admin Add(AdminViewModel vm);
         void Update(AdminViewModel vm);
     }

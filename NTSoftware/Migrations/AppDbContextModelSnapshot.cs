@@ -123,10 +123,6 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("DeleteFlag");
 
-                    b.Property<string>("Email");
-
-                    b.Property<string>("EmployeeKey");
-
                     b.Property<string>("Gender");
 
                     b.Property<string>("Name");
@@ -192,17 +188,17 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("DeleteFlag");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("EmailRepresentative");
 
                     b.Property<string>("Logo");
 
                     b.Property<string>("NameCompany");
 
-                    b.Property<int>("PhoneNumber");
+                    b.Property<string>("PhoneNumber");
 
-                    b.Property<Guid>("RepresentativeId");
+                    b.Property<string>("PositionRepresentative");
 
-                    b.Property<Guid>("UpdatePersonID");
+                    b.Property<string>("RepresentativeName");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
@@ -220,33 +216,31 @@ namespace NTSoftware.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CompanyID");
+                    b.Property<int>("CompanyId");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int>("DeleteFlag");
+                    b.Property<int>("CreatorId");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<int>("DeleteFlag");
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<int>("RuleId");
+                    b.Property<string>("NumberContract");
 
-                    b.Property<int>("Source");
+                    b.Property<int>("RuleId");
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<Guid>("UpdatePersonId");
+                    b.Property<int>("Status");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
 
                     b.Property<DateTime>("UpdatedDate");
-
-                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -271,6 +265,10 @@ namespace NTSoftware.Migrations
                     b.Property<int>("DeleteFlag");
 
                     b.Property<string>("Describe");
+
+                    b.Property<string>("Email");
+
+                    b.Property<int>("ManagerId");
 
                     b.Property<string>("Name");
 
@@ -309,13 +307,15 @@ namespace NTSoftware.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<int>("EmployeeKey");
+                    b.Property<string>("EmployeeKey");
 
                     b.Property<string>("Gender");
 
                     b.Property<string>("Name");
 
                     b.Property<int>("PhoneNumber");
+
+                    b.Property<string>("Position");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
@@ -335,10 +335,14 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("CompanyId");
 
+                    b.Property<string>("ContractNumber");
+
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
                     b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Creator");
 
                     b.Property<int>("DeleteFlag");
 
@@ -348,11 +352,9 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("RuleId");
 
-                    b.Property<string>("Source");
+                    b.Property<int>("Status");
 
                     b.Property<DateTime>("StrartDate");
-
-                    b.Property<Guid>("UpdatePersonId");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
@@ -406,14 +408,12 @@ namespace NTSoftware.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<bool>("DeleteFlag");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
-                    b.Property<bool>("EmailConfirmed");
+                    b.Property<string>("EmailCompany");
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<bool>("EmailConfirmed");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -487,6 +487,8 @@ namespace NTSoftware.Migrations
                     b.Property<string>("Describe");
 
                     b.Property<DateTime>("EndDate");
+
+                    b.Property<int>("ManagerId");
 
                     b.Property<string>("ProjectName");
 

@@ -9,7 +9,7 @@ namespace NTSoftware.Core.Models.Models
     [Table("Employees")]
    public class Employee :DomainEntity<int>
     {
-        public int EmployeeKey { set; get; }
+        public string EmployeeKey { set; get; }
         public string Name { set; get; }
         public string CMT { get; set; }
         public DateTime Birthday { get; set; }
@@ -18,8 +18,7 @@ namespace NTSoftware.Core.Models.Models
         public int PhoneNumber { set; get; }
         public string Email { set; get; }
         public int DepartmentId { set; get; }
-       
-
+        public string Position { set; get; }
 
     }
 }

@@ -17,16 +17,5 @@ namespace NTSoftware.Service.Interface.ViewModels
         public string Email { set; get; }
         public int DepartmentId { set; get; }
     }
-    public class EmployeeCreateViewModel
-    {
-        public int EmployeeKey { set; get; }
-        public string Name { set; get; }
-        public string CMT { get; set; }
-        public DateTime Birthday { get; set; }
-        public string Gender { get; set; }
-        public string Address { set; get; }
-        public int PhoneNumber { set; get; }
-        public string Email { set; get; }
-        public int DepartmentId { set; get; }
-    }
+
 }

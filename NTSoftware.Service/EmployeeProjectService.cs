@@ -17,31 +17,31 @@ namespace NTSoftware.Service
     {
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IEmployeeProjectRepository _iemployeeProjectRepo;
+        private IEmployeeProjectRepository _iemployeeProjectRepository;
         private readonly AppDbContext _dbContext;
         public EmployeeProjectService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IEmployeeProjectRepository iemployeeProjectRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _iemployeeProjectRepo = iemployeeProjectRepo;
+            _iemployeeProjectRepository = iemployeeProjectRepo;
             _dbContext = dbContext;
         }
 
         public EmployeeProjectViewModel GetById(Guid id)
         {
-            var data = _iemployeeProjectRepo.FindById(id);
+            var data = _iemployeeProjectRepository.FindById(id);
             return _mapper.Map<EmployeeProject, EmployeeProjectViewModel>(data);
         }
 
         public List<EmployeeProjectViewModel> GetAll()
         {
-            var model = _iemployeeProjectRepo.FindAll().ToList();
+            var model = _iemployeeProjectRepository.FindAll().ToList();
             return _mapper.Map<List<EmployeeProject>, List<EmployeeProjectViewModel>>(model);
         }
 
         public PagedResult<EmployeeProjectViewModel> GetAllPaging(int page, int pageSize)
         {
-            var query = _iemployeeProjectRepo.FindAll().ToList();
+            var query = _iemployeeProjectRepository.FindAll().ToList();
             int totalRow = query.Count();
 
             try
@@ -65,7 +65,7 @@ namespace NTSoftware.Service
         public EmployeeProject Add(EmployeeProjectViewModel vm)
         {
              var entity = _mapper.Map<EmployeeProjectViewModel, EmployeeProject>(vm);
-            _iemployeeProjectRepo.Add(entity);
+            _iemployeeProjectRepository.Add(entity);
                 SaveChanges();
              return entity;
         }

@@ -17,31 +17,31 @@ namespace NTSoftware.Service
     {
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IEmployeeContractRepository _iemployeeContractRepo;
+        private IEmployeeContractRepository _iemployeeContractRepository;
         private readonly AppDbContext _dbContext;
         public EmployeeContractService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IEmployeeContractRepository iemployeeContractRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _iemployeeContractRepo = iemployeeContractRepo;
+            _iemployeeContractRepository = iemployeeContractRepo;
             _dbContext = dbContext;
         }
 
         public EmployeeContractViewModel GetById(int id)
         {
-            var data = _iemployeeContractRepo.FindById(id);
+            var data = _iemployeeContractRepository.FindById(id);
             return _mapper.Map<EmployeeContract, EmployeeContractViewModel>(data);
         }
 
         public List<EmployeeContractViewModel> GetAll()
         {
-            var model = _iemployeeContractRepo.FindAll().ToList();
+            var model = _iemployeeContractRepository.FindAll().ToList();
             return _mapper.Map<List<EmployeeContract>, List<EmployeeContractViewModel>>(model);
         }
 
         public PagedResult<EmployeeContractViewModel> GetAllPaging(int page, int pageSize)
         {
-            var query = _iemployeeContractRepo.FindAll().ToList();
+            var query = _iemployeeContractRepository.FindAll().ToList();
             int totalRow = query.Count();
 
             try
@@ -66,7 +66,7 @@ namespace NTSoftware.Service
         {
             {
                 var entity = _mapper.Map<EmployeeContract>(vm);
-                _iemployeeContractRepo.Add(entity);
+                _iemployeeContractRepository.Add(entity);
                 SaveChanges();
                 return entity;
             }

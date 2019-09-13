@@ -11,11 +11,12 @@ namespace NTSoftware.Core.Models.Models
     {
         public string NameCompany { set; get; }
         public string Logo { set; get; }
-        public int PhoneNumber { set; get; }
-        public string Email { set; get; }
+        public string PhoneNumber { set; get; }
+        public string EmailRepresentative { set; get; }
         public string Address { set; get; }
-        public Guid RepresentativeId { set; get; }
-        public Guid  UpdatePersonID{ set;get;}
+        public string PositionRepresentative { set; get; }
+        public string RepresentativeName { set; get; }
+       
       
 
     }

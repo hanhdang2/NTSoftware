@@ -14,6 +14,7 @@ namespace NTSoftware.Core.Models.Models
         public DateTime StartDate { set; get; }
         public DateTime EndDate { set; get; }
         public int CompanyId { set; get; }
+        public int ManagerId { set; get; }
         
     }
 }

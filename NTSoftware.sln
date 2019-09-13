@@ -7,23 +7,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Web-Api", "1.Web-Api", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Service", "2.Service", "{AB638D25-F5B7-4952-A0DB-B50506FE9354}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTSoftware.Service", "NTSoftware.Service\NTSoftware.Service.csproj", "{709362D4-9E43-4B0F-B89F-B86ABB782564}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTSoftware.Service", "NTSoftware.Service\NTSoftware.Service.csproj", "{709362D4-9E43-4B0F-B89F-B86ABB782564}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTSoftware.Service.Interface", "NTSoftware.Service.Interface\NTSoftware.Service.Interface.csproj", "{A7B04CE3-BCFB-408C-8E00-CA885E35DDBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTSoftware.Service.Interface", "NTSoftware.Service.Interface\NTSoftware.Service.Interface.csproj", "{A7B04CE3-BCFB-408C-8E00-CA885E35DDBB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Repository", "3.Repository", "{D0E80C3D-2E7A-4EBB-8AEA-2F761CC29F42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTSoftware.Repository", "NTSoftware.Repository\NTSoftware.Repository.csproj", "{D7A57710-A6C7-4B78-BAE7-3E33CA4149A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTSoftware.Repository", "NTSoftware.Repository\NTSoftware.Repository.csproj", "{D7A57710-A6C7-4B78-BAE7-3E33CA4149A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTSoftware.Repository.Interface", "NTSoftware.Repository.Interface\NTSoftware.Repository.Interface.csproj", "{9B4AFB8D-275B-44C1-B33E-4F5E532932AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTSoftware.Repository.Interface", "NTSoftware.Repository.Interface\NTSoftware.Repository.Interface.csproj", "{9B4AFB8D-275B-44C1-B33E-4F5E532932AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Cross", "4.Cross", "{EE6FF12C-D395-45C1-AFCB-28AB5F3BAD07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTSoftware.Core.Shared", "NTSoftware.Core.Shared\NTSoftware.Core.Shared.csproj", "{A5F8A4AB-0EB0-4AC1-ACA1-7958B9783080}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTSoftware.Core.Shared", "NTSoftware.Core.Shared\NTSoftware.Core.Shared.csproj", "{A5F8A4AB-0EB0-4AC1-ACA1-7958B9783080}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTSoftware.Core.Models", "NTSoftware.Core.Models\NTSoftware.Core.Models.csproj", "{AF647FD5-2778-463E-908E-C777897429E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTSoftware.Core.Models", "NTSoftware.Core.Models\NTSoftware.Core.Models.csproj", "{AF647FD5-2778-463E-908E-C777897429E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTSoftware", "NTSoftware\NTSoftware.csproj", "{1CEFDB4D-F422-40AC-A093-51FA90279851}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTSoftware", "NTSoftware\NTSoftware.csproj", "{1CEFDB4D-F422-40AC-A093-51FA90279851}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

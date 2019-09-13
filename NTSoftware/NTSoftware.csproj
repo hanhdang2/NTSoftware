@@ -14,14 +14,17 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="DocX" Version="1.3.0" />
     <PackageReference Include="FluentValidation" Version="8.4.0" />
     <PackageReference Include="IdentityServer4" Version="2.5.3" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.5.3" />
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.5.1" />
     <PackageReference Include="MailKit" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1003" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
@@ -46,6 +49,7 @@
   <ItemGroup>
     <Folder Include="Authorization\" />
     <Folder Include="Logs\" />
+    <Folder Include="word\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

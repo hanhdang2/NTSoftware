@@ -13,5 +13,7 @@ namespace NTSoftware.Core.Shared.Constants
         public static int HANDLE_ERROR_CODE = 3;
         public static int ERROR_HANDLE_DATA = 4;
         public static int DATA_REQUEST_IN_VALID = 5;
+        public static int SEND_EMAIL_SUCCESS = 6;
+
     }
 }

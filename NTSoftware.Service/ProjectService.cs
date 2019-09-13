@@ -17,31 +17,31 @@ namespace NTSoftware.Service
     {
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IProjectRepository _iprojectRepo;
+        private IProjectRepository _iprojectRepository;
         private readonly AppDbContext _dbContext;
         public ProjectService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IProjectRepository iprojectRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _iprojectRepo = iprojectRepo;
+            _iprojectRepository = iprojectRepo;
             _dbContext = dbContext;
         }
 
         public ProjectViewModel GetById(int id)
         {
-            var data = _iprojectRepo.FindById(id);
+            var data = _iprojectRepository.FindById(id);
             return _mapper.Map<Project, ProjectViewModel>(data);
         }
 
         public List<ProjectViewModel> GetAll()
         {
-            var model = _iprojectRepo.FindAll().ToList();
+            var model = _iprojectRepository.FindAll().ToList();
             return _mapper.Map<List<Project>, List<ProjectViewModel>>(model);
         }
 
         public PagedResult<ProjectViewModel> GetAllPaging(int page, int pageSize)
         {
-            var query = _iprojectRepo.FindAll().ToList();
+            var query = _iprojectRepository.FindAll().ToList();
             int totalRow = query.Count();
 
             try
@@ -66,7 +66,7 @@ namespace NTSoftware.Service
         public Project Add(ProjectViewModel vm)
         {
             var entity = _mapper.Map<ProjectViewModel, Project>(vm);
-            _iprojectRepo.Add(entity);
+            _iprojectRepository.Add(entity);
             SaveChanges();
             return entity;
         }

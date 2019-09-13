@@ -13,9 +13,6 @@ namespace NTSoftware.Core.Models.Models
     {
         public class AppUser : IdentityUser<Guid>,IDomainEntity
         {
-         
-           
-            public DateTime EndDate { get; set; }
             public Status Status { set; get; }
             public string Password { get; set; }
             public string Token { get; set; }
@@ -27,7 +24,7 @@ namespace NTSoftware.Core.Models.Models
             public DateTime UpdatedDate { get; set; }
             public int UserEmployeeID { get; set; }
             public int UserAdminId { get; set; }
-            public bool DeleteFlag { get; set; }
+            public string EmailCompany { set; get; }
          
            // <summary>
             /// Navigation property for the roles this user belongs to.

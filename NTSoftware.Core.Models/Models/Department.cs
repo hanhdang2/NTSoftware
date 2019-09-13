@@ -14,6 +14,8 @@ namespace NTSoftware.Core.Models.Models
         public string Address { set; get; }
         public string Describe { set; get; }
         public int CompanyId { set; get; }
+        public string Email { set; get; }
+        public int ManagerId { set; get; }
 
     }
 }
