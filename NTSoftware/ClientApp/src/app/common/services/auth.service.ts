@@ -43,18 +43,15 @@ export class AuthService {
     }
     return this.http.post(`${this.myAppUrl}${url}`, body, this.httpOptions);
   }
-  onRequestPassword(url: string, body?: any, param?: HttpParams) {
+  onRequestPassword(url: string, param?: HttpParams) {
     const user = localStorage.getItem(CURRENT_USER);
     if (user) {
       this.httpOptions.headers.set('Authorization', JSON.parse(user));
     }
-    if (body) {
-      this.httpOptions.body = body;
-    }
     if (param) {
       this.httpOptions.params = param;
     }
-    return this.http.post(`${this.myAppUrl}${url}`, body, this.httpOptions);
+    return this.http.get(`${this.myAppUrl}${url}`, this.httpOptions);
   }
   onResetPassword(url: string, body?: any, param?: HttpParams) {
     const user = localStorage.getItem(CURRENT_USER);

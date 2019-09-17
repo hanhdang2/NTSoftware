@@ -129,8 +129,20 @@
   <data name="HAS_ERROR" xml:space="preserve">
     <value>Có lỗi xảy ra vui lòng thử lại sau</value>
   </data>
+  <data name="INVALID_TOKEN_RESET" xml:space="preserve">
+    <value>Hết hạn phiên làm việc. Vui lòng thử lại sau.</value>
+  </data>
+  <data name="LOCK_ACCOUNT" xml:space="preserve">
+    <value>Tài khoản của bạn bị khóa tạm thời do đăng nhập sai quá nhiều. Vui lòng thử lại sau.</value>
+  </data>
   <data name="LOGIN_FAILED" xml:space="preserve">
     <value>Tài khoản hoặc mật khẩu không chính xác</value>
+  </data>
+  <data name="NOT_EXIST_EMAIL" xml:space="preserve">
+    <value>Email người dùng không tồn tạis</value>
+  </data>
+  <data name="SEND_MAIL_SUCCESS" xml:space="preserve">
+    <value>Gửi email thành công. </value>
   </data>
   <data name="SUCCEED" xml:space="preserve">
     <value>Thành công</value>

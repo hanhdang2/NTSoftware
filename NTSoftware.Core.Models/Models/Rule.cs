@@ -7,8 +7,7 @@ namespace NTSoftware.Core.Models.Models
 {
    public class Rule: DomainEntity<int>
     {
-        public int CompanyId { set; get; }
         public string Content { set; get; }
-        
+        public int CompanyId { set; get; }       
     }
 }

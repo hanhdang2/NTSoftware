@@ -10,10 +10,11 @@ namespace NTSoftware.Core.Models.Models
     public class Project :DomainEntity<int>
     {
         public string ProjectName { set; get; }
-        public string Describe { set; get; }
+        public string Description { set; get; }
         public DateTime StartDate { set; get; }
-        public DateTime EndDate { set; get; }
+        public DateTime? EndDate { set; get; }
         public int CompanyId { set; get; }
+        public Guid ManagerId { set; get; }
         
     }
 }

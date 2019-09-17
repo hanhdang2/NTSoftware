@@ -97,11 +97,47 @@ namespace NTSoftware.Core.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hết hạn phiên làm việc. Vui lòng thử lại sau..
+        /// </summary>
+        public static string INVALID_TOKEN_RESET {
+            get {
+                return ResourceManager.GetString("INVALID_TOKEN_RESET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tài khoản của bạn bị khóa tạm thời do đăng nhập sai quá nhiều. Vui lòng thử lại sau..
+        /// </summary>
+        public static string LOCK_ACCOUNT {
+            get {
+                return ResourceManager.GetString("LOCK_ACCOUNT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tài khoản hoặc mật khẩu không chính xác.
         /// </summary>
         public static string LOGIN_FAILED {
             get {
                 return ResourceManager.GetString("LOGIN_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email người dùng không tồn tạis.
+        /// </summary>
+        public static string NOT_EXIST_EMAIL {
+            get {
+                return ResourceManager.GetString("NOT_EXIST_EMAIL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gửi email thành công. .
+        /// </summary>
+        public static string SEND_MAIL_SUCCESS {
+            get {
+                return ResourceManager.GetString("SEND_MAIL_SUCCESS", resourceCulture);
             }
         }
         

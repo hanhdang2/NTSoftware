@@ -8,9 +8,26 @@ namespace NTSoftware.Service.Interface.ViewModels
 {
     public interface IRuleService
     {
-        RuleViewModel GetById(Guid id);
+        #region GET
+
+        RuleViewModel GetById(int id);
         List<RuleViewModel> GetAll();
         PagedResult<RuleViewModel> GetAllPaging(int page, int pageSize);
+
+        #endregion GET
+
+        #region POST
+
         Rule Add(RuleViewModel vm);
+
+        #endregion POST
+
+        #region PUT
+
+
+
+        #endregion PUT
+
+
     }
 }

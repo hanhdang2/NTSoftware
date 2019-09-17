@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +44,29 @@ namespace NTSoftware.Service
 
         public PagedResult<AppUserViewModel> GetAllPaging(int page, int pageSize)
         {
-            throw new NotImplementedException();
+
+            var query = _userManager.Users.ToList();
+               
+
+            int totalRow = query.Count();
+
+            try
+            {
+                var data = _mapper.Map<List<AppUser>, List<AppUserViewModel>>(query);
+
+                var paginationSet = new PagedResult<AppUserViewModel>()
+                {
+                    Results = data,
+                    CurrentPage = page,
+                    RowCount = totalRow,
+                    PageSize = pageSize
+                };
+                return paginationSet;
+            }
+            catch
+            {
+                return null;
+            }
         }
         public void UpdateAsync(AppUserViewModel Vm)
         {
@@ -65,7 +88,8 @@ namespace NTSoftware.Service
         public async Task<bool> AddAsync(AppUserViewModel userVm)
         {
             var user = _mapper.Map<AppUserViewModel, AppUser>(userVm);
-            var data = await _userManager.CreateAsync(user, userVm.Password);
+            user.Id = new Guid();
+            var data = await _userManager.CreateAsync(user, userVm.PasswordHash);
             var result = (data.Succeeded) ? true : false;
             return result;
         }

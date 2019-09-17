@@ -7,15 +7,26 @@ using System.Threading.Tasks;
 
 namespace NTSoftware.Service.Interface
 {
-   public interface IAppUserService
+    public interface IAppUserService
     {
         #region GET
         Task<AppUserViewModel> GetById(string id);
         Task<List<AppUserViewModel>> GetAllAsync();
         PagedResult<AppUserViewModel> GetAllPaging(int page, int pageSize);
-        Task<bool> AddAsync(AppUserViewModel Vm);
-        void UpdateAsync(AppUserViewModel userVm);
 
         #endregion GET
+
+        #region POST
+
+        Task<bool> AddAsync(AppUserViewModel Vm);
+
+        #endregion POST
+
+        #region PUT
+
+        void UpdateAsync(AppUserViewModel userVm);
+
+        #endregion PUT
+
     }
 }

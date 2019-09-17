@@ -8,34 +8,34 @@ using System.Text;
 
 namespace NTSoftware.Core.Models.Models
 {
- 
+
     namespace NTSoftware.Core.Models.Models
     {
-        public class AppUser : IdentityUser,IDomainEntity
+        public class AppUser : IdentityUser<Guid>, IDomainEntity
         {
-            public Guid UserId { set; get; }
-            public DateTime EndDate { get; set; }
-            public Status Status { set; get; }
-            public string Password { get; set; }
-            public string Token { get; set; }
+
+            public Status Status { get; set; }
             public Roles UserType { get; set; }
+            public int CompanyId { get; set; }
+            public string Position { get; set; }
+            public int DepartmentId { get; set; }
+
             public bool IsLockedOut => this.LockoutEnabled && this.LockoutEnd >= DateTimeOffset.UtcNow;
-            public string CreatedBy { get; set; }
-            public string UpdatedBy { get; set; }
+            public Guid CreatedBy { get; set; }
+            public Guid UpdatedBy { get; set; }
             public DateTime CreatedDate { get; set; }
             public DateTime UpdatedDate { get; set; }
-            public int UserEmployeeID { get; set; }
-            public int UserAdminId { get; set; }
-            public bool DeleteFlag { get; set; }
-           // <summary>
+            public int DeleteFlag { get; set; }
+            // <summary>
             /// Navigation property for the roles this user belongs to.
             /// </summary>
-            public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+            public virtual ICollection<IdentityUserRole<Guid>> Roles { get; set; }
 
             /// <summary>
             /// Navigation property for the claims this user possesses.
             /// </summary>
-            public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+            public virtual ICollection<IdentityUserClaim<Guid>> Claims { get; set; }
+
         }
     }
 

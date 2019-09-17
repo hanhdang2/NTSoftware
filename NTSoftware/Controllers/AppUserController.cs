@@ -44,12 +44,12 @@ namespace NTSoftware.Controllers
                     }
                     else
                     {
-                        return new OkObjectResult(new GenericResult(new AppUser(),false,ErrorMsg.ERROR_ON_HANDLE_DATA,ErrorCode.HANDLE_ERROR_CODE));
+                        return new OkObjectResult(new GenericResult(null,false,ErrorMsg.ERROR_ON_HANDLE_DATA,ErrorCode.HANDLE_ERROR_CODE));
                     }
                 }
                 catch (Exception)
                 {
-                    return new BadRequestObjectResult(new GenericResult(new AppUser(), false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
                     throw;
                 }
             }

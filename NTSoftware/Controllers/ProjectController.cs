@@ -22,19 +22,34 @@ namespace NTSoftware.Controllers
         {
             _iprojectService = iprojectService;
         }
-    [HttpGet]
-    [Route("GetById/{id}")]
-    public IActionResult GetById(int id)
-    {
-        if (id == 0)
+        [HttpGet]
+        [Route("GetById/{id}")]
+        public IActionResult GetById(int id)
         {
-            return new BadRequestObjectResult(new GenericResult(new Project(), false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
+            if (id == 0)
+            {
+                return new BadRequestObjectResult(new GenericResult(new Project(), false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
+            }
+            else
+            {
+                try
+                {
+                    var data = _iprojectService.GetById(id);
+                    return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                }
+                catch (Exception ex)
+                {
+                    return new OkObjectResult(new GenericResult(new Project(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                }
+            }
         }
-        else
+        [HttpGet]
+        [Route("GetAllPaging")]
+        public IActionResult GetAllPaging(int page, int pageSize, string description = "")
         {
             try
             {
-                var data = _iprojectService.GetById(id);
+                var data = _iprojectService.GetAllPaging(page, pageSize, description);
                 return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
             }
             catch (Exception ex)
@@ -42,7 +57,6 @@ namespace NTSoftware.Controllers
                 return new OkObjectResult(new GenericResult(new Project(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
-    }
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAll()

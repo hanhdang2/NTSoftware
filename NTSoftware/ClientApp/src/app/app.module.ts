@@ -19,12 +19,19 @@ import {
   NbAuthService
 } from '@nebular/auth';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { AdminGuard } from './guards/admin.guard';
+import { CompanyGuard } from './guards/company.guard';
+import { EmployeeGuard } from './guards/employee.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminComponent } from './layout/admin/admin.component';
+import { CompanyComponent } from './layout/company/company.component';
+import { EmployeeComponent } from './layout/employee/employee.component';
+import { NotFoundComponent } from './layout/not-found/not-found.component';
 export function getToken() {
   return localStorage.getItem('currentUser');
 }
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AdminComponent, CompanyComponent, EmployeeComponent, NotFoundComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -42,10 +49,10 @@ export function getToken() {
         validation: {
           password: {
             required: true,
-            minLength: 4,
+            minLength: 8,
             maxLength: 50,
           },
-          code:{
+          code: {
             required: true,
           }
         },
@@ -67,7 +74,7 @@ export function getToken() {
       }
     })
   ],
-  providers: [AuthService],
+  providers: [AuthService, AdminGuard, CompanyGuard, EmployeeGuard],
   bootstrap: [AppComponent],
   exports: [TranslateModule]
 })

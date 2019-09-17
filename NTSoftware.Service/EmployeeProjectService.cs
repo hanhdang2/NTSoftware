@@ -17,36 +17,55 @@ namespace NTSoftware.Service
     {
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IEmployeeProjectRepository _iemployeeProjectRepo;
+        private IEmployeeProjectRepository _iemployeeProjectRepository;
         private readonly AppDbContext _dbContext;
         public EmployeeProjectService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IEmployeeProjectRepository iemployeeProjectRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _iemployeeProjectRepo = iemployeeProjectRepo;
+            _iemployeeProjectRepository = iemployeeProjectRepo;
             _dbContext = dbContext;
         }
 
-        public EmployeeProjectViewModel GetById(Guid id)
+        public EmployeeProjectViewModel GetById(int id)
         {
-            var data = _iemployeeProjectRepo.FindById(id);
+            var data = _iemployeeProjectRepository.FindById(id);
             return _mapper.Map<EmployeeProject, EmployeeProjectViewModel>(data);
         }
 
         public List<EmployeeProjectViewModel> GetAll()
         {
-            var model = _iemployeeProjectRepo.FindAll().ToList();
+            var model = _iemployeeProjectRepository.FindAll().ToList();
             return _mapper.Map<List<EmployeeProject>, List<EmployeeProjectViewModel>>(model);
         }
 
         public PagedResult<EmployeeProjectViewModel> GetAllPaging(int page, int pageSize)
         {
-            throw new NotImplementedException();
+            var query = _iemployeeProjectRepository.FindAll().ToList();
+            int totalRow = query.Count();
+
+            try
+            {
+                var data = _mapper.Map<List<EmployeeProject>, List<EmployeeProjectViewModel>>(query);
+
+                var paginationSet = new PagedResult<EmployeeProjectViewModel>()
+                {
+                    Results = data,
+                    CurrentPage = page,
+                    RowCount = totalRow,
+                    PageSize = pageSize
+                };
+                return paginationSet;
+            }
+            catch
+            {
+                return null;
+            }
         }
         public EmployeeProject Add(EmployeeProjectViewModel vm)
         {
              var entity = _mapper.Map<EmployeeProjectViewModel, EmployeeProject>(vm);
-            _iemployeeProjectRepo.Add(entity);
+            _iemployeeProjectRepository.Add(entity);
                 SaveChanges();
              return entity;
         }

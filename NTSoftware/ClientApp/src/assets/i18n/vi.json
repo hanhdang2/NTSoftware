@@ -2,6 +2,7 @@
   "auth":{
     "login":{
       "title":"Đăng nhập",
+      "anError":"Có lỗi xảy ra trong quá trình xử lý dữ liệu. Vui lòng thử lại sau",
       "buttonLogin":"Đăng nhập",
       "email":"Email đăng nhập:",
       "ohSnap":"Ồ không!",
@@ -22,6 +23,8 @@
       "ohSnap":"Ồ không!",
       "hooray":"Tuyệt vời",
       "guide":"Nhập địa chỉ email của bạn và chúng tôi sẽ gửi mã xác nhận đến địa chỉ email của bạn",
+      "sendEmailSucces":"Vui lòng kiểm tra hộp thư đến trên email để thay đổi mật khẩu",
+      "sendEmailFailed":"Có lỗi trong quá trình gửi email. Vui lòng thử lại sau",
       "yourEmail":"Địa chỉ email của bạn:",
       "email":"Email",
       "emailEmpty":"Email không được trống",
@@ -33,6 +36,9 @@
       "title":"Đổi mật khẩu",
       "ohSnap":"Ồ không!",
       "hooray":"Tuyệt vời",
+      "email":"Email",
+      "emailEmpty":"Email không được trống",
+      "notEmail":"Email sai định dạng",
       "guide":"Chúng tôi đã gửi một mã xác nhận đến địa chỉ email {{email}}. Vui lòng kiểm tra hộp thư đến!",
       "newPassword":"Mật khẩu mới",
       "newPasswordEmpty":"Mật khẩu mới không được trống",
@@ -46,7 +52,13 @@
       "character":"ký tự",
       "notConfirm":"Xác nhận mật khẩu không khớp",
       "QRCode":"Mã xác nhận",
-      "codeEmpty":"Mã xác nhận không được trống"
+      "codeEmpty":"Mã xác nhận không được trống",
+      "resetSuccess":"Đổi mật khẩu thành công",
+      "passwordInvalid":"Mật khẩu phải từ 8 ký tự gồm chữ hoa, chữ thường, số, kỹ tự đặc biệt"
+    },
+    "notFound":{
+      "content":"Trang bạn tìm không có sẵn",
+      "oop":"Oops"
     }
   }
 }

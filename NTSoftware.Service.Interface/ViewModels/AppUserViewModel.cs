@@ -1,19 +1,31 @@
 ﻿using NTSoftware.Core.Models.Enum;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace NTSoftware.Service.Interface.ViewModels
 {
     public class AppUserViewModel
     {
-        public int UserId { set; get; }
-        public DateTime EndDate { get; set; }
-        public string Status { set; get; }
-        public string Password { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string UserName { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
+        public string PasswordHash { get; set; }
+        public Guid? Id { get; set; }
+        [Required]
+        public Status Status { get; set; }
+        [Required]
         public Roles UserType { get; set; }
-        public int UserEmployeeID { get; set; }
-        public int UserAdminId { get; set; }
-        public string Token { get; set; }
+
+        public Guid? CreatedBy { get; set; }
+
+        public Guid? UpdatedBy { get; set; }
+        [Required]
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace NTSoftware.Core.Models.Enum
     [JsonConverter(typeof(StringEnumConverter))]
     public enum Roles
     {
-        [Display(Name = "AdminNT")] AdminEF = 1,
+        [Display(Name = "AdminNT")] AdminNT = 1,
         [Display(Name = "AdminCompany")] AdminCompany = 2,
         [Display(Name = "Employee")] Employee = 3,
     }

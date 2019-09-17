@@ -12,23 +12,22 @@ using System.Threading.Tasks;
 
 namespace NTSoftware.Repository
 {
-    public class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public AppDbContext(DbContextOptions options) : base(options)
         { }
-        public string CurrentUserId { get; set; }
-        public DbSet<Admin> Admin { set; get; }
+        public Guid CurrentUserId { get; set; }
+        public DbSet<DetailUser> DetailUser { set; get; }
         public DbSet<AppRole> AppRole { set; get; }
         public DbSet<AppUser> AppUser { get; set; }
-        public DbSet<Company> Company { set;get;}
-        public DbSet<ContractCompany> ContractCompany { set;get;}
-        public DbSet<Department> Department { set;get;}
-        public DbSet<EmployeeContract> EmployeeContract { set;get;}
-        public DbSet<EmployeeProject> EmployeeProject { set;get;}
-        public DbSet<Project> Project { set;get;}
-        public DbSet<Employee> Employee { set;get;}
+        public DbSet<CompanyDetail> CompanyDetail { set; get; }
+        public DbSet<ContractCompany> ContractCompany { set; get; }
+        public DbSet<Department> Department { set; get; }
+        public DbSet<EmployeeContract> EmployeeContract { set; get; }
+        public DbSet<EmployeeProject> EmployeeProject { set; get; }
+        public DbSet<Project> Project { set; get; }
         public DbSet<Rule> Rule { set; get; }
-     protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             ///const string priceDecimalType = "decimal(18,2)";
@@ -40,13 +39,15 @@ namespace NTSoftware.Repository
             builder.Entity<AppRole>().HasMany(r => r.Users).WithOne().HasForeignKey(r => r.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             //builder.Entity<Company>().Property(r => r.RepresentativeId).HasColumnType("uniqueidentifier");
             //builder.Entity<Company>().Property(r => r.UpdatePersonID).HasColumnType("uniqueidentifier");
-           
+
             builder.Entity<AppUser>().Property(r => r.UserType).HasColumnType("tinyint");
             builder.Entity<AppUser>().Property(r => r.Status).HasColumnType("tinyint");
             //builder.Entity<ContractCompany>().Property(r => r.UpdatePersonId).HasColumnType("uniqueidentifier");
             //builder.Entity<EmployeeContract>().Property(r => r.UpdatePersonId).HasColumnType("uniqueidentifier");
             builder.Entity<Rule>().Property(r => r.Content).HasColumnType("text");
-            
+            builder.Entity<DetailUser>().Property(r => r.PhoneNumber).HasColumnType("varchar(15)");
+            builder.Entity<CompanyDetail>().Property(r => r.PhoneNumber).HasColumnType("varchar(15)");
+
         }
         public override int SaveChanges()
         {

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ using NTSoftware.Repository.Repository;
 using NTSoftware.Service;
 using NTSoftware.Service.AutoMapper;
 using NTSoftware.Service.Interface;
+using NTSoftware.Service.Interface.ViewModels;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
@@ -41,6 +43,7 @@ namespace NTSoftware
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DataProtectionTokenProviderOptions>(x => x.TokenLifespan = TimeSpan.FromHours(15));
             services.AddDbContext<AppDbContext>(options =>
                    options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"], b => b.MigrationsAssembly("NTSoftware")));
 
@@ -55,7 +58,9 @@ namespace NTSoftware
 
             services.AddMvc();
 
-            // add identity
+            #region REPOSITOTRY
+
+
             services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
@@ -66,17 +71,31 @@ namespace NTSoftware
             services.AddTransient<IProjectRepository, ProjectRepository>();
             services.AddTransient<IEmployeeContractRepository, EmployeeContractRepository>();
             services.AddTransient<IEmployeeProjectRepository, EmployeeProjectRepository>();
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IDetailUserRepository, DetailUserRepository>();
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<IRuleRepository, RuleRepository>();
 
+            #endregion REPOSITOTRY
+
+            #region SERVICE
+
+
+            services.AddTransient<ISmsSenderService, AuthMessageSenderService>();
+            services.AddTransient<IEmailSender, AuthMessageSenderService>();
+            services.AddTransient<IDetailUserService, DetailUserService>();
+            services.AddTransient<IRuleService, RuleService>();
             services.AddTransient<IContractCompanyService, ContractCompanyService>();
-            services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<ICompanyDetailService, CompanyDetailService>();
             services.AddTransient<IAppUserService, AppUserService>();
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IEmployeeContractService, EmployeeContractService>();
             services.AddTransient<IEmployeeProjectService, EmployeeProjectService>();
-            services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
+            services.AddTransient<IFillForm, FillFrom>();
+
+            #endregion SERVICE
+            services.Configure<EmailSettingViewModel>(Configuration.GetSection("EmailSettings"));
+
             // Configure Identity options and password complexity here
             services.Configure<IdentityOptions>(options =>
             {
@@ -113,7 +132,7 @@ namespace NTSoftware
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
                 };
             });
-          
+
             // In production, the Angular files will be served from this directory
             // The port to use for https redirection in production
             if (!_env.IsDevelopment() && !string.IsNullOrWhiteSpace(Configuration["HttpsRedirectionPort"]))

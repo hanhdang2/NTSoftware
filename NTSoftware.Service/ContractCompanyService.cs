@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NTSoftware.Core.Models.Enum;
 using NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Core.Shared.Interface;
@@ -17,25 +18,25 @@ namespace NTSoftware.Service
     {
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IContractCompanyRepository _icontractCompanyRepo;
+        private IContractCompanyRepository _icontractCompanyRepository;
         private readonly AppDbContext _dbContext;
         public ContractCompanyService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IContractCompanyRepository icontractCompanyRepo)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _icontractCompanyRepo = icontractCompanyRepo;
+            _icontractCompanyRepository = icontractCompanyRepo;
             _dbContext = dbContext;
         }
         public List<ContractCompanyViewModel> GetAll()
         {
-            var model = _icontractCompanyRepo.FindAll().ToList();
+            var model = _icontractCompanyRepository.FindAll().ToList();
             return _mapper.Map<List<ContractCompany>, List<ContractCompanyViewModel>>(model);
         }
 
-        public PagedResult<ContractCompanyViewModel> GetAllPaging(int page, int pageSize)
+        public PagedResult<ContractCompanyViewModel> GetAllPaging(int page, int pageSize, Status status)
         {
 
-            var query = _icontractCompanyRepo.FindAll().ToList();
+            var query = _icontractCompanyRepository.FindAll().ToList();
             int totalRow = query.Count();
 
             try
@@ -59,14 +60,14 @@ namespace NTSoftware.Service
 
         public ContractCompanyViewModel GetById(int id)
         {
-            var data = _icontractCompanyRepo.FindById(id);
+            var data = _icontractCompanyRepository.FindById(id);
             return _mapper.Map<ContractCompany, ContractCompanyViewModel>(data);
         }
         public ContractCompany Add(ContractCompanyViewModel vm)
         {
             {
                 var entity = _mapper.Map<ContractCompany>(vm);
-                _icontractCompanyRepo.Add(entity);
+                _icontractCompanyRepository.Add(entity);
                 SaveChanges();
                 return entity;
             }
@@ -74,7 +75,7 @@ namespace NTSoftware.Service
         public void Update(ContractCompanyViewModel Vm)
         {
             var data = _mapper.Map<ContractCompany>(Vm);
-            _icontractCompanyRepo.Update(data);
+            _icontractCompanyRepository.Update(data);
             SaveChanges();
         }
         private void SaveChanges()

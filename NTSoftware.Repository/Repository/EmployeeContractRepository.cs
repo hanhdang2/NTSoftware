@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NTSoftware.Repository.Repository
 {
-  public class EmployeeContractRepository :NTRepository<EmployeeContract,int>,IEmployeeContractRepository
+    public class EmployeeContractRepository : NTRepository<EmployeeContract, int>, IEmployeeContractRepository
     {
         private AppDbContext _appContext;
         public EmployeeContractRepository(AppDbContext context) : base(context)

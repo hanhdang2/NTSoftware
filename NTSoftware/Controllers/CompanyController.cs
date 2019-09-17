@@ -17,8 +17,8 @@ namespace NTSoftware.Controllers
     [ApiController]
     public class CompanyController : BaseController
     {
-        private ICompanyService _icompanyService;
-    public CompanyController(ICompanyService icompanyService)
+        private ICompanyDetailService _icompanyService;
+    public CompanyController(ICompanyDetailService icompanyService)
         {
             _icompanyService = icompanyService;
         }
@@ -29,7 +29,7 @@ namespace NTSoftware.Controllers
         {
             if (id == 0)
             {
-                return new BadRequestObjectResult(new GenericResult( new Company(), false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
+                return new BadRequestObjectResult(new GenericResult( null, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
             }
             else
             {
@@ -40,7 +40,7 @@ namespace NTSoftware.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new Company(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                    return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
                 }
             }
         }
@@ -55,12 +55,12 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(new List<Company>(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
         [HttpPost]
         [Route("Add")]
-        public IActionResult Add([FromBody] CompanyViewModel Vm)
+        public IActionResult Add([FromBody] CompanyDetailViewModel Vm)
         {
             if (!ModelState.IsValid)
             {
@@ -77,13 +77,27 @@ namespace NTSoftware.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new Company(), false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                    return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
                 }
+            }
+        }
+        [HttpGet]
+        [Route("GetAllPaging")]
+        public IActionResult GetAllPaging(int page, int pageSize, string namecompany, string phonenumber, string address, string representativename, string positionrepresentative)
+        {
+            try
+            {
+                var data = _icompanyService.GetAllPaging(page, pageSize,namecompany,phonenumber,address,representativename,positionrepresentative);
+                return new OkObjectResult(new GenericResult(data, true,ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
+            }
+            catch (Exception ex)
+            {
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
         [HttpPut]
         [Route("Update")]
-        public IActionResult Update([FromBody]CompanyViewModel Vm)
+        public IActionResult Update([FromBody]CompanyDetailViewModel Vm)
         {
             if (!ModelState.IsValid)
             {
@@ -96,11 +110,11 @@ namespace NTSoftware.Controllers
                 {
                        _icompanyService.Update(Vm);
 
-                    return new OkObjectResult(new GenericResult( new Company() ,true, ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
+                    return new OkObjectResult(new GenericResult( null ,true, ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new Company(),false, ErrorMsg.ERROR_ON_HANDLE_DATA,ErrorCode.ERROR_HANDLE_DATA));
+                    return new OkObjectResult(new GenericResult(null,false, ErrorMsg.ERROR_ON_HANDLE_DATA,ErrorCode.ERROR_HANDLE_DATA));
                 }
             }
         }
