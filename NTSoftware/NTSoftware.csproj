@@ -18,6 +18,7 @@
     <PackageReference Include="IdentityServer4" Version="2.5.3" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.5.3" />
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.5.1" />
     <PackageReference Include="MailKit" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
@@ -46,6 +47,7 @@
   <ItemGroup>
     <Folder Include="Authorization\" />
     <Folder Include="Logs\" />
+    <Folder Include="Resource\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -48,7 +48,7 @@ export class LoginComponent extends NbLoginComponent implements OnInit {
     } else if (adminToken) {
       this.router.navigate(['admin']);
     } else if (employeeToken) {
-      this.router.navigate(['admin']);
+      this.router.navigate(['employee']);
     }
   }
   // tslint:disable-next-line:max-line-length

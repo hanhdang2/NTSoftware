@@ -63,7 +63,7 @@ namespace NTSoftware.Controllers
                 }
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-                await _emailSender.SendEmailAsync("lhngoc2497@gmail.com", "", $"<div><span> Bạn vừa gửi yêu cầu lấy lại mật khẩu.Click vào đường dẫn dưới đây để tiếp tục.</span> <a href = 'http://localhost:4200/auth/reset-password?userId={user.Id}&code={code}' style = ' position: absolute; left: 50%;padding: 30px 60px; font - size: 30px;  top: 50 %; transform: translate(-50 %, -50 %);color: #1670f0; text - decoration: none; overflow: hidden;letter - spacing: 2px;text - transform: uppercase; box - shadow: 0 10px 20px rgba(0, 0, 0, 0.2);'>Reset Password</a> </div> ");
+                await _emailSender.SendEmailAsync(email, "", $"<div><span> Bạn vừa gửi yêu cầu lấy lại mật khẩu.Click vào đường dẫn dưới đây để tiếp tục.</span> <a href = 'http://localhost:4200/auth/reset-password?userId={user.Id}&code={code}' style = ' position: absolute; left: 50%;padding: 30px 60px; font - size: 30px;  top: 50 %; transform: translate(-50 %, -50 %);color: #1670f0; text - decoration: none; overflow: hidden;letter - spacing: 2px;text - transform: uppercase; box - shadow: 0 10px 20px rgba(0, 0, 0, 0.2);'>Reset Password</a> </div> ");
 
                 return new OkObjectResult(new GenericResult(null, true, ErrorMsg.SEND_MAIL_SUCCESS, ErrorCode.SEND_EMAIL_SUCCESS));
             }
