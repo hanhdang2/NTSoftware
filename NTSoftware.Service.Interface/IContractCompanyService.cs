@@ -14,7 +14,7 @@ namespace NTSoftware.Service.Interface
         #region GET
 
         ContractCompanyViewModel GetById(int id);
-        List<ContractCompanyViewModel> GetAll();
+        List<ContractCompanyViewModel> GetAll( DateTime date1, DateTime date2);
         PagedResult<ContractCompanyViewModel> GetAllPaging(int page, int pageSize, Status status);
 
         #endregion GET

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using NTSoftware.Core.Models.Models;
+using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Core.Shared.Helper;
 using NTSoftware.Core.Shared.Interface;
@@ -22,13 +24,16 @@ namespace NTSoftware.Service
         private readonly IMapper _mapper;
         private IDetailUserRepository _detailUserRepository;
         private readonly AppDbContext _dbContext;
-
-        public DetailUserService(IUnitOfWork unitOfWork, IMapper mapper, IDetailUserRepository detailUserRepository, AppDbContext dbContext)
+        private readonly UserManager<AppUser> _userManager;
+        private ICompanyRepository _icompanyRepository;
+        public DetailUserService(IUnitOfWork unitOfWork, IMapper mapper, ICompanyRepository icompanyRepo, IDetailUserRepository detailUserRepository, AppDbContext dbContext, UserManager<AppUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _detailUserRepository = detailUserRepository;
             _dbContext = dbContext;
+            _userManager = userManager;
+            _icompanyRepository = icompanyRepo;
         }
 
 
@@ -67,6 +72,45 @@ namespace NTSoftware.Service
             catch
             {
                 return null;
+            }
+        }
+        public void AddUserDetail(UserCompanyDetailViewModel vm)
+        {
+            var company = new CompanyDetail();
+            company.CompanyName = vm.CompanyName;
+            company.EmailRepresentative = vm.EmailRepresentative;
+            company.PhoneNumber = vm.PhoneNumber;
+            company.PositionRepresentative = vm.PositionRepresentative;
+            company.RepresentativeName = vm.RepresentativeName;
+            company.Address = vm.Address;
+            _icompanyRepository.Add(company);
+            SaveChanges();
+
+            var user = new AppUser();
+            user.CompanyId = company.Id ;
+            user.UserName = vm.UserName;
+            user.PhoneNumber = vm.PhoneNumber;
+            user.Status = vm.Status;
+            user.Position = vm.Position;
+            user.UserType = vm.UserType;
+            user.DepartmentId = vm.DepartmentId;
+            user.PasswordHash = vm.Password;
+            _userManager.CreateAsync(user);
+            SaveChanges();
+
+            var userdetail = vm.UserDetail.ToList();
+            foreach (var item in userdetail)
+            {
+                var detail = new DetailUser();
+                detail.Id = item.Id;
+                detail.Name = item.Name;
+                detail.PhoneNumber = item.PhoneNumber;
+                detail.Address = item.Address;
+                detail.Birthday = item.Birthday;
+                detail.PhoneNumber = item.PhoneNumber;
+                detail.Gender = item.Gender;
+                _detailUserRepository.Add(detail);
+                SaveChanges();
             }
         }
 

@@ -17,4 +17,5 @@ namespace NTSoftware.Service.Interface.ViewModels
         public Guid ManagerId { set; get; }
         public int CompanyId { set; get; }
     }
+ 
 }

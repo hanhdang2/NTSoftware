@@ -46,11 +46,11 @@ namespace NTSoftware.Controllers
         }
         [HttpGet]
         [Route("GetAll")]
-        public IActionResult GetAll()
+        public IActionResult GetAll( DateTime date1, DateTime date2)
         {
             try
             {
-                var data = _icontractCompanyService.GetAll();
+                var data = _icontractCompanyService.GetAll(date1,date2);
                 return new OkObjectResult(new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
             }
             catch (Exception ex)

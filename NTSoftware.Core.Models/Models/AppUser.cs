@@ -19,12 +19,11 @@ namespace NTSoftware.Core.Models.Models
             public int CompanyId { get; set; }
             public string Position { get; set; }
             public int DepartmentId { get; set; }
-
             public bool IsLockedOut => this.LockoutEnabled && this.LockoutEnd >= DateTimeOffset.UtcNow;
             public Guid CreatedBy { get; set; }
             public Guid UpdatedBy { get; set; }
             public DateTime CreatedDate { get; set; }
-            public DateTime UpdatedDate { get; set; }
+            public DateTime UpdatedDate { get; set; }   
             public int DeleteFlag { get; set; }
             // <summary>
             /// Navigation property for the roles this user belongs to.

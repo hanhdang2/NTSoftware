@@ -12,7 +12,6 @@ namespace NTSoftware.Core.Models.Models
         public string CompanyName { set; get; }
         public string PhoneNumber { set; get; }
         public string Logo { set; get; }
-
         public string EmailRepresentative { set; get; }
         public string RepresentativeName { set; get; }
         public string PositionRepresentative { set; get; }

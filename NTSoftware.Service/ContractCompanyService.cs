@@ -16,21 +16,24 @@ namespace NTSoftware.Service
 {
     public class ContractCompanyService : IContractCompanyService
     {
+        private IDetailUserRepository _detailUserRepository;
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private IContractCompanyRepository _icontractCompanyRepository;
         private readonly AppDbContext _dbContext;
-        public ContractCompanyService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IContractCompanyRepository icontractCompanyRepo)
+        public ContractCompanyService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IContractCompanyRepository icontractCompanyRepo, IDetailUserRepository detailUserRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _icontractCompanyRepository = icontractCompanyRepo;
             _dbContext = dbContext;
+            _detailUserRepository = detailUserRepository;
         }
-        public List<ContractCompanyViewModel> GetAll()
+        public List<ContractCompanyViewModel> GetAll( DateTime date1, DateTime date2)
         {
-            var model = _icontractCompanyRepository.FindAll().ToList();
-            return _mapper.Map<List<ContractCompany>, List<ContractCompanyViewModel>>(model);
+            var enddate = _icontractCompanyRepository.FindAll().Where(x =>(x.EndDate <= date2 )&&( x.EndDate >= date1)).ToList();
+            //var model = _icontractCompanyRepository.FindAll().ToList();
+            return _mapper.Map<List<ContractCompany>, List<ContractCompanyViewModel>>(enddate);
         }
 
         public PagedResult<ContractCompanyViewModel> GetAllPaging(int page, int pageSize, Status status)
@@ -57,6 +60,7 @@ namespace NTSoftware.Service
                 return null;
             }
         }
+        
 
         public ContractCompanyViewModel GetById(int id)
         {

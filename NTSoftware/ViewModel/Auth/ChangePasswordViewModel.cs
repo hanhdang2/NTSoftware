@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NTSoftware.Core.Shared;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace NTSoftware.ViewModel.Auth
     {
         public string UserId { get; set; }
         public string TokenCode { get; set; }
+        [Required]
         public string NewPassword { get; set; }
     }
 }

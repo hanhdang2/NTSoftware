@@ -16,12 +16,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ErrorMsg.resx</DependentUpon>
     </Compile>
+    <Compile Update="ErrorParam.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ErrorParam.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="ErrorMsg.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorMsg.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="ErrorParam.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorParam.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

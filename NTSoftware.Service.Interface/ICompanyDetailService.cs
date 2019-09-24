@@ -19,7 +19,7 @@ namespace NTSoftware.Service.Interface
         #region POST
 
         CompanyDetail Add(CompanyDetailViewModel Vm);
-
+       
         #endregion POST
 
         #region PUT

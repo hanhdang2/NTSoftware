@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using NTSoftware.Core.Models.Models;
+using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Core.Shared.Interface;
 using NTSoftware.Repository;
@@ -19,12 +21,14 @@ namespace NTSoftware.Service
         private readonly IMapper _mapper;
         private IDepartmentRepository _idepartmentRepository;
         private readonly AppDbContext _dbContext;
-        public DepartmentService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IDepartmentRepository idepartmentRepo)
+        private readonly UserManager<AppUser> _userManager;
+        public DepartmentService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IDepartmentRepository idepartmentRepo, UserManager<AppUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _idepartmentRepository = idepartmentRepo;
             _dbContext = dbContext;
+            _userManager = userManager;
         }
 
         public DepartmentViewModel GetById(int id)
@@ -65,6 +69,7 @@ namespace NTSoftware.Service
         public Department Add(DepartmentViewModel vm)
         {
             {
+                
                 var entity = _mapper.Map<Department>(vm);
                 _idepartmentRepository.Add(entity);
                 SaveChanges();

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using NTSoftware.Core.Models.Models;
+using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Core.Shared.Interface;
 using NTSoftware.Repository;
@@ -20,13 +22,18 @@ namespace NTSoftware.Service
         private readonly IMapper _mapper;
         private ICompanyRepository _icompanyRepository;
         private readonly AppDbContext _dbContext;
+        private IDetailUserRepository _detailUserRepository;
 
-        public CompanyDetailService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, ICompanyRepository icompanyRepo)
-        {
+
+
+        public CompanyDetailService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, ICompanyRepository icompanyRepo, IDetailUserRepository detailUserRepository)
+        { 
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _icompanyRepository = icompanyRepo;
             _dbContext = dbContext;
+            _detailUserRepository = detailUserRepository;
+
         }
         #endregion Contructor
         public List<CompanyDetailViewModel> GetAll()
@@ -34,7 +41,7 @@ namespace NTSoftware.Service
             var data = _icompanyRepository.FindAll().ToList();
             return _mapper.Map<List<CompanyDetail>, List<CompanyDetailViewModel>>(data);
         }
-
+      
         public PagedResult<CompanyDetailViewModel> GetAllPaging(int page, int pageSize, string namecompany,
             string phonenumber, string address,
             string representativename, string positionrepresentative)
@@ -71,16 +78,15 @@ namespace NTSoftware.Service
         {
             var entity = _mapper.Map<CompanyDetail>(Vm);
             _icompanyRepository.Add(entity);
-            SaveChanges();
             return entity;
         }
-        public void Update(CompanyDetailViewModel Vm)
+         public void Update(CompanyDetailViewModel Vm)
         {
             var data = _mapper.Map<CompanyDetail>(Vm);
             _icompanyRepository.Update(data);
             SaveChanges();
         }
-
+      
         private void SaveChanges()
         {
             _unitOfWork.Commit();

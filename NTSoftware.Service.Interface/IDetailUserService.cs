@@ -20,6 +20,8 @@ namespace NTSoftware.Service.Interface
         #region POST
 
         DetailUser Add(DetailUserViewModel vm);
+        void AddUserDetail(UserCompanyDetailViewModel vm);
+
 
         #endregion POST
 
