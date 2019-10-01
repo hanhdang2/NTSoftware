@@ -16,5 +16,6 @@ namespace NTSoftware.Service.Interface.ViewModels
         public string Description { set; get; }
         public Guid ManagerId { set; get; }
         public int CompanyId { set; get; }
+        public List<AppUserViewModel> lstAppUser { get; set; }
     }
 }

@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ACCOUNT_EXPRIED_NEW" xml:space="preserve">
+    <value>Tài khoản của bạn đã hết hạn hoặc chưa được kích hoạt. Vui lòng thử lại sau</value>
+  </data>
+  <data name="ACCOUNT_NOT_EXITS" xml:space="preserve">
+    <value>Tài khoản không tồn tại. Vui lòng thử lại sau.</value>
+  </data>
+  <data name="CHANGE_PASSWORD_FAILED" xml:space="preserve">
+    <value>Thay đổi mật khẩu không thành công</value>
+  </data>
+  <data name="CHANGE_PASSWORD_SUCCESS" xml:space="preserve">
+    <value>Đổi mật khẩu thành công</value>
+  </data>
+  <data name="COMPANY_EXPRIED" xml:space="preserve">
+    <value>Công ty bạn đã hết hợp đồng. Thêm hợp đồng mới để tiếp tục.</value>
+  </data>
+  <data name="COMPANY_NOT_EXITS" xml:space="preserve">
+    <value>Công ty không tồn tại. Vui lòng thử lại sau.</value>
+  </data>
+  <data name="COMPANY_NOT_READY" xml:space="preserve">
+    <value>Công ty chưa đến hạn hợp đồng. Vui lòng quay lại sau.</value>
+  </data>
   <data name="DATA_REQUEST_IN_VALID" xml:space="preserve">
     <value>Dữ liệu truyền lên không đúng</value>
   </data>
@@ -139,12 +160,18 @@
     <value>Tài khoản hoặc mật khẩu không chính xác</value>
   </data>
   <data name="NOT_EXIST_EMAIL" xml:space="preserve">
-    <value>Email người dùng không tồn tạis</value>
+    <value>Email người dùng không tồn tại</value>
+  </data>
+  <data name="OLD_PASSWORD_INCORECT" xml:space="preserve">
+    <value>Mật khẩu cũ không đúng</value>
   </data>
   <data name="SEND_MAIL_SUCCESS" xml:space="preserve">
     <value>Gửi email thành công. </value>
   </data>
   <data name="SUCCEED" xml:space="preserve">
     <value>Thành công</value>
+  </data>
+  <data name="UN_AUTHOZIRED" xml:space="preserve">
+    <value>Bạn không có quyền truy cập chức năng này.</value>
   </data>
 </root>

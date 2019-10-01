@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NTSoftware.Core.Shared.Helper
 {
@@ -44,6 +45,12 @@ namespace NTSoftware.Core.Shared.Helper
             {
                 writer.WriteLine($"{DateTime.Now} - {text}");
             }
+        }
+        public static string ConvertToUnSign(string text)
+        {
+            Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
+            string temp = text.Normalize(NormalizationForm.FormD);
+            return regex.Replace(temp, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
         }
     }
 }

@@ -18,7 +18,7 @@ namespace NTSoftware.Core.Models.Enum
     public enum Status
     {
         [Display(Name = "Active")] Active = 1,
-        [Display(Name = "Inactive")] Inactive = 2,
+        [Display(Name = "New")] New = 2,
         [Display(Name = "Expired")] Expired = 3,
     }
 

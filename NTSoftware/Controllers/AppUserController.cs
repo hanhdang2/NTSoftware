@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared;
 using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Service.Interface;
 using NTSoftware.Service.Interface.ViewModels;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace NTSoftware.Controllers
 {
@@ -17,13 +15,37 @@ namespace NTSoftware.Controllers
     [ApiController]
     public class AppUserController : BaseController
     {
-        
-        private IAppUserService _iuserService;
+        #region CONTRUCTOR
+
+        private IAppUserService _appUserService;
         public AppUserController(IAppUserService iuserService)
         {
-            _iuserService = iuserService;
+            _appUserService = iuserService;
         }
-        
+
+        #endregion CONTRUCTOR
+
+        #region GET
+
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<IActionResult> Add(string id)
+        {
+            try
+            {
+                var result = await _appUserService.GetById(id);
+                return new OkObjectResult(new GenericResult(result, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+            }
+        }
+
+        #endregion GET
+
+        #region POST
+
         [HttpPost]
         [Route("Add")]
         public async Task<IActionResult> Add([FromBody] AppUserViewModel Vm)
@@ -31,29 +53,25 @@ namespace NTSoftware.Controllers
             if (!ModelState.IsValid)
             {
                 var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(new GenericResult( allErrors,false,ErrorMsg.DATA_REQUEST_IN_VALID,ErrorCode.DATA_REQUEST_IN_VALID));
+                return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.ERROR_HANDLE_DATA));
             }
             else
             {
                 try
                 {
-                    var result = await _iuserService.AddAsync(Vm);
-                    if (result)
-                    {
-                        return new OkObjectResult(new GenericResult(result,true,ErrorMsg.SUCCEED,ErrorCode.SUCCEED_CODE));
-                    }
-                    else
-                    {
-                        return new OkObjectResult(new GenericResult(null,false,ErrorMsg.ERROR_ON_HANDLE_DATA,ErrorCode.HANDLE_ERROR_CODE));
-                    }
+                    var result = await _appUserService.AddAsync(Vm);
+                    return new OkObjectResult(new GenericResult(result, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
-                    throw;
                 }
             }
         }
+
+        #endregion POST
+
+        #region PUT
 
         [HttpPut]
         [Route("Update")]
@@ -62,15 +80,15 @@ namespace NTSoftware.Controllers
             if (!ModelState.IsValid)
             {
                 var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
+                return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.ERROR_HANDLE_DATA));
             }
             else
             {
                 try
                 {
-                     _iuserService.UpdateAsync(Vm);
+                    var result = _appUserService.UpdateAsync(Vm);
 
-                    return new OkObjectResult(new GenericResult(new AppUser(), true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                    return new OkObjectResult(result);
                 }
                 catch (Exception ex)
                 {
@@ -78,6 +96,17 @@ namespace NTSoftware.Controllers
                 }
             }
         }
-  
+
+        #endregion PUT
+
+        #region DELETE
+
+
+
+        #endregion DELETE
+
+
+
+
     }
 }

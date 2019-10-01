@@ -61,6 +61,69 @@ namespace NTSoftware.Core.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tài khoản của bạn đã hết hạn hoặc chưa được kích hoạt. Vui lòng thử lại sau.
+        /// </summary>
+        public static string ACCOUNT_EXPRIED_NEW {
+            get {
+                return ResourceManager.GetString("ACCOUNT_EXPRIED_NEW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tài khoản không tồn tại. Vui lòng thử lại sau..
+        /// </summary>
+        public static string ACCOUNT_NOT_EXITS {
+            get {
+                return ResourceManager.GetString("ACCOUNT_NOT_EXITS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thay đổi mật khẩu không thành công.
+        /// </summary>
+        public static string CHANGE_PASSWORD_FAILED {
+            get {
+                return ResourceManager.GetString("CHANGE_PASSWORD_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đổi mật khẩu thành công.
+        /// </summary>
+        public static string CHANGE_PASSWORD_SUCCESS {
+            get {
+                return ResourceManager.GetString("CHANGE_PASSWORD_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Công ty bạn đã hết hợp đồng. Thêm hợp đồng mới để tiếp tục..
+        /// </summary>
+        public static string COMPANY_EXPRIED {
+            get {
+                return ResourceManager.GetString("COMPANY_EXPRIED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Công ty không tồn tại. Vui lòng thử lại sau..
+        /// </summary>
+        public static string COMPANY_NOT_EXITS {
+            get {
+                return ResourceManager.GetString("COMPANY_NOT_EXITS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Công ty chưa đến hạn hợp đồng. Vui lòng quay lại sau..
+        /// </summary>
+        public static string COMPANY_NOT_READY {
+            get {
+                return ResourceManager.GetString("COMPANY_NOT_READY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dữ liệu truyền lên không đúng.
         /// </summary>
         public static string DATA_REQUEST_IN_VALID {
@@ -124,11 +187,20 @@ namespace NTSoftware.Core.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email người dùng không tồn tạis.
+        ///   Looks up a localized string similar to Email người dùng không tồn tại.
         /// </summary>
         public static string NOT_EXIST_EMAIL {
             get {
                 return ResourceManager.GetString("NOT_EXIST_EMAIL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mật khẩu cũ không đúng.
+        /// </summary>
+        public static string OLD_PASSWORD_INCORECT {
+            get {
+                return ResourceManager.GetString("OLD_PASSWORD_INCORECT", resourceCulture);
             }
         }
         
@@ -147,6 +219,15 @@ namespace NTSoftware.Core.Shared {
         public static string SUCCEED {
             get {
                 return ResourceManager.GetString("SUCCEED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bạn không có quyền truy cập chức năng này..
+        /// </summary>
+        public static string UN_AUTHOZIRED {
+            get {
+                return ResourceManager.GetString("UN_AUTHOZIRED", resourceCulture);
             }
         }
     }

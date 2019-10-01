@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using NTSoftware.Core.Models.Enum;
@@ -35,14 +36,16 @@ namespace NTSoftware.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IConfiguration _config;
+        private readonly ICompanyDetailService _companyDetailService;
         private readonly IEmailSender _emailSender;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration config, IEmailSender emailSender)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration config, IEmailSender emailSender, ICompanyDetailService companyDetailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _config = config;
             _emailSender = emailSender;
+            _companyDetailService = companyDetailService;
         }
 
         #endregion Constructor
@@ -59,7 +62,12 @@ namespace NTSoftware.Controllers
                 var user = await _userManager.FindByNameAsync(email);
                 if (user == null)
                 {
-                    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.NOT_EXIST_EMAIL, ErrorCode.NO_EMAIL_CODE));
+                    return new OkObjectResult(new GenericResult(null, false, ErrorMsg.NOT_EXIST_EMAIL, ErrorCode.NO_EMAIL_CODE));
+                }
+                var checkLogin = CheckAccountCanLogin(user);
+                if (checkLogin != null)
+                {
+                    return new OkObjectResult(checkLogin);
                 }
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -76,10 +84,49 @@ namespace NTSoftware.Controllers
 
         #endregion GET
 
-
         #region Post
 
+        [HttpPost]
+        [Route("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] LoginViewModel vm)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                    return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.ERROR_HANDLE_DATA));
+                }
+                var user = await _userManager.FindByNameAsync(vm.UserName);
+                if (user != null)
+                {
+                    var result = await _signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, true);
+                    if (result.IsLockedOut)
+                    {
+                        return new OkObjectResult(new GenericResult(null, false, ErrorMsg.LOCK_ACCOUNT, ErrorCode.LOCK_ACCOUNT));
+                    }
+                    else if (!result.Succeeded || user.DeleteFlag == StatusDelete.DELETED)
+                    {
+                        return new OkObjectResult(new GenericResult(null, false, ErrorMsg.LOGIN_FAILED, ErrorCode.LOGIN_FAILED));
+                    }
+                    var checkLogin = CheckAccountCanLogin(user);
+                    if (checkLogin != null)
+                    {
+                        return new OkObjectResult(checkLogin);
+                    }
+                    var token_access = SignToken(user);
+                    return new OkObjectResult(new GenericResult(token_access, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                }
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.LOGIN_FAILED, ErrorCode.HAS_ERROR_CODE));
+            }
+            catch (Exception ex)
+            {
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.HAS_ERROR_CODE));
+            }
 
+
+        }
 
         #endregion  Post
 
@@ -87,17 +134,26 @@ namespace NTSoftware.Controllers
 
         [HttpPut]
         [Route("ChangePasswordWithCode")]
-        public async Task<IActionResult> ChangePasswordWithCode([FromBody]ChangePasswordViewModel vm)
+        public async Task<IActionResult> ChangePasswordWithCode([FromBody]ChangePasswordCodeViewModel vm)
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(vm.UserId);
+                if (!ModelState.IsValid)
+                {
+                    var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                    return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.ERROR_HANDLE_DATA));
+                }
+                var user = await _userManager.FindByIdAsync(vm.userId);
                 if (user == null)
                 {
                     return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.NOT_EXIST_EMAIL, ErrorCode.NO_EMAIL_CODE));
                 }
-
-                var result = await _userManager.ResetPasswordAsync(user, vm.TokenCode, vm.NewPassword);
+                var checkLogin = CheckAccountCanLogin(user);
+                if (checkLogin != null)
+                {
+                    return new OkObjectResult(checkLogin);
+                }
+                var result = await _userManager.ResetPasswordAsync(user, vm.tokenCode, vm.newPassword);
                 if (result.Succeeded)
                 {
                     return new OkObjectResult(new GenericResult(result, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
@@ -112,54 +168,101 @@ namespace NTSoftware.Controllers
         }
 
         [HttpPut]
-        [Route("ChangePassword")]
+        [Route("ChangePasswordWithOldPassword")]
         [Authorize]
-        public async Task<IActionResult> UpdatePassword()
-        {
-            //var user = await _userManager.FindByIdAsync(Inforvm.Id.ToString());
-            //if (user == null)
-            //    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
-            //if (await _userManager.CheckPasswordAsync(user, Inforvm.OldPassword))
-            //{
-            //    var result = await _userManager.ChangePasswordAsync(user, Inforvm.OldPassword, Inforvm.NewPassword);
-            //    if (result.Succeeded)
-            //    {
-            //        return new OkObjectResult(new GenericResult(result, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
-            //    }
-            //    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
-            //};
-            return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
-        }
-
-        #endregion Put
-
-        #region Login Admin
-        [HttpPost]
-        [Route("Login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel vm)
+        public async Task<IActionResult> UpdatePassword([FromBody] ChangePasswordWithOldPasswordViewModel vm)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
+                    var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                    return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.ERROR_HANDLE_DATA));
                 }
-                var user = await _userManager.FindByNameAsync(vm.UserName);
-                if (user != null)
+                var user = await _userManager.FindByIdAsync(vm.userName);
+                if (user == null)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, true);
-                    if (result.IsLockedOut)
-                    {
-                        return new OkObjectResult(new GenericResult(null, false, ErrorMsg.LOCK_ACCOUNT, ErrorCode.LOCK_ACCOUNT));
-                    }
-                    else if (!result.Succeeded)
-                    {
-                        return new OkObjectResult(new GenericResult(null, false, ErrorMsg.LOGIN_FAILED, ErrorCode.LOGIN_FAILED));
-                    }
+                    return new OkObjectResult(new GenericResult(null, false, ErrorMsg.NOT_EXIST_EMAIL, ErrorCode.NO_EMAIL_CODE));
+                }
 
-                    var claims = new[]
+                var checkLogin = CheckAccountCanLogin(user);
+                if (checkLogin != null)
+                {
+                    return new OkObjectResult(checkLogin);
+                }
+                if (await _userManager.CheckPasswordAsync(user, vm.oldPassword))
+                {
+                    var result = await _userManager.ChangePasswordAsync(user, vm.oldPassword, vm.newPassword);
+                    if (result.Succeeded)
                     {
+                        return new OkObjectResult(new GenericResult(result, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                    }
+                    return new OkObjectResult(new GenericResult(null, false, ErrorMsg.CHANGE_PASSWORD_FAILED, ErrorCode.ERROR_CODE));
+                };
+
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.OLD_PASSWORD_INCORECT, ErrorCode.ERROR_CODE));
+            }
+            catch (Exception ex)
+            {
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_CODE));
+            }
+        }
+
+        [HttpPut]
+        [Route("ChangePasswordWithoutOldPassword")]
+        [Authorize]
+        public async Task<IActionResult> UpdatePassword([FromBody] ChangePasswordWithoutOldPassword vm)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                    return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.ERROR_HANDLE_DATA));
+                }
+                var user = await _userManager.FindByEmailAsync(vm.userName);
+                var userCurrent = await _userManager.FindByEmailAsync(vm.curentUser);
+                if (user == null || userCurrent == null)
+                {
+                    return new OkObjectResult(new GenericResult(null, false, ErrorMsg.NOT_EXIST_EMAIL, ErrorCode.NO_EMAIL_CODE));
+                }
+                var checkLogin = CheckAccountCanLogin(userCurrent);
+                if (checkLogin != null)
+                {
+                    return new OkObjectResult(checkLogin);
+                }
+                if ((int)userCurrent.UserType > (int)user.UserType)
+                {
+                    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.UN_AUTHOZIRED, ErrorCode.ERROR_CODE));
+
+                }
+                var resultRemove = await _userManager.RemovePasswordAsync(user);
+                if (resultRemove.Succeeded)
+                {
+                    var resultSetNew = await _userManager.AddPasswordAsync(user, vm.newPassword);
+                    if (resultSetNew.Succeeded)
+                    {
+                        return new OkObjectResult(new GenericResult(null, true, ErrorMsg.CHANGE_PASSWORD_SUCCESS, ErrorCode.SUCCEED_CODE));
+                    }
+                }
+
+
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.CHANGE_PASSWORD_FAILED, ErrorCode.ERROR_CODE));
+            }
+            catch (Exception ex)
+            {
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_CODE));
+            }
+        }
+
+        #endregion Put
+
+        #region Private Method
+
+        private string SignToken(AppUser user)
+        {
+            var claims = new[]
+                   {
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -168,33 +271,30 @@ namespace NTSoftware.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                    var token = new JwtSecurityToken(_config["Tokens:Issuer"],
-                        _config["Tokens:Issuer"],
-                        claims,
-                      expires: DateTime.UtcNow.AddHours(2),
-                        signingCredentials: creds);
-                    var token_access = new JwtSecurityTokenHandler().WriteToken(token);
-                    return new OkObjectResult(new GenericResult(token_access, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
-                }
-                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.LOGIN_FAILED, ErrorCode.HAS_ERROR_CODE));
-            }
-            catch (Exception ex)
-            {
-                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.LOGIN_FAILED, ErrorCode.HAS_ERROR_CODE));
-            }
-
-
+            var token = new JwtSecurityToken(_config["Tokens:Issuer"],
+                _config["Tokens:Issuer"],
+                claims,
+              expires: DateTime.UtcNow.AddHours(12),
+                signingCredentials: creds);
+            var token_access = new JwtSecurityTokenHandler().WriteToken(token);
+            return token_access;
         }
 
-        #endregion Login Admin
-
-
-        #region Login Other User
-
-
-        #endregion Login Other User
+        private GenericResult CheckAccountCanLogin(AppUser user)
+        {
+            if (user.UserType != Roles.AdminCompany)
+            {
+                return _companyDetailService.CheckCompanyExpried(user.CompanyId);
+            }
+            if (user.UserType == Roles.Employee && (user.Status == Status.New || user.Status == Status.Expired))
+            {
+                return new GenericResult(null, false, ErrorMsg.ACCOUNT_EXPRIED_NEW, ErrorCode.LOGIN_FAILED);
+            }
+            return null;
+        }
+        #endregion Private Method
     }
 }

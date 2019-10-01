@@ -19,6 +19,7 @@ namespace NTSoftware.Core.Models.Models
             public int CompanyId { get; set; }
             public string Position { get; set; }
             public int DepartmentId { get; set; }
+            public string ContractNumber { get; set; }
 
             public bool IsLockedOut => this.LockoutEnabled && this.LockoutEnd >= DateTimeOffset.UtcNow;
             public Guid CreatedBy { get; set; }

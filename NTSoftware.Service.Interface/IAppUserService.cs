@@ -10,23 +10,27 @@ namespace NTSoftware.Service.Interface
     public interface IAppUserService
     {
         #region GET
-        Task<AppUserViewModel> GetById(string id);
-        Task<List<AppUserViewModel>> GetAllAsync();
+        Task<GenericResult> GetById(string id);
         PagedResult<AppUserViewModel> GetAllPaging(int page, int pageSize);
 
         #endregion GET
 
         #region POST
 
-        Task<bool> AddAsync(AppUserViewModel Vm);
+        Task<AppUserViewModel> AddAsync(AppUserViewModel Vm);
 
         #endregion POST
 
         #region PUT
 
-        void UpdateAsync(AppUserViewModel userVm);
+        Task<GenericResult> UpdateAsync(AppUserViewModel userVm);
 
         #endregion PUT
 
+        #region DELETE
+
+        Task<GenericResult> DeleteUser(string id);
+
+        #endregion DELETE
     }
 }

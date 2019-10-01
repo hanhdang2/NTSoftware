@@ -8,6 +8,7 @@ namespace NTSoftware.Core.Models.Models
    public class Rule: DomainEntity<int>
     {
         public string Content { set; get; }
+        public string TypeContractName { get; set; }
         public int CompanyId { set; get; }       
     }
 }

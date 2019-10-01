@@ -10,8 +10,7 @@ namespace NTSoftware.Service.Interface
     public interface IDepartmentService
     {
         #region GET
-        DepartmentViewModel GetById(int id);
-        List<DepartmentViewModel> GetAll();
+        GenericResult GetById(int id);
         PagedResult<DepartmentViewModel> GetAllPaging(int page, int pageSize);
 
 
@@ -19,14 +18,19 @@ namespace NTSoftware.Service.Interface
 
         #region POST
 
-        Department Add(DepartmentViewModel vm);
+        GenericResult Add(DepartmentViewModel vm);
 
         #endregion POST
 
         #region PUT
-
-
+        GenericResult Update(DepartmentViewModel vm);
 
         #endregion PUT
+
+        #region DELETE
+
+        GenericResult Delete(int id);
+
+        #endregion DELETE
     }
 }
