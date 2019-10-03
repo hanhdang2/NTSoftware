@@ -29,4 +29,9 @@ namespace NTSoftware.Core.Models.Enum
         [Display(Name = "AdminCompany")] AdminCompany = 2,
         [Display(Name = "Employee")] Employee = 3,
     }
+    public static class DeleteFlg
+    {
+        public static int Delete = 1;
+        public static int NotDelete = 0;
+    }
 }

@@ -31,7 +31,6 @@ namespace NTSoftware.Service.Interface
 
         #endregion PUT
 
-
-
+        void Delete(int id);
     }
 }

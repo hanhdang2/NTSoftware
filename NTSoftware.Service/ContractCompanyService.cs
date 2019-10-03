@@ -35,7 +35,7 @@ namespace NTSoftware.Service
             //var model = _icontractCompanyRepository.FindAll().ToList();
             return _mapper.Map<List<ContractCompany>, List<ContractCompanyViewModel>>(enddate);
         }
-
+       
         public PagedResult<ContractCompanyViewModel> GetAllPaging(int page, int pageSize, Status status)
         {
 
@@ -60,7 +60,17 @@ namespace NTSoftware.Service
                 return null;
             }
         }
-        
+        public void Delete(int id)
+        {
+            DateTime date = DateTime.Now;
+            var model = _icontractCompanyRepository.Find(x => x.CompanyId == id && x.EndDate <= date && x.DeleteFlag != DeleteFlg.Delete);
+            foreach (var item in model)
+            {
+                _icontractCompanyRepository.Remove(item.Id);
+            }
+            SaveChanges();
+        }
+       
 
         public ContractCompanyViewModel GetById(int id)
         {

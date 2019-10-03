@@ -13,11 +13,11 @@ namespace NTSoftware.Service.Interface
         CompanyDetailViewModel GetById(int id);
         List<CompanyDetailViewModel> GetAll();
         PagedResult<CompanyDetailViewModel> GetAllPaging(int page, int pageSize, string namecompany, string phonenumber, string address, string representativename, string positionrepresentative);
-
+        ContractCompanyModel GetCompanyContract(int id);
         #endregion GET
 
         #region POST
-
+       
         CompanyDetail Add(CompanyDetailViewModel Vm);
        
         #endregion POST
@@ -27,5 +27,6 @@ namespace NTSoftware.Service.Interface
         void Update(CompanyDetailViewModel Vm);
 
         #endregion PUT
+       
     }
 }

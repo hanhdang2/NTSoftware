@@ -44,6 +44,7 @@ namespace NTSoftware.Controllers
                 }
             }
         }
+        
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAll()
@@ -81,7 +82,31 @@ namespace NTSoftware.Controllers
                 }
             }
         }
-      
+        [HttpPost]
+        [Route("AddCompanyDepartment")]
+        public IActionResult AddCompanyDepartment([FromBody] CompanyDeparmentViewModel Vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.DATA_REQUEST_IN_VALID));
+            }
+            else
+            {
+                try
+                {
+                    _icompanyService.AddDepartmentCompany(Vm);
+
+                    return new OkObjectResult(new GenericResult(new CompanyDetail(), true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
+                }
+                catch (Exception ex)
+                {
+                    return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
+                }
+            }
+        }
+
+
         [HttpGet]
         [Route("GetAllPaging")]
         public IActionResult GetAllPaging(int page, int pageSize, string namecompany, string phonenumber, string address, string representativename, string positionrepresentative)
@@ -119,6 +144,10 @@ namespace NTSoftware.Controllers
                 }
             }
         }
+        #region DELETE
+
+       
+        #endregion DELETE
 
     }
 }

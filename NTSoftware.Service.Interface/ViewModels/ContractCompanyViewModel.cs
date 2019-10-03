@@ -8,9 +8,7 @@ namespace NTSoftware.Service.Interface.ViewModels
 {
     public class ContractCompanyViewModel
     {
-
-        public int Id { set; get; }
-        [Required]
+       
         public string ContractNumber { set; get; }
         public int RuleId { set; get; }
         public DateTime StartDate { set; get; }

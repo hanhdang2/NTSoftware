@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared.Dtos;
@@ -14,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace NTSoftware.Service
 {
@@ -119,7 +123,7 @@ namespace NTSoftware.Service
             var model = _detailUserRepository.FindById(id);
             return _mapper.Map<DetailUser, DetailUserViewModel>(model);
         }
-
+      
         public DetailUser Add(DetailUserViewModel Vm)
         {
             var entity = _mapper.Map<DetailUser>(Vm);

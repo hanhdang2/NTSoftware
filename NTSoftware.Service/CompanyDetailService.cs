@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using NTSoftware.Core.Models.Enum;
 using NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared.Dtos;
@@ -23,17 +24,21 @@ namespace NTSoftware.Service
         private ICompanyRepository _icompanyRepository;
         private readonly AppDbContext _dbContext;
         private IDetailUserRepository _detailUserRepository;
+        private IContractCompanyRepository _icontractCompanyRepository;
+        private readonly UserManager<AppUser> _userManager;
+        private IDepartmentRepository _idepartmentRepository;
 
 
-
-        public CompanyDetailService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, ICompanyRepository icompanyRepo, IDetailUserRepository detailUserRepository)
+        public CompanyDetailService(IUnitOfWork unitOfWork, IMapper mapper,IDepartmentRepository departmentRepository, AppDbContext dbContext, UserManager<AppUser> userManager, ICompanyRepository icompanyRepo, IDetailUserRepository detailUserRepository, IContractCompanyRepository icontractCompanyRepository)
         { 
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _icompanyRepository = icompanyRepo;
             _dbContext = dbContext;
             _detailUserRepository = detailUserRepository;
-
+            _icontractCompanyRepository = icontractCompanyRepository;
+            _userManager = userManager;
+            _idepartmentRepository = departmentRepository;
         }
         #endregion Contructor
         public List<CompanyDetailViewModel> GetAll()
@@ -41,7 +46,8 @@ namespace NTSoftware.Service
             var data = _icompanyRepository.FindAll().ToList();
             return _mapper.Map<List<CompanyDetail>, List<CompanyDetailViewModel>>(data);
         }
-      
+        
+       
         public PagedResult<CompanyDetailViewModel> GetAllPaging(int page, int pageSize, string namecompany,
             string phonenumber, string address,
             string representativename, string positionrepresentative)
@@ -73,7 +79,25 @@ namespace NTSoftware.Service
             var model = _icompanyRepository.FindById(id);
             return _mapper.Map<CompanyDetail, CompanyDetailViewModel>(model);
         }
+        public ContractCompanyModel GetCompanyContract(int id)
+        {
+            var company = _icompanyRepository.FindById(id);
+            if (company != null)
+            {
+                var model = _mapper.Map<CompanyDetailViewModel>(company);
+                var contract = _icontractCompanyRepository.Find(x => x.CompanyId == id);
+                var data = _mapper.Map<List<ContractCompanyViewModel>>(contract);
+                var result = new ContractCompanyModel();
+                result.companydetail = model;
+                result.contractcompany = data;
+                return result;
+            }
+            else
+            {
+                return null;
+            }
 
+        }
         public CompanyDetail Add(CompanyDetailViewModel Vm)
         {
             var entity = _mapper.Map<CompanyDetail>(Vm);
@@ -87,6 +111,7 @@ namespace NTSoftware.Service
             SaveChanges();
         }
       
+        
         private void SaveChanges()
         {
             _unitOfWork.Commit();

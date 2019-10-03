@@ -14,7 +14,9 @@ namespace NTSoftware.Service.AutoMapper
         public AutoMapperProfile()
         {
             CreateMap<ContractCompany, ContractCompanyViewModel>().ReverseMap();
+            CreateMap<ContractCompanyViewModel, ContractCompany>().ReverseMap();
             CreateMap<CompanyDetail, CompanyDetailViewModel>().ReverseMap();
+            CreateMap<CompanyDetailViewModel, CompanyDetail>().ReverseMap();
             CreateMap<DetailUser,DetailUserViewModel>().ReverseMap();
             CreateMap<Project, ProjectViewModel>().ReverseMap();
             CreateMap<Department, DepartmentViewModel>().ReverseMap();

@@ -9,7 +9,7 @@ namespace NTSoftware.Core.Models.Models
 {
     public class ContractCompany : DomainEntity<int>
     {
-        public string ContractNumberS { set; get; }
+        public string ContractNumber { set; get; }
         public int RuleId { set; get; }
         public DateTime StartDate { set; get; }
         public DateTime? EndDate { get; set; }

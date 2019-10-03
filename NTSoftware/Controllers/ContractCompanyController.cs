@@ -118,5 +118,27 @@ namespace NTSoftware.Controllers
                 }
             }
         }
+        [HttpDelete]
+        [Route("Delete")]
+        public IActionResult Delete(int id)
+        {
+            if (id == 0)
+            {
+                return new BadRequestObjectResult(new GenericResult(false, "Id is Requied"));
+            }
+            else
+            {
+                try
+                {
+                    _icontractCompanyService.Delete(id);
+
+                    return new OkObjectResult(new GenericResult(true, "DeleteSuccess"));
+                }
+                catch (Exception ex)
+                {
+                    return new OkObjectResult(new GenericResult(false, ex.Message));
+                }
+            }
+        }
     }
 }
