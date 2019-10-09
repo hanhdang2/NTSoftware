@@ -1,15 +1,13 @@
 ﻿using NTSoftware.Core.Models.Enum;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace NTSoftware.Service.Interface.ViewModels
 {
-  public  class DetailUserViewModel
+    public class DetailUserViewModel
     {
-        public string Id { set; get; }
-        [Required]
+        public Guid Id { get; set; }
         public string Name { set; get; }
         public string EmployeeKey { get; set; }
         public string IdentityCard { set; get; }
@@ -17,5 +15,6 @@ namespace NTSoftware.Service.Interface.ViewModels
         public Gender Gender { set; get; }
         public string PhoneNumber { set; get; }
         public string Address { set; get; }
+
     }
 }

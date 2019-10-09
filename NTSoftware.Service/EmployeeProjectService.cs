@@ -27,12 +27,6 @@ namespace NTSoftware.Service
             _dbContext = dbContext;
         }
 
-        public EmployeeProjectViewModel GetById(int id)
-        {
-            var data = _iemployeeProjectRepository.FindById(id);
-            return _mapper.Map<EmployeeProject, EmployeeProjectViewModel>(data);
-        }
-
         public List<EmployeeProjectViewModel> GetAll()
         {
             var model = _iemployeeProjectRepository.FindAll().ToList();

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NTSoftware.Repository.Repository
 {
-    public class DetailUserRepository : NTRepository<DetailUser, int>, IDetailUserRepository
+    public class DetailUserRepository : NTRepository<DetailUser, Guid>, IDetailUserRepository
     {
         private AppDbContext _appContext;
         public DetailUserRepository(AppDbContext context) : base(context)

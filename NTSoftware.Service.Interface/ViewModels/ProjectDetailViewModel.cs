@@ -4,13 +4,9 @@ using System.Text;
 
 namespace NTSoftware.Service.Interface.ViewModels
 {
-    public class ProjectViewModel
+    public class ProjectDetailViewModel
     {
-        public ProjectViewModel()
-        {
-        }
-
-        public ProjectViewModel(int id, string projectName, string description, DateTime startDate, DateTime? endDate, int companyId, Guid managerId, int employeeCount, string managerName)
+        public ProjectDetailViewModel(int id, string projectName, string description, DateTime startDate, DateTime? endDate, int companyId, Guid managerId, List<DetailUserViewModel> lstEmployee)
         {
             Id = id;
             ProjectName = projectName;
@@ -19,8 +15,7 @@ namespace NTSoftware.Service.Interface.ViewModels
             EndDate = endDate;
             CompanyId = companyId;
             ManagerId = managerId;
-            this.employeeCount = employeeCount;
-            ManagerName = managerName;
+            this.lstEmployee = lstEmployee;
         }
 
         public int Id { get; set; }
@@ -30,7 +25,6 @@ namespace NTSoftware.Service.Interface.ViewModels
         public DateTime? EndDate { set; get; }
         public int CompanyId { set; get; }
         public Guid ManagerId { set; get; }
-        public string ManagerName { get; set; }
-        public int  employeeCount { get; set; }
+        public List<DetailUserViewModel> lstEmployee { get; set; }
     }
 }

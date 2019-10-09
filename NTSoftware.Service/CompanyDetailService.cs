@@ -12,20 +12,21 @@ using NTSoftware.Service.Interface.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NTSoftware.Service
 {
     public class CompanyDetailService : ICompanyDetailService
     {
         #region Contructor
+
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private ICompanyRepository _icompanyRepository;
         private IContractCompanyRepository _iContractCompanyRepository;
         private readonly AppDbContext _dbContext;
 
-        public CompanyDetailService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, ICompanyRepository icompanyRepo, ICompanyRepository icompanyRepository, IContractCompanyRepository icontractCompanyRepository)
+        public CompanyDetailService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, 
+            ICompanyRepository icompanyRepo, ICompanyRepository icompanyRepository, IContractCompanyRepository icontractCompanyRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -34,6 +35,7 @@ namespace NTSoftware.Service
             _icompanyRepository = icompanyRepository;
             _iContractCompanyRepository = icontractCompanyRepository;
         }
+
         #endregion Contructor
 
         #region GET
@@ -59,7 +61,6 @@ namespace NTSoftware.Service
 
             int totalRow = query.Count();
 
-
             var data = _mapper.Map<List<CompanyDetail>, List<CompanyDetailViewModel>>(query.ToList());
 
             var paginationSet = new PagedResult<CompanyDetailViewModel>()
@@ -73,35 +74,35 @@ namespace NTSoftware.Service
 
         }
 
-        public GenericResult GetById(int id)
+        public CompanyDetailViewModel GetById(int id)
         {
             var model = _icompanyRepository.FindById(id);
             var company = _mapper.Map<CompanyDetail, CompanyDetailViewModel>(model);
-            return new GenericResult(company, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE);
+            return company;
         }
 
         #endregion GET
 
         #region POST
 
-        public GenericResult Add(CompanyDetailViewModel Vm)
+        public CompanyDetail Add(CompanyDetailViewModel Vm)
         {
             var entity = _mapper.Map<CompanyDetail>(Vm);
             _icompanyRepository.Add(entity);
             SaveChanges();
-            return new GenericResult(entity, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE);
+            return entity;
         }
 
         #endregion POST
 
         #region PUT
 
-        public GenericResult Update(CompanyDetailViewModel Vm)
+        public bool Update(CompanyDetailViewModel Vm)
         {
             var data = _mapper.Map<CompanyDetail>(Vm);
             _icompanyRepository.Update(data);
             SaveChanges();
-            return new GenericResult(data, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE);
+            return true;
         }
 
         private void SaveChanges()
@@ -113,17 +114,18 @@ namespace NTSoftware.Service
 
         #region DELETE
 
-        public GenericResult DeleteCompany(int id)
+        public bool DeleteCompany(int id)
         {
             var company = _icompanyRepository.FindById(id);
-            company.DeleteFlag = StatusDelete.DELETED;
-            return new GenericResult(null, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE);
+            _icompanyRepository.RemoveFlg(company);
+            SaveChanges();
+            return true;
 
         }
 
         #endregion DELETE
 
-        #region PRIVATE_METHOD
+        #region OTHER_METHOD
 
         public GenericResult CheckCompanyExpried(int id)
         {
@@ -135,15 +137,15 @@ namespace NTSoftware.Service
             var contractCompany = _iContractCompanyRepository.Find(x => x.CompanyId == id).LastOrDefault();
             if (contractCompany == null || contractCompany.DeleteFlag == StatusDelete.DELETED)
             {
-                return new GenericResult(null, false, ErrorMsg.COMPANY_EXPRIED, ErrorCode.ERROR_CODE);
+                return new GenericResult(null, false, ErrorMsg.COMPANY_EXPRIED, ErrorCode.EXPIRES_COMPANY_CODE);
             }
             if (contractCompany.EndDate < DateTime.Now)
             {
-                return new GenericResult(null, false, ErrorMsg.COMPANY_EXPRIED, ErrorCode.ERROR_CODE);
+                return new GenericResult(null, false, ErrorMsg.COMPANY_EXPRIED, ErrorCode.EXPIRES_COMPANY_CODE);
             }
             else if (contractCompany.StartDate > DateTime.Now)
             {
-                return new GenericResult(null, false, ErrorMsg.COMPANY_NOT_READY, ErrorCode.ERROR_CODE);
+                return new GenericResult(null, false, ErrorMsg.COMPANY_NOT_READY, ErrorCode.NOT_READY_COMPANY_CODE);
             }
             return null;
         }
@@ -154,6 +156,6 @@ namespace NTSoftware.Service
             return company == null;
         }
 
-        #endregion PRIVATE_METHOD
+        #endregion OTHER_METHOD
     }
 }

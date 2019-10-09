@@ -8,6 +8,7 @@ namespace NTSoftware.Core.Shared.Constants
     {
         public static int SUCCEED_CODE = 0;
         public static int EXPIRES_COMPANY_CODE = 1;
+        public static int NOT_READY_COMPANY_CODE = 1;
         public static int EXPIRES_EMPLOYEE_CODE = 1;
         public static int HAS_ERROR_CODE = 2;
         public static int NO_EMAIL_CODE = 3;

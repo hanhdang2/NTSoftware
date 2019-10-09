@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NTSoftware.Service.Interface.ViewModels
 {
-    public class EmployeeContractViewModel
+    public class EmployeeContractDetailViewModel
     {
     }
 }

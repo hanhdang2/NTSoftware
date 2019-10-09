@@ -1,23 +1,24 @@
-﻿using NTSoftware.Core.Models.Enum;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace NTSoftware.Service.Interface.ViewModels
 {
     public class ContractCompanyViewModel
     {
+        public int Id { get; set; }
+        public string CompanyName { set; get; }
+        public string PhoneNumber { set; get; }
+        public string Logo { set; get; }
 
-        public int Id { set; get; }
-        [Required]
-        public string ContractNumber { set; get; }
-        public int RuleId { set; get; }
-        public DateTime StartDate { set; get; }
-        public DateTime? EndDate { get; set; }
-        public Status Status { set; get; }
-        public int CompanyId { set; get; }
+        public string EmailRepresentative { set; get; }
+        public string RepresentativeName { set; get; }
+        public string PositionRepresentative { set; get; }
+        public string Address { set; get; }
 
+        public Guid CreatedBy { get; set; }
+        public Guid UpdatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
-  
 }

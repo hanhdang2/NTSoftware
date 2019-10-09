@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using NTSoftware.Core.Models.Models;
+using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Core.Shared.Interface;
 using NTSoftware.Repository;
@@ -13,35 +14,31 @@ using System.Text;
 
 namespace NTSoftware.Service
 {
-    public class RuleService: IRuleService
+    public class RuleService : IRuleService
     {
-        #region Contructor
+        #region CONTRUCTOR
+
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IRuleRepository _iruleRepository;
-        private readonly AppDbContext _dbContext;
+        private IRuleRepository _ruleRepository;
 
-        public RuleService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IRuleRepository iruleRepo)
+        public RuleService(IUnitOfWork unitOfWork, IMapper mapper, IRuleRepository ruleRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _iruleRepository = iruleRepo;
-            _dbContext = dbContext;
-        }
-        #endregion Contructor
-        public List<RuleViewModel> GetAll()
-        {
-            var data = _iruleRepository.FindAll().ToList();
-            return _mapper.Map<List<Rule>, List<RuleViewModel>>(data);
+            _ruleRepository = ruleRepository;
         }
 
-        public PagedResult<RuleViewModel> GetAllPaging(int page, int pageSize)
-        {
-            var query = _iruleRepository.FindAll().ToList();
-            int totalRow = query.Count();
+        #endregion CONTRUCTOR
 
+        #region GET
+
+        public PagedResult<RuleViewModel> GetAllPaging(int page, int pageSize, int companyId)
+        {
             try
             {
+                var query = _ruleRepository.FindAll(x => x.DeleteFlag == StatusDelete.NON_DELETED && x.CompanyId == companyId).ToList();
+                int totalRow = query.Count();
                 var data = _mapper.Map<List<Rule>, List<RuleViewModel>>(query);
 
                 var paginationSet = new PagedResult<RuleViewModel>()
@@ -55,27 +52,41 @@ namespace NTSoftware.Service
             }
             catch
             {
-                return null;
+                return new PagedResult<RuleViewModel>()
+                {
+                    Results = new List<RuleViewModel>(),
+                    CurrentPage = page,
+                    RowCount = 0,
+                    PageSize = pageSize
+                }; ;
             }
         }
 
         public RuleViewModel GetById(int id)
         {
-            var model = _iruleRepository.FindById(id);
+            var model = _ruleRepository.FindById(id);
             return _mapper.Map<Rule, RuleViewModel>(model);
         }
 
+        #endregion GET
+
+        #region POST
         public Rule Add(RuleViewModel Vm)
         {
             var entity = _mapper.Map<Rule>(Vm);
-            _iruleRepository.Add(entity);
+            _ruleRepository.Add(entity);
             SaveChanges();
             return entity;
         }
+
+        #endregion POST
+
+        #region PUT
+
         public void Update(RuleViewModel Vm)
         {
             var data = _mapper.Map<Rule>(Vm);
-            _iruleRepository.Update(data);
+            _ruleRepository.Update(data);
             SaveChanges();
         }
 
@@ -83,5 +94,23 @@ namespace NTSoftware.Service
         {
             _unitOfWork.Commit();
         }
+
+        #endregion PUT
+
+        #region DELETE
+
+        public void Delete(int id)
+        {
+            var entity = _ruleRepository.FindById(id);
+            entity.DeleteFlag = StatusDelete.DELETED;
+            _ruleRepository.Update(entity);
+            SaveChanges();
+        }
+
+        #endregion DELETE
+
+        #region OTHER_METHOD
+
+        #endregion OTHER_METHOD
     }
 }

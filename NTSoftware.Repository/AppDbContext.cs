@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Models.Models.Interface;
 using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
+using NTSoftware.Core.Shared.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,11 +43,14 @@ namespace NTSoftware.Repository
 
             builder.Entity<AppUser>().Property(r => r.UserType).HasColumnType("tinyint");
             builder.Entity<AppUser>().Property(r => r.Status).HasColumnType("tinyint");
+            builder.Entity<ContractCompany>().Property(r => r.Status).HasColumnType("tinyint");
+            builder.Entity<EmployeeContract>().Property(r => r.Status).HasColumnType("tinyint");
             //builder.Entity<ContractCompany>().Property(r => r.UpdatePersonId).HasColumnType("uniqueidentifier");
             //builder.Entity<EmployeeContract>().Property(r => r.UpdatePersonId).HasColumnType("uniqueidentifier");
             builder.Entity<Rule>().Property(r => r.Content).HasColumnType("text");
             builder.Entity<DetailUser>().Property(r => r.PhoneNumber).HasColumnType("varchar(15)");
             builder.Entity<CompanyDetail>().Property(r => r.PhoneNumber).HasColumnType("varchar(15)");
+            builder.Entity<EmployeeProject>().HasKey(r => new { r.UserID, r.ProjectId });
 
         }
         public override int SaveChanges()
@@ -84,6 +88,7 @@ namespace NTSoftware.Repository
                 {
                     entity.CreatedDate = now;
                     entity.CreatedBy = CurrentUserId;
+                    entity.DeleteFlag = StatusDelete.NON_DELETED;
                 }
                 else
                 {

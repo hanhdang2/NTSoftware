@@ -28,10 +28,10 @@ namespace NTSoftware.Service
             _dbContext = dbContext;
         }
 
-        public EmployeeContractViewModel GetById(int id)
+        public EmployeeContractDetailViewModel GetById(int id)
         {
             var data = _iemployeeContractRepository.FindById(id);
-            return _mapper.Map<EmployeeContract, EmployeeContractViewModel>(data);
+            return _mapper.Map<EmployeeContract, EmployeeContractDetailViewModel>(data);
         }
 
         public List<EmployeeContractViewModel> GetAll()
@@ -63,7 +63,7 @@ namespace NTSoftware.Service
                 return null;
             }
         }
-        public EmployeeContract Add(EmployeeContractViewModel vm)
+        public EmployeeContract Add(EmployeeContractDetailViewModel vm)
         {
             {
                 var entity = _mapper.Map<EmployeeContract>(vm);

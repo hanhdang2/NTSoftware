@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using NTSoftware.Core.Models.Models;
+using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Core.Shared.Helper;
 using NTSoftware.Core.Shared.Interface;
@@ -17,64 +18,32 @@ namespace NTSoftware.Service
 {
     public class DetailUserService : IDetailUserService
     {
-        #region Contructor
+        #region CONTRUCTOR
+
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private IDetailUserRepository _detailUserRepository;
-        private readonly AppDbContext _dbContext;
 
-        public DetailUserService(IUnitOfWork unitOfWork, IMapper mapper, IDetailUserRepository detailUserRepository, AppDbContext dbContext)
+        public DetailUserService(IUnitOfWork unitOfWork, IMapper mapper, IDetailUserRepository detailUserRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _detailUserRepository = detailUserRepository;
-            _dbContext = dbContext;
         }
 
+        #endregion CONTRUCTOR
 
+        #region GET
 
-        #endregion Contructor
-
-        public List<DetailUserViewModel> GetAll()
-        {
-            var data = _detailUserRepository.FindAll().ToList();
-            return _mapper.Map<List<DetailUser>, List<DetailUserViewModel>>(data);
-        }
-
-        public PagedResult<DetailUserViewModel> GetAllPaging(int page, int pageSize, string name, string phonenumber)
-        {
-            string nameUnSign = ConvertToUnSign(name);
-            string phoneUnSign = ConvertToUnSign(phonenumber);
-            var query = _detailUserRepository.GetAll().
-                Where(x => ConvertToUnSign(x.Name).Contains(nameUnSign) &&
-                ConvertToUnSign(x.PhoneNumber).Contains(phoneUnSign)).AsQueryable();
-
-            int totalRow = query.Count();
-
-            try
-            {
-                var data = _mapper.Map<List<DetailUser>, List<DetailUserViewModel>>(query.ToList());
-
-                var paginationSet = new PagedResult<DetailUserViewModel>()
-                {
-                    Results = data,
-                    CurrentPage = page,
-                    RowCount = totalRow,
-                    PageSize = pageSize
-                };
-                return paginationSet;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public DetailUserViewModel GetById(int id)
+        public DetailUserViewModel GetById(Guid id)
         {
             var model = _detailUserRepository.FindById(id);
             return _mapper.Map<DetailUser, DetailUserViewModel>(model);
         }
+
+        #endregion GET
+
+        #region POST
 
         public DetailUser Add(DetailUserViewModel Vm)
         {
@@ -83,6 +52,11 @@ namespace NTSoftware.Service
             SaveChanges();
             return entity;
         }
+
+        #endregion POST
+
+        #region PUT
+
         public void Update(DetailUserViewModel Vm)
         {
             var data = _mapper.Map<DetailUser>(Vm);
@@ -95,25 +69,22 @@ namespace NTSoftware.Service
             _unitOfWork.Commit();
         }
 
-        #region Private Method
+        #endregion PUT
 
-        private string ConvertToUnSign(string input)
+        #region DELETE
+
+        public void Delete(Guid id)
         {
-            input = input.Trim();
-            for (int i = 0x20; i < 0x30; i++)
-            {
-                input = input.Replace(((char)i).ToString(), " ");
-            }
-            Regex regex = new Regex(@"\p{IsCombiningDiacriticalMarks}+");
-            string str = input.Normalize(NormalizationForm.FormD);
-            string str2 = regex.Replace(str, string.Empty).Replace('đ', 'd').Replace('Đ', 'D');
-            while (str2.IndexOf("?") >= 0)
-            {
-                str2 = str2.Remove(str2.IndexOf("?"), 1);
-            }
-            return str2;
+            var entity = _detailUserRepository.FindById(id);
+            entity.DeleteFlag = StatusDelete.DELETED;
+            _detailUserRepository.Update(entity);
+            SaveChanges();
         }
 
-        #endregion Private Method
+        #endregion DELETE
+
+        #region OTHER_METHOD
+
+        #endregion OTHER_METHOD
     }
 }

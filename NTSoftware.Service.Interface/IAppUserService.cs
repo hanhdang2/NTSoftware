@@ -23,13 +23,13 @@ namespace NTSoftware.Service.Interface
 
         #region PUT
 
-        Task<GenericResult> UpdateAsync(AppUserViewModel userVm);
+        Task UpdateAsync(AppUserViewModel userVm);
 
         #endregion PUT
 
         #region DELETE
 
-        Task<GenericResult> DeleteUser(string id);
+        Task DeleteUser(string id);
 
         #endregion DELETE
     }

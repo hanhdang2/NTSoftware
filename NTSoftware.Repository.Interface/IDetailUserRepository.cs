@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NTSoftware.Repository.Interface
 {
-    public interface IDetailUserRepository : IRepository<DetailUser, int>
+    public interface IDetailUserRepository : IRepository<DetailUser, Guid>
     {
        
     }

@@ -12,15 +12,14 @@ namespace NTSoftware.Service.Interface
     {
         #region GET
 
-        EmployeeContractViewModel GetById(int id);
-        List<EmployeeContractViewModel> GetAll();
+        EmployeeContractDetailViewModel GetById(int id);
         PagedResult<EmployeeContractViewModel> GetAllPaging(int page, int pageSize, Status status);
 
         #endregion GET
 
         #region POST
 
-        EmployeeContract Add(EmployeeContractViewModel vm);
+        EmployeeContract Add(EmployeeContractDetailViewModel vm);
 
         #endregion POST
 

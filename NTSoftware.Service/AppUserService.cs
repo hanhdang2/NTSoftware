@@ -3,12 +3,14 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared;
 using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Core.Shared.Interface;
 using NTSoftware.Repository;
+using NTSoftware.Repository.Interface;
 using NTSoftware.Service.Interface;
 using NTSoftware.Service.Interface.ViewModels;
 using System;
@@ -23,18 +25,19 @@ namespace NTSoftware.Service
     {
         #region CONTRUCTOR
 
-
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private IDetailUserRepository _detailUserRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly AppDbContext _dbContext;
 
-        public AppUserService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, UserManager<AppUser> userManager)
+        public AppUserService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, UserManager<AppUser> userManager, IDetailUserRepository detailUserRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
             _dbContext = dbContext;
+            _detailUserRepository = detailUserRepository;
         }
 
         #endregion CONTRUCTOR
@@ -75,7 +78,6 @@ namespace NTSoftware.Service
             return await _userManager.Users.ProjectTo<AppUserViewModel>().ToListAsync();
         }
 
-
         #endregion GET 
 
         #region POST
@@ -93,12 +95,11 @@ namespace NTSoftware.Service
 
         #region PUT
 
-        public async Task<GenericResult> UpdateAsync(AppUserViewModel Vm)
+        public async Task UpdateAsync(AppUserViewModel Vm)
         {
             var user = _mapper.Map<AppUser>(Vm);
             await _userManager.UpdateAsync(user);
             SaveChanges();
-            return new GenericResult(null, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE);
         }
 
         private void SaveChanges()
@@ -110,13 +111,12 @@ namespace NTSoftware.Service
 
         #region DELETE
 
-        public async Task<GenericResult> DeleteUser(string id)
+        public async Task DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             user.DeleteFlag = StatusDelete.DELETED;
             await _userManager.UpdateAsync(user);
             SaveChanges();
-            return new GenericResult(null, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE);
         }
 
         #endregion DELETE

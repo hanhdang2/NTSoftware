@@ -17,5 +17,6 @@ namespace NTSoftware.Core.Models.Models
         public DateTime EndDate { get; set; }
         public Status Status { get; set; }
         public int CompanyId { set; get; }
+        public decimal SalaryContract { get; set; }
     }
 }

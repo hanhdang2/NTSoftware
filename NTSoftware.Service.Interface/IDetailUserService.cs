@@ -11,9 +11,7 @@ namespace NTSoftware.Service.Interface
     {
         #region GET
 
-        DetailUserViewModel GetById(int id);
-        List<DetailUserViewModel> GetAll();
-        PagedResult<DetailUserViewModel> GetAllPaging(int page, int pageSize, string name, string phonenumber);
+        DetailUserViewModel GetById(Guid id);
 
         #endregion GET
 
@@ -29,7 +27,11 @@ namespace NTSoftware.Service.Interface
 
         #endregion PUT
 
+        #region DELETE
 
+        void Delete(Guid id);
+
+        #endregion DELETE
 
     }
 }

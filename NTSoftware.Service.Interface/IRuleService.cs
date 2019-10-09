@@ -11,8 +11,7 @@ namespace NTSoftware.Service.Interface.ViewModels
         #region GET
 
         RuleViewModel GetById(int id);
-        List<RuleViewModel> GetAll();
-        PagedResult<RuleViewModel> GetAllPaging(int page, int pageSize);
+        PagedResult<RuleViewModel> GetAllPaging(int page, int pageSize, int companyId);
 
         #endregion GET
 
@@ -24,10 +23,14 @@ namespace NTSoftware.Service.Interface.ViewModels
 
         #region PUT
 
-
+        void Update(RuleViewModel vm);
 
         #endregion PUT
 
+        #region DELETE
 
+        void Delete(int id);
+
+        #endregion DELETE
     }
 }

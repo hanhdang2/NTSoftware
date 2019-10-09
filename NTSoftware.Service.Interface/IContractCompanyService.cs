@@ -14,7 +14,6 @@ namespace NTSoftware.Service.Interface
         #region GET
 
         ContractCompanyViewModel GetById(int id);
-        List<ContractCompanyViewModel> GetAll();
         PagedResult<ContractCompanyViewModel> GetAllPaging(int page, int pageSize, Status status);
 
         #endregion GET
@@ -27,11 +26,15 @@ namespace NTSoftware.Service.Interface
 
         #region PUT
 
-        void Update(ContractCompanyViewModel vm);
+        bool Update(ContractCompanyViewModel vm);
 
         #endregion PUT
 
+        #region DELETE
 
+        bool Delete(int id);
+
+        #endregion DELETE
 
     }
 }

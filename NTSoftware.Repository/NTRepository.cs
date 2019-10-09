@@ -123,10 +123,11 @@ namespace NTSoftware.Repository
 
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            _entities.RemoveRange(entities);
+            foreach (var item in entities)
+            {
+                item.DeleteFlag = StatusDelete.DELETED;
+                _entities.Update(item);
+            }
         }
-
-
-
     }
 }

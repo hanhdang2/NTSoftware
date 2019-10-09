@@ -4,32 +4,33 @@ using NTSoftware.Service.Interface.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NTSoftware.Service.Interface
 {
     public interface IDepartmentService
     {
         #region GET
-        GenericResult GetById(int id);
-        PagedResult<DepartmentViewModel> GetAllPaging(int page, int pageSize);
+        DetailDepartmentViewModel GetById(int id, int companyId);
+        PagedResult<DepartmentViewModel> GetAllPaging(int page, int pageSize, int companyId);
 
 
         #endregion GET
 
         #region POST
 
-        GenericResult Add(DepartmentViewModel vm);
+        Task<Department> Add(DetailDepartmentViewModel vm);
 
         #endregion POST
 
         #region PUT
-        GenericResult Update(DepartmentViewModel vm);
+        Task Update(DetailDepartmentViewModel vm);
 
         #endregion PUT
 
         #region DELETE
 
-        GenericResult Delete(int id);
+        void Delete(int id);
 
         #endregion DELETE
     }

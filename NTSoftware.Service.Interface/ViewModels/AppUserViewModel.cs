@@ -14,17 +14,16 @@ namespace NTSoftware.Service.Interface.ViewModels
         public string UserName { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
+        [Required]
         public string PasswordHash { get; set; }
         public Guid? Id { get; set; }
         [Required]
         public Status Status { get; set; }
-        [Required]
         public Roles UserType { get; set; }
 
         public Guid? CreatedBy { get; set; }
 
         public Guid? UpdatedBy { get; set; }
-        [Required]
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
     }

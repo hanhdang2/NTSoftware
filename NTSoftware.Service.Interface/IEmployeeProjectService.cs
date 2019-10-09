@@ -10,9 +10,6 @@ namespace NTSoftware.Service.Interface
     public interface IEmployeeProjectService
     {
         #region GET
-
-        EmployeeProjectViewModel GetById(int id);
-        List<EmployeeProjectViewModel> GetAll();
         PagedResult<EmployeeProjectViewModel> GetAllPaging(int page, int pageSize);
 
         #endregion GET

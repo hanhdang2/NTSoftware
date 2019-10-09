@@ -11,24 +11,27 @@ namespace NTSoftware.Service.Interface
     {
         #region GET
 
-        ProjectViewModel GetById(int id);
-        List<ProjectViewModel> GetAll();
-        PagedResult<ProjectViewModel> GetAllPaging(int page, int pageSize, string description);
+        ProjectDetailViewModel GetById(int id, int companyId);
+        PagedResult<ProjectViewModel> GetAllPaging(int page, int pageSize,int companyId, string description);
 
         #endregion GET
 
         #region POST
 
-        Project Add(ProjectViewModel vm);
+        Project Add(ProjectDetailViewModel vm);
 
         #endregion POST
 
         #region PUT
 
-
+        void Update(ProjectDetailViewModel Vm);
 
         #endregion PUT
 
+        #region DELETE
 
+        void Delete(int id);
+
+        #endregion DELETE
     }
 }

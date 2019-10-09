@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NTSoftware.Core.Models.Models
 {
-    public class DetailUser : DomainEntity<int>
+    public class DetailUser : DomainEntity<Guid>
     {
         public string Name { set; get; }
         public string EmployeeKey { get; set; }
