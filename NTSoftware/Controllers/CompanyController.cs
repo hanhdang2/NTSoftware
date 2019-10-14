@@ -106,6 +106,7 @@ namespace NTSoftware.Controllers
                 SaveChanges();
                 Vm.CompanyCode = company.CompanyCode;
                 Vm.ContractVm.Status = Status.New;
+                Vm.ContractVm.CompanyId = company.Id;
                 var contractCompany = _contractCompanyService.Add(_mapper.Map<ContractCompanyViewModel>(Vm.ContractVm), company.CompanyCode);
                 Vm.EmployeeVm.UserType = Roles.AdminCompany;
                 Vm.EmployeeVm.CompanyId = company.Id;

@@ -285,7 +285,7 @@ namespace NTSoftware.Controllers
 
         private GenericResult CheckAccountCanLogin(AppUser user)
         {
-            if (user.UserType != Roles.AdminCompany)
+            if (user.UserType == Roles.AdminCompany)
             {
                 return _companyDetailService.CheckCompanyExpried(user.CompanyId);
             }

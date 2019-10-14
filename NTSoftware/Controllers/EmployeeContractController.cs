@@ -92,7 +92,7 @@ namespace NTSoftware.Controllers
                     return new OkObjectResult(companyExpired);
                 }
                 _employeeContractService.Update(Vm);
-                SaveChanges()
+                SaveChanges();
                 return new OkObjectResult(new GenericResult(null, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
             }
             catch (Exception ex)
