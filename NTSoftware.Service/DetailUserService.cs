@@ -77,6 +77,12 @@ namespace NTSoftware.Service
             _detailUserRepository.Update(entity);
         }
 
+        public List<UserSearchViewModel> GetUserSelect(List<UserSearchViewModel> lstVm, int companyId, string keyword)
+        {
+            var data = _detailUserRepository.GetLstSearch(lstVm, companyId, keyword);
+            return data;
+        }
+
         #endregion DELETE
 
         #region OTHER_METHOD

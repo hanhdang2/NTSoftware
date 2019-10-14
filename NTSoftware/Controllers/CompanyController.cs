@@ -53,7 +53,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 
@@ -78,7 +78,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 
@@ -105,7 +105,6 @@ namespace NTSoftware.Controllers
                 var company = _companyDetailService.Add(_mapper.Map<CompanyDetailViewModel>(Vm));
                 SaveChanges();
                 Vm.CompanyCode = company.CompanyCode;
-                Vm.ContractVm.Status = Status.New;
                 Vm.ContractVm.CompanyId = company.Id;
                 var contractCompany = _contractCompanyService.Add(_mapper.Map<ContractCompanyViewModel>(Vm.ContractVm), company.CompanyCode);
                 Vm.EmployeeVm.UserType = Roles.AdminCompany;
@@ -126,7 +125,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
         [HttpPost]
@@ -169,7 +168,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 
@@ -194,7 +193,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 
@@ -225,7 +224,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 

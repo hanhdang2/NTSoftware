@@ -77,7 +77,7 @@ namespace NTSoftware.Service
 
         public EmployeeContract Add(EmployeeContractViewModel vm, string companyCode)
         {
-
+            vm.Status = Status.New;
             var entity = _mapper.Map<EmployeeContract>(vm);
             entity.ContractNumber = $"HDE{companyCode}{_employeeContractRepository.FindAll().ToList().Count + 1}";
             _employeeContractRepository.Add(entity);
@@ -102,7 +102,6 @@ namespace NTSoftware.Service
         {
             var entity = _employeeContractRepository.FindById(id);
             _employeeContractRepository.RemoveFlg(entity);
-            _employeeContractRepository.Update(entity);
         }
 
         #endregion DELETE

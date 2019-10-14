@@ -12,6 +12,7 @@ namespace NTSoftware.Service.Interface
         #region GET
 
         DetailUserViewModel GetById(Guid id);
+        List<UserSearchViewModel> GetUserSelect(List<UserSearchViewModel> lstVm, int companyId, string keyword);
 
         #endregion GET
 

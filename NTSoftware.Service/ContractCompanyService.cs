@@ -68,7 +68,7 @@ namespace NTSoftware.Service
 
         public ContractCompany Add(ContractCompanyViewModel vm, string companyCode)
         {
-
+            vm.Status = Status.New;
             var entity = _mapper.Map<ContractCompany>(vm);
             entity.ContractNumber = $"HD{companyCode}{_contractCompanyRepository.FindAll().ToList().Count() + 1}";
             _contractCompanyRepository.Add(entity);
