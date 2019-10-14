@@ -12,6 +12,7 @@ namespace NTSoftware.Service.Interface
     {
         #region GET
         DetailDepartmentViewModel GetById(int id, int companyId);
+        int GetEmployeeCount( int comoanyId);
         PagedResult<DepartmentViewModel> GetAllPaging(int page, int pageSize, int companyId);
 
 

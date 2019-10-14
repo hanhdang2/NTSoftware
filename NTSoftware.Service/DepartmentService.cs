@@ -170,6 +170,11 @@ namespace NTSoftware.Service
             SaveChanges();
         }
 
+        public int GetEmployeeCount( int companyId)
+        {
+            return _idepartmentRepository.FindAll(x => x.CompanyId == companyId).Count();
+        }
+
         #endregion DELETE
     }
 

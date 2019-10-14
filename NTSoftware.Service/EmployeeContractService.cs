@@ -14,35 +14,36 @@ using System.Text;
 
 namespace NTSoftware.Service
 {
-   public class EmployeeContractService: IEmployeeContractService
+    public class EmployeeContractService : IEmployeeContractService
     {
-        private IUnitOfWork _unitOfWork;
+        #region CONTRUCTOR
+
         private readonly IMapper _mapper;
-        private IEmployeeContractRepository _iemployeeContractRepository;
-        private readonly AppDbContext _dbContext;
-        public EmployeeContractService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IEmployeeContractRepository iemployeeContractRepo)
+        private IEmployeeContractRepository _employeeContractRepository;
+
+        public EmployeeContractService(IMapper mapper, IEmployeeContractRepository employeeContractRepository)
         {
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _iemployeeContractRepository = iemployeeContractRepo;
-            _dbContext = dbContext;
+            _employeeContractRepository = employeeContractRepository;
         }
 
-        public EmployeeContractDetailViewModel GetById(int id)
+        #endregion CONTRUCTOR
+
+        #region GET
+
+        public EmployeeContractViewModel GetById(int id)
         {
-            var data = _iemployeeContractRepository.FindById(id);
-            return _mapper.Map<EmployeeContract, EmployeeContractDetailViewModel>(data);
+            var data = _employeeContractRepository.FindById(id);
+            return _mapper.Map<EmployeeContract, EmployeeContractViewModel>(data);
         }
 
-        public List<EmployeeContractViewModel> GetAll()
+        public PagedResult<EmployeeContractViewModel> GetAllPaging(int page, int pageSize, int companyId, Status status)
         {
-            var model = _iemployeeContractRepository.FindAll().ToList();
-            return _mapper.Map<List<EmployeeContract>, List<EmployeeContractViewModel>>(model);
-        }
-
-        public PagedResult<EmployeeContractViewModel> GetAllPaging(int page, int pageSize, Status status)
-        {
-            var query = _iemployeeContractRepository.FindAll().ToList();
+            var query = _employeeContractRepository.FindAll(x => x.CompanyId == companyId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            if (status != Status.None)
+            {
+                query = query.Where(x => x.Status == status).ToList();
+            }
             int totalRow = query.Count();
 
             try
@@ -60,22 +61,58 @@ namespace NTSoftware.Service
             }
             catch
             {
-                return null;
-            }
-        }
-        public EmployeeContract Add(EmployeeContractDetailViewModel vm)
-        {
-            {
-                var entity = _mapper.Map<EmployeeContract>(vm);
-                _iemployeeContractRepository.Add(entity);
-                SaveChanges();
-                return entity;
+                return new PagedResult<EmployeeContractViewModel>()
+                {
+                    Results = new List<EmployeeContractViewModel>(),
+                    CurrentPage = page,
+                    RowCount = 0,
+                    PageSize = pageSize
+                }; ;
             }
         }
 
-        private void SaveChanges()
+        #endregion GET
+
+        #region POST
+
+        public EmployeeContract Add(EmployeeContractViewModel vm, string companyCode)
         {
-            _unitOfWork.Commit();
+
+            var entity = _mapper.Map<EmployeeContract>(vm);
+            entity.ContractNumber = $"HDE{companyCode}{_employeeContractRepository.FindAll().ToList().Count + 1}";
+            _employeeContractRepository.Add(entity);
+            return entity;
         }
+
+        #endregion POST
+
+        #region PUT
+
+        public void Update(EmployeeContractViewModel vm)
+        {
+            var entity = _mapper.Map<EmployeeContract>(vm);
+            _employeeContractRepository.Update(entity);
+        }
+
+        #endregion PUT
+
+        #region DELETE
+
+        public void Delete(int id)
+        {
+            var entity = _employeeContractRepository.FindById(id);
+            _employeeContractRepository.RemoveFlg(entity);
+            _employeeContractRepository.Update(entity);
+        }
+
+        #endregion DELETE
+
+        #region OTHER_METHOD
+
+        #endregion OTHER_METHOD
+
+
+
+
     }
 }

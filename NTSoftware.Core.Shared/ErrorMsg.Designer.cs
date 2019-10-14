@@ -61,6 +61,15 @@ namespace NTSoftware.Core.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tài khoản đã tồn tại..
+        /// </summary>
+        public static string ACCOUNT_EXISTED {
+            get {
+                return ResourceManager.GetString("ACCOUNT_EXISTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tài khoản của bạn đã hết hạn hoặc chưa được kích hoạt. Vui lòng thử lại sau.
         /// </summary>
         public static string ACCOUNT_EXPRIED_NEW {
@@ -97,6 +106,15 @@ namespace NTSoftware.Core.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Không thể xóa công ty đang còn hạn hợp đồng.
+        /// </summary>
+        public static string COMPANY_CAN_NOT_DELETE {
+            get {
+                return ResourceManager.GetString("COMPANY_CAN_NOT_DELETE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Công ty bạn đã hết hợp đồng. Thêm hợp đồng mới để tiếp tục..
         /// </summary>
         public static string COMPANY_EXPRIED {
@@ -129,6 +147,15 @@ namespace NTSoftware.Core.Shared {
         public static string DATA_REQUEST_IN_VALID {
             get {
                 return ResourceManager.GetString("DATA_REQUEST_IN_VALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phòng ban đã có nhân viên. Không thể xóa.
+        /// </summary>
+        public static string DEPARTMENT_HAS_EMPLOYEE {
+            get {
+                return ResourceManager.GetString("DEPARTMENT_HAS_EMPLOYEE", resourceCulture);
             }
         }
         

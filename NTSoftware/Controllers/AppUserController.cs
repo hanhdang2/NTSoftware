@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using NTSoftware.Core.Models.Enum;
 using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared;
 using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Core.Shared.Dtos;
+using NTSoftware.Core.Shared.Interface;
 using NTSoftware.Service.Interface;
 using NTSoftware.Service.Interface.ViewModels;
 using System;
@@ -17,10 +20,18 @@ namespace NTSoftware.Controllers
     {
         #region CONTRUCTOR
 
+        private IMapper _mapper;
+        private  IUnitOfWork _unitOfWork;
         private IAppUserService _appUserService;
-        public AppUserController(IAppUserService iuserService)
+        private ICompanyDetailService _companyDetailService;
+        private IDetailUserService _detailUserService;
+        public AppUserController(IMapper mapper, IAppUserService appUserService, IDetailUserService detailUserService, ICompanyDetailService companyDetailService, IUnitOfWork unitOfWork)
         {
-            _appUserService = iuserService;
+            _mapper = mapper;
+            _appUserService = appUserService;
+            _detailUserService = detailUserService;
+            _companyDetailService = companyDetailService;
+            _unitOfWork = unitOfWork;
         }
 
         #endregion CONTRUCTOR
@@ -29,7 +40,7 @@ namespace NTSoftware.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<IActionResult> Add(string id)
+        public async Task<IActionResult> GetById(string id)
         {
             try
             {
@@ -44,30 +55,8 @@ namespace NTSoftware.Controllers
 
         #endregion GET
 
-        #region POST
+        #region POST      
 
-        [HttpPost]
-        [Route("Add")]
-        public async Task<IActionResult> Add([FromBody] AppUserViewModel Vm)
-        {
-            if (!ModelState.IsValid)
-            {
-                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(new GenericResult(allErrors, false, ErrorMsg.DATA_REQUEST_IN_VALID, ErrorCode.ERROR_HANDLE_DATA));
-            }
-            else
-            {
-                try
-                {
-                    var result = await _appUserService.AddAsync(Vm);
-                    return new OkObjectResult(new GenericResult(result, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
-                }
-                catch (Exception ex)
-                {
-                    return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
-                }
-            }
-        }
 
         #endregion POST
 
@@ -87,7 +76,6 @@ namespace NTSoftware.Controllers
                 try
                 {
                     var result = _appUserService.UpdateAsync(Vm);
-
                     return new OkObjectResult(result);
                 }
                 catch (Exception ex)
@@ -101,7 +89,10 @@ namespace NTSoftware.Controllers
 
         #region DELETE
 
-
+        private void SaveChanges()
+        {
+            _unitOfWork.Commit();
+        }
 
         #endregion DELETE
 

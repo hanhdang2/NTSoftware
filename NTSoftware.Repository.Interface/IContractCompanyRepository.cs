@@ -8,6 +8,6 @@ namespace NTSoftware.Repository.Interface
 {
     public interface IContractCompanyRepository : IRepository<ContractCompany, int>
     {
-        
+        string GetLastestContractNumber(int companyId);
     }
 }

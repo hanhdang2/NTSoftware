@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ACCOUNT_EXISTED" xml:space="preserve">
+    <value>Tài khoản đã tồn tại.</value>
+  </data>
   <data name="ACCOUNT_EXPRIED_NEW" xml:space="preserve">
     <value>Tài khoản của bạn đã hết hạn hoặc chưa được kích hoạt. Vui lòng thử lại sau</value>
   </data>
@@ -129,6 +132,9 @@
   <data name="CHANGE_PASSWORD_SUCCESS" xml:space="preserve">
     <value>Đổi mật khẩu thành công</value>
   </data>
+  <data name="COMPANY_CAN_NOT_DELETE" xml:space="preserve">
+    <value>Không thể xóa công ty đang còn hạn hợp đồng</value>
+  </data>
   <data name="COMPANY_EXPRIED" xml:space="preserve">
     <value>Công ty bạn đã hết hợp đồng. Thêm hợp đồng mới để tiếp tục.</value>
   </data>
@@ -140,6 +146,9 @@
   </data>
   <data name="DATA_REQUEST_IN_VALID" xml:space="preserve">
     <value>Dữ liệu truyền lên không đúng</value>
+  </data>
+  <data name="DEPARTMENT_HAS_EMPLOYEE" xml:space="preserve">
+    <value>Phòng ban đã có nhân viên. Không thể xóa</value>
   </data>
   <data name="ERROR_ON_HANDLE_DATA" xml:space="preserve">
     <value>Lỗi trong quá trình xử lý dữ liệu</value>

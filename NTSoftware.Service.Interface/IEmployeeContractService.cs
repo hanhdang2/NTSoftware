@@ -12,22 +12,28 @@ namespace NTSoftware.Service.Interface
     {
         #region GET
 
-        EmployeeContractDetailViewModel GetById(int id);
-        PagedResult<EmployeeContractViewModel> GetAllPaging(int page, int pageSize, Status status);
+        EmployeeContractViewModel GetById(int id);
+        PagedResult<EmployeeContractViewModel> GetAllPaging(int page, int pageSize,int companyId, Status status);
 
         #endregion GET
 
         #region POST
 
-        EmployeeContract Add(EmployeeContractDetailViewModel vm);
+        EmployeeContract Add(EmployeeContractViewModel vm, string companyCode);
 
         #endregion POST
 
         #region PUT
 
-
+        void Update(EmployeeContractViewModel vm);
 
         #endregion PUT
+
+        #region 
+
+        void Delete(int id);
+
+        #endregion DELETE
 
     }
 }

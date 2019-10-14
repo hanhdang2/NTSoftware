@@ -18,13 +18,11 @@ namespace NTSoftware.Service
     {
         #region CONTRUCTOR
 
-        private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private IContractCompanyRepository _contractCompanyRepository;
         private readonly AppDbContext _dbContext;
-        public ContractCompanyService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, IContractCompanyRepository icontractCompanyRepo)
+        public ContractCompanyService(IMapper mapper, AppDbContext dbContext, IContractCompanyRepository icontractCompanyRepo)
         {
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _contractCompanyRepository = icontractCompanyRepo;
             _dbContext = dbContext;
@@ -34,10 +32,15 @@ namespace NTSoftware.Service
 
         #region GET
 
-        public PagedResult<ContractCompanyViewModel> GetAllPaging(int page, int pageSize, Status status)
+        public PagedResult<ContractCompanyViewModel> GetAllPaging(int page, int companyId, int pageSize, Status status)
         {
 
-            var query = _contractCompanyRepository.FindAll().ToList();
+            var query = _contractCompanyRepository.FindAll(x => x.CompanyId == companyId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            if (status != Status.None)
+            {
+                query = query.Where(x => x.Status == status).ToList();
+            }
+
             int totalRow = query.Count();
 
             var data = _mapper.Map<List<ContractCompany>, List<ContractCompanyViewModel>>(query);
@@ -63,44 +66,34 @@ namespace NTSoftware.Service
 
         #region POST
 
-        public ContractCompany Add(ContractCompanyViewModel vm)
+        public ContractCompany Add(ContractCompanyViewModel vm, string companyCode)
         {
-            {
-                var entity = _mapper.Map<ContractCompany>(vm);
-                _contractCompanyRepository.Add(entity);
-                SaveChanges();
-                return entity;
-            }
+
+            var entity = _mapper.Map<ContractCompany>(vm);
+            entity.ContractNumber = $"HD{companyCode}{_contractCompanyRepository.FindAll().ToList().Count() + 1}";
+            _contractCompanyRepository.Add(entity);
+            return entity;
         }
 
         #endregion POST
 
         #region PUT
 
-        public bool Update(ContractCompanyViewModel Vm)
+        public void Update(ContractCompanyViewModel Vm)
         {
             var data = _mapper.Map<ContractCompany>(Vm);
             _contractCompanyRepository.Update(data);
-            SaveChanges();
-            return true;
         }
-        private void SaveChanges()
-        {
-            _unitOfWork.Commit();
-        }
-
 
         #endregion PUT
 
         #region DELETE
 
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             var entity = _contractCompanyRepository.FindById(id);
-            entity.DeleteFlag = StatusDelete.DELETED;
+            _contractCompanyRepository.RemoveFlg(entity);
             _contractCompanyRepository.Update(entity);
-            SaveChanges();
-            return true;
         }
 
         #endregion DELETE

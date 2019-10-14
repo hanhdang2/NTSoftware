@@ -146,6 +146,8 @@ namespace NTSoftware.Migrations
 
                     b.Property<string>("Address");
 
+                    b.Property<string>("CompanyCode");
+
                     b.Property<string>("CompanyName");
 
                     b.Property<Guid>("CreatedBy");
@@ -180,7 +182,12 @@ namespace NTSoftware.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address");
+
                     b.Property<int>("CompanyId");
+
+                    b.Property<string>("ContentRule")
+                        .HasColumnType("text");
 
                     b.Property<string>("ContractNumber");
 
@@ -190,13 +197,27 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("DeleteFlag");
 
+                    b.Property<string>("EmailRepresentativeA");
+
+                    b.Property<string>("EmailRepresentativeB");
+
                     b.Property<DateTime?>("EndDate");
 
-                    b.Property<int>("RuleId");
+                    b.Property<string>("PositionRepresentativeA");
+
+                    b.Property<string>("PositionRepresentativeB");
+
+                    b.Property<decimal>("PriceContract")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RepresentativeNameA");
+
+                    b.Property<string>("RepresentativeNameB");
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<int>("Status");
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<Guid>("UpdatedBy");
 
@@ -244,9 +265,8 @@ namespace NTSoftware.Migrations
 
             modelBuilder.Entity("NTSoftware.Core.Models.Models.DetailUser", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
 
@@ -286,6 +306,9 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("CompanyId");
 
+                    b.Property<string>("ContentRule")
+                        .HasColumnType("text");
+
                     b.Property<string>("ContractNumber");
 
                     b.Property<Guid>("CreatedBy");
@@ -294,15 +317,25 @@ namespace NTSoftware.Migrations
 
                     b.Property<int>("DeleteFlag");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<string>("EmailRepresentativeA");
+
+                    b.Property<string>("EmailRepresentativeB");
+
+                    b.Property<Guid>("EmployeeId");
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<int>("RuleId");
+                    b.Property<string>("PositionRepresentativeA");
 
-                    b.Property<string>("Source");
+                    b.Property<string>("RepresentativeNameA");
 
-                    b.Property<int>("Status");
+                    b.Property<string>("RepresentativeNameB");
+
+                    b.Property<decimal>("SalaryContract")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("StrartDate");
 
@@ -317,9 +350,9 @@ namespace NTSoftware.Migrations
 
             modelBuilder.Entity("NTSoftware.Core.Models.Models.EmployeeProject", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("UserID");
+
+                    b.Property<int>("ProjectId");
 
                     b.Property<Guid>("CreatedBy");
 
@@ -331,15 +364,11 @@ namespace NTSoftware.Migrations
 
                     b.Property<DateTime?>("OutDate");
 
-                    b.Property<int>("ProjectId");
-
                     b.Property<Guid>("UpdatedBy");
 
                     b.Property<DateTime>("UpdatedDate");
 
-                    b.Property<Guid>("UserID");
-
-                    b.HasKey("Id");
+                    b.HasKey("UserID", "ProjectId");
 
                     b.ToTable("EmployeeProject");
                 });
@@ -355,6 +384,8 @@ namespace NTSoftware.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<string>("ContractNumber");
 
                     b.Property<Guid>("CreatedBy");
 
@@ -466,6 +497,8 @@ namespace NTSoftware.Migrations
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<int>("DeleteFlag");
+
+                    b.Property<string>("TypeContractName");
 
                     b.Property<Guid>("UpdatedBy");
 
