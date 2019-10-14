@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NTSoftware.Core.Models\NTSoftware.Core.Models.csproj" />
     <ProjectReference Include="..\NTSoftware.Core.Shared\NTSoftware.Core.Shared.csproj" />
+    <ProjectReference Include="..\NTSoftware.Service.Interface\NTSoftware.Service.Interface.csproj" />
   </ItemGroup>
 
 </Project>
