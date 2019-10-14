@@ -17,6 +17,7 @@ namespace NTSoftware.Core.Models.Enum
     [JsonConverter(typeof(StringEnumConverter))]
     public enum Status
     {
+        [Display(Name = "None")] None = -1,
         [Display(Name = "Active")] Active = 1,
         [Display(Name = "New")] New = 2,
         [Display(Name = "Expired")] Expired = 3,

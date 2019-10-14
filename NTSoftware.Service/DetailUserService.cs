@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using NTSoftware.Core.Models.Models;
+using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Core.Shared.Helper;
@@ -20,15 +22,15 @@ namespace NTSoftware.Service
     {
         #region CONTRUCTOR
 
-        private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private IDetailUserRepository _detailUserRepository;
+        private UserManager<AppUser> _userManager;
 
-        public DetailUserService(IUnitOfWork unitOfWork, IMapper mapper, IDetailUserRepository detailUserRepository)
+        public DetailUserService(IMapper mapper, IDetailUserRepository detailUserRepository, UserManager<AppUser> userManager)
         {
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _detailUserRepository = detailUserRepository;
+            _userManager = userManager;
         }
 
         #endregion CONTRUCTOR
@@ -45,11 +47,12 @@ namespace NTSoftware.Service
 
         #region POST
 
-        public DetailUser Add(DetailUserViewModel Vm)
+        public DetailUser Add(DetailUserViewModel Vm, string companyCode, int companyId)
         {
             var entity = _mapper.Map<DetailUser>(Vm);
+            var lstUser = _userManager.Users.Where(x => x.CompanyId == companyId).ToList();
+            entity.EmployeeKey = $"NV{companyCode}{lstUser.Count + 1}";
             _detailUserRepository.Add(entity);
-            SaveChanges();
             return entity;
         }
 
@@ -61,12 +64,6 @@ namespace NTSoftware.Service
         {
             var data = _mapper.Map<DetailUser>(Vm);
             _detailUserRepository.Update(data);
-            SaveChanges();
-        }
-
-        private void SaveChanges()
-        {
-            _unitOfWork.Commit();
         }
 
         #endregion PUT
@@ -78,7 +75,6 @@ namespace NTSoftware.Service
             var entity = _detailUserRepository.FindById(id);
             entity.DeleteFlag = StatusDelete.DELETED;
             _detailUserRepository.Update(entity);
-            SaveChanges();
         }
 
         #endregion DELETE

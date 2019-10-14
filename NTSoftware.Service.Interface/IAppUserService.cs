@@ -10,7 +10,8 @@ namespace NTSoftware.Service.Interface
     public interface IAppUserService
     {
         #region GET
-        Task<GenericResult> GetById(string id);
+        Task<AppUserViewModel> GetById(string id);
+        Task<AppUserViewModel> GetByUserName(string userName);
         PagedResult<AppUserViewModel> GetAllPaging(int page, int pageSize);
 
         #endregion GET
@@ -32,5 +33,12 @@ namespace NTSoftware.Service.Interface
         Task DeleteUser(string id);
 
         #endregion DELETE
+
+        #region OTHER_METHOD
+
+        Task RemoveDepartment(int departmentId);
+        Task AddDepartment(List<AppUserViewModel> lstVm);
+
+        #endregion OTHER_METHOD
     }
 }

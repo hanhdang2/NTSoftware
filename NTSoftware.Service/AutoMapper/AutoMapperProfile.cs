@@ -16,8 +16,17 @@ namespace NTSoftware.Service.AutoMapper
             CreateMap<ContractCompany, ContractCompanyViewModel>().ReverseMap();
             CreateMap<CompanyDetail, CompanyDetailViewModel>().ReverseMap();
             CreateMap<DetailUser,DetailUserViewModel>().ReverseMap();
+            CreateMap<DetailUserViewModel, EmployeeViewModel>().ReverseMap();
+            CreateMap<CompanyFullViewModel, EmployeeViewModel>().ReverseMap();
+            CreateMap<CompanyFullViewModel, CompanyDetailViewModel>().ReverseMap();
+            CreateMap<CompanyFullViewModel, ContractCompanyViewModel>().ReverseMap();
+
+            CreateMap<EmployeeFullViewModel, EmployeeContractViewModel>().ReverseMap();
+            CreateMap<EmployeeFullViewModel, DetailUserViewModel>().ReverseMap();
+
             CreateMap<Project, ProjectViewModel>().ReverseMap();
             CreateMap<Department, DepartmentViewModel>().ReverseMap();
+            CreateMap<AppUserViewModel, EmployeeViewModel>().ReverseMap();
             CreateMap<AppUser, AppUserViewModel>().ReverseMap();
             CreateMap<AppUserViewModel, AppUser>().ReverseMap();
             CreateMap<EmployeeContract, EmployeeContractViewModel>().ReverseMap();

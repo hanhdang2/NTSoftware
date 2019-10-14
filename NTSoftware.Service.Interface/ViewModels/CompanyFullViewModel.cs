@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NTSoftware.Service.Interface.ViewModels
 {
-    public class CompanyDetailViewModel
+    public class CompanyFullViewModel
     {
         public int Id { get; set; }
         public string CompanyName { set; get; }
@@ -15,10 +15,7 @@ namespace NTSoftware.Service.Interface.ViewModels
         public string RepresentativeName { set; get; }
         public string PositionRepresentative { set; get; }
         public string Address { set; get; }
-        public Guid CreatedBy { get; set; }
-        public Guid UpdatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
-        public string ContractNumber { get; set; }
+        public EmployeeViewModel EmployeeVm { get; set; }
+        public ContractCompanyViewModel ContractVm { get; set; }
     }
 }

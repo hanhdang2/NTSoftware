@@ -14,25 +14,25 @@ namespace NTSoftware.Service.Interface
         #region GET
 
         ContractCompanyViewModel GetById(int id);
-        PagedResult<ContractCompanyViewModel> GetAllPaging(int page, int pageSize, Status status);
+        PagedResult<ContractCompanyViewModel> GetAllPaging(int page,int companyId, int pageSize, Status status);
 
         #endregion GET
 
         #region POST
 
-        ContractCompany Add(ContractCompanyViewModel vm);
+        ContractCompany Add(ContractCompanyViewModel vm, string companyCode);
 
         #endregion POST
 
         #region PUT
 
-        bool Update(ContractCompanyViewModel vm);
+        void Update(ContractCompanyViewModel vm);
 
         #endregion PUT
 
         #region DELETE
 
-        bool Delete(int id);
+        void Delete(int id);
 
         #endregion DELETE
 

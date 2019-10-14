@@ -8,6 +8,7 @@ using NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared;
 using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Core.Shared.Dtos;
+using NTSoftware.Core.Shared.Interface;
 using NTSoftware.Service.Interface;
 using NTSoftware.Service.Interface.ViewModels;
 
@@ -17,6 +18,40 @@ namespace NTSoftware.Controllers
     [ApiController]
     public class DetailUserController : ControllerBase
     {
-        private IDetailUserService _idetailUserService;
+        #region CONTRUCTOR
+
+        private IDetailUserService _detailUserService;
+        private ICompanyDetailService _companyDetailService;
+        private IUnitOfWork _unitOfWork;
+
+        public DetailUserController(IDetailUserService detailUserService, ICompanyDetailService companyDetailService, IUnitOfWork unitOfWork)
+        {
+            _detailUserService = detailUserService;
+            _companyDetailService = companyDetailService;
+            _unitOfWork = unitOfWork;
+        }
+
+        #endregion CONTRUCTOR
+
+        #region GET
+
+        #endregion GET
+
+        #region POST
+
+        #endregion POST
+
+        #region PUT
+
+        #endregion PUT
+
+        #region DELETE
+
+        #endregion DELETE
+
+        #region OTHER_METHOD
+
+        #endregion OTHER_METHOD
+
     }
 }

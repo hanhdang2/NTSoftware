@@ -25,43 +25,43 @@ namespace NTSoftware.Service
     {
         #region CONTRUCTOR
 
-        private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private IDetailUserRepository _detailUserRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly AppDbContext _dbContext;
 
-        public AppUserService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, UserManager<AppUser> userManager, IDetailUserRepository detailUserRepository)
+        public AppUserService(IMapper mapper, AppDbContext dbContext, UserManager<AppUser> userManager)
         {
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
             _dbContext = dbContext;
-            _detailUserRepository = detailUserRepository;
         }
-
         #endregion CONTRUCTOR
 
         #region GET
 
-        public async Task<GenericResult> GetById(string id)
+        public async Task<AppUserViewModel> GetById(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
-                return new GenericResult(null, false, ErrorMsg.NOT_EXIST_EMAIL, ErrorCode.ERROR_CODE);
+                return null;
             }
             var userVm = _mapper.Map<AppUser, AppUserViewModel>(user);
-            return new GenericResult(userVm, true, ErrorMsg.NOT_EXIST_EMAIL, ErrorCode.ERROR_CODE);
+            return userVm;
         }
-
+        public async Task<AppUserViewModel> GetByUserName(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            var userVm = _mapper.Map<AppUser, AppUserViewModel>(user);
+            return userVm; 
+        }
         public PagedResult<AppUserViewModel> GetAllPaging(int page, int pageSize)
         {
 
             var query = _userManager.Users.ToList();
             int totalRow = query.Count();
 
-            var data = _mapper.Map<List<AppUser>, List<AppUserViewModel>>(query);
+            var data = _mapper.Map<List<AppUser>, List<AppUserViewModel>>(query).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             var paginationSet = new PagedResult<AppUserViewModel>()
             {
@@ -87,8 +87,11 @@ namespace NTSoftware.Service
             var user = _mapper.Map<AppUserViewModel, AppUser>(userVm);
             user.Id = new Guid();
             var data = await _userManager.CreateAsync(user, userVm.PasswordHash);
-            var result = (data.Succeeded) ? true : false;
-            return result == true ? userVm : null;
+            if (data.Succeeded)
+            {
+                return _mapper.Map<AppUser, AppUserViewModel>(user);
+            }
+            return null;
         }
 
         #endregion POST
@@ -99,14 +102,7 @@ namespace NTSoftware.Service
         {
             var user = _mapper.Map<AppUser>(Vm);
             await _userManager.UpdateAsync(user);
-            SaveChanges();
         }
-
-        private void SaveChanges()
-        {
-            _unitOfWork.Commit();
-        }
-
         #endregion PUT
 
         #region DELETE
@@ -116,12 +112,11 @@ namespace NTSoftware.Service
             var user = await _userManager.FindByIdAsync(id);
             user.DeleteFlag = StatusDelete.DELETED;
             await _userManager.UpdateAsync(user);
-            SaveChanges();
         }
 
         #endregion DELETE
 
-        #region PRIVATE_METHOD
+        #region OTHER_METHOD
 
         public GenericResult CheckUserExits(AppUserViewModel vm)
         {
@@ -133,6 +128,27 @@ namespace NTSoftware.Service
             return null;
         }
 
-        #endregion PRIVATE_METHOD
+        public async Task RemoveDepartment( int departmentId)
+        {
+            var lstUser = _userManager.Users.Where(x => x.DepartmentId == departmentId && x.DeleteFlag == StatusDelete.NON_DELETED).ToList();
+            foreach (var item in lstUser)
+            {
+                var user = _mapper.Map<AppUser>(item);
+                user.DepartmentId = -1;
+                await _userManager.UpdateAsync(user);
+            }
+        }
+
+        public async Task AddDepartment(List<AppUserViewModel> lstVm)
+        {
+            foreach (var item in lstVm)
+            {
+                var user = _mapper.Map<AppUser>(item);
+                user.DepartmentId = item.DepartmentId;
+                await _userManager.UpdateAsync(user);
+            }
+        }
+
+        #endregion OTHER_METHOD
     }
 }

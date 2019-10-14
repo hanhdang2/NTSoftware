@@ -19,21 +19,15 @@ namespace NTSoftware.Service
     {
         #region Contructor
 
-        private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private ICompanyRepository _icompanyRepository;
-        private IContractCompanyRepository _iContractCompanyRepository;
-        private readonly AppDbContext _dbContext;
+        private ICompanyRepository _companyRepository;
+        private IContractCompanyRepository _contractCompanyRepository;
 
-        public CompanyDetailService(IUnitOfWork unitOfWork, IMapper mapper, AppDbContext dbContext, 
-            ICompanyRepository icompanyRepo, ICompanyRepository icompanyRepository, IContractCompanyRepository icontractCompanyRepository)
+        public CompanyDetailService(IMapper mapper, ICompanyRepository companyRepository, IContractCompanyRepository contractCompanyRepository)
         {
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _icompanyRepository = icompanyRepo;
-            _dbContext = dbContext;
-            _icompanyRepository = icompanyRepository;
-            _iContractCompanyRepository = icontractCompanyRepository;
+            _companyRepository = companyRepository;
+            _contractCompanyRepository = contractCompanyRepository;
         }
 
         #endregion Contructor
@@ -42,7 +36,7 @@ namespace NTSoftware.Service
 
         public List<CompanyDetailViewModel> GetAll()
         {
-            var data = _icompanyRepository.FindAll().ToList();
+            var data = _companyRepository.FindAll().ToList();
             return _mapper.Map<List<CompanyDetail>, List<CompanyDetailViewModel>>(data);
         }
 
@@ -54,14 +48,14 @@ namespace NTSoftware.Service
             string newNameCompany = Utilities.ConvertToUnSign(nameCompany);
             string newRepresentativeName = Utilities.ConvertToUnSign(representativeName);
             string newPositionRepresentative = Utilities.ConvertToUnSign(positionRepresentative);
-            var query = _icompanyRepository.Find(x => Utilities.ConvertToUnSign(x.CompanyName).Contains(newNameCompany) &&
+            var query = _companyRepository.Find(x => Utilities.ConvertToUnSign(x.CompanyName).Contains(newNameCompany) &&
              Utilities.ConvertToUnSign(x.PhoneNumber).Contains(newPhone) &&
               Utilities.ConvertToUnSign(x.RepresentativeName).Contains(newRepresentativeName) &&
-               Utilities.ConvertToUnSign(x.PositionRepresentative).Contains(newPositionRepresentative));
+               Utilities.ConvertToUnSign(x.PositionRepresentative).Contains(newPositionRepresentative)).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             int totalRow = query.Count();
 
-            var data = _mapper.Map<List<CompanyDetail>, List<CompanyDetailViewModel>>(query.ToList());
+            var data = _mapper.Map<List<CompanyDetail>, List<CompanyDetailViewModel>>(query.ToList()).Select(c => { c.ContractNumber = _contractCompanyRepository.GetLastestContractNumber(c.Id); return c; }).ToList();
 
             var paginationSet = new PagedResult<CompanyDetailViewModel>()
             {
@@ -76,7 +70,7 @@ namespace NTSoftware.Service
 
         public CompanyDetailViewModel GetById(int id)
         {
-            var model = _icompanyRepository.FindById(id);
+            var model = _companyRepository.FindById(id);
             var company = _mapper.Map<CompanyDetail, CompanyDetailViewModel>(model);
             return company;
         }
@@ -88,8 +82,8 @@ namespace NTSoftware.Service
         public CompanyDetail Add(CompanyDetailViewModel Vm)
         {
             var entity = _mapper.Map<CompanyDetail>(Vm);
-            _icompanyRepository.Add(entity);
-            SaveChanges();
+            entity.CompanyCode = _companyRepository.GenCompanyCode(Vm.CompanyName);
+            _companyRepository.Add(entity);
             return entity;
         }
 
@@ -97,30 +91,21 @@ namespace NTSoftware.Service
 
         #region PUT
 
-        public bool Update(CompanyDetailViewModel Vm)
+        public void Update(CompanyDetailViewModel Vm)
         {
             var data = _mapper.Map<CompanyDetail>(Vm);
-            _icompanyRepository.Update(data);
-            SaveChanges();
-            return true;
-        }
-
-        private void SaveChanges()
-        {
-            _unitOfWork.Commit();
+            _companyRepository.Update(data);
         }
 
         #endregion PUT
 
         #region DELETE
 
-        public bool DeleteCompany(int id)
+        public void DeleteCompany(int id)
         {
-            var company = _icompanyRepository.FindById(id);
-            _icompanyRepository.RemoveFlg(company);
-            SaveChanges();
-            return true;
-
+            var entity = _companyRepository.FindById(id);
+            _companyRepository.RemoveFlg(entity);
+            _companyRepository.Update(entity);
         }
 
         #endregion DELETE
@@ -132,9 +117,9 @@ namespace NTSoftware.Service
             var checkCompany = CheckCompanyExist(id);
             if (checkCompany == false)
             {
-                return new GenericResult(null, false, ErrorMsg.COMPANY_NOT_EXITS, ErrorCode.ERROR_CODE);
+                return new GenericResult(null, false, ErrorMsg.COMPANY_NOT_EXITS, ErrorCode.NOT_EXIST_COMPANY_CODE);
             }
-            var contractCompany = _iContractCompanyRepository.Find(x => x.CompanyId == id).LastOrDefault();
+            var contractCompany = _contractCompanyRepository.Find(x => x.CompanyId == id).LastOrDefault();
             if (contractCompany == null || contractCompany.DeleteFlag == StatusDelete.DELETED)
             {
                 return new GenericResult(null, false, ErrorMsg.COMPANY_EXPRIED, ErrorCode.EXPIRES_COMPANY_CODE);
@@ -152,7 +137,7 @@ namespace NTSoftware.Service
 
         public bool CheckCompanyExist(int id)
         {
-            var company = _icompanyRepository.FindById(id);
+            var company = _companyRepository.FindById(id);
             return company == null;
         }
 

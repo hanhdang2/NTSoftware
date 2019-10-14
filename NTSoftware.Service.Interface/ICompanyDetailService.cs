@@ -21,13 +21,13 @@ namespace NTSoftware.Service.Interface
 
         #region PUT
 
-        bool Update(CompanyDetailViewModel Vm);
+        void Update(CompanyDetailViewModel Vm);
 
         #endregion PUT
 
         #region DELETE
 
-        bool DeleteCompany(int id);
+        void DeleteCompany(int id);
 
         #endregion DELETE
     }
