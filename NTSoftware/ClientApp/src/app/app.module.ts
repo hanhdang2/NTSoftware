@@ -4,7 +4,8 @@ import {
   NbThemeModule,
   NbLayoutModule,
   NbCardModule,
-  NbIconModule
+  NbIconModule,
+  NbSidebarModule
 } from '@nebular/theme';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,6 +62,7 @@ export function getToken() {
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
+    NbSidebarModule.forRoot(),
     JwtModule.forRoot({config: {
       throwNoTokenError: false,
       tokenGetter: getToken,
