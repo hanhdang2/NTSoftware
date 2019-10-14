@@ -55,7 +55,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 
@@ -80,13 +80,12 @@ namespace NTSoftware.Controllers
                 {
                     return new OkObjectResult(bCheckExist);
                 }
-                Vm.Status = Status.New;
                 var result = _contractCompany.Add(Vm, _companyDetailService.GetById(Vm.CompanyId).CompanyCode);
                 return new OkObjectResult(new GenericResult(result, true, ErrorMsg.SUCCEED, ErrorCode.SUCCEED_CODE));
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 
@@ -116,7 +115,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 

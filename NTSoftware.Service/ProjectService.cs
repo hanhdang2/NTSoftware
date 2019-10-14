@@ -158,8 +158,7 @@ namespace NTSoftware.Service
         public void Delete(int id)
         {
             var entity = _projectRepository.FindById(id);
-            entity.DeleteFlag = StatusDelete.DELETED;
-            _projectRepository.Update(entity);
+            _projectRepository.RemoveFlg(entity);
             SaveChanges();
         }
 

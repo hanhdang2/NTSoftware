@@ -49,7 +49,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult(new GenericResult(null, false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 
@@ -75,7 +75,7 @@ namespace NTSoftware.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new AppUser(), false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                    return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace NTSoftware.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return new OkObjectResult(new GenericResult(new AppUser(), false, ErrorMsg.HAS_ERROR, ErrorCode.HAS_ERROR_CODE));
+                    return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
                 }
             }
         }

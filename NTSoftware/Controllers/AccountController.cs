@@ -1,31 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using NTSoftware.Core.Models.Enum;
-using NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Models.Models.NTSoftware.Core.Models.Models;
 using NTSoftware.Core.Shared;
 using NTSoftware.Core.Shared.Constants;
 using NTSoftware.Core.Shared.Dtos;
 using NTSoftware.Service.Interface;
-using NTSoftware.Service.Interface.ViewModels;
 using NTSoftware.ViewModel.Auth;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NTSoftware.Controllers
 {
@@ -122,7 +113,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.HAS_ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
 
 
@@ -204,7 +195,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 
@@ -251,7 +242,7 @@ namespace NTSoftware.Controllers
             }
             catch (Exception ex)
             {
-                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_CODE));
+                return new OkObjectResult(new GenericResult(null, false, ErrorMsg.ERROR_ON_HANDLE_DATA, ErrorCode.ERROR_HANDLE_DATA));
             }
         }
 
@@ -285,15 +276,26 @@ namespace NTSoftware.Controllers
 
         private GenericResult CheckAccountCanLogin(AppUser user)
         {
+            if (user.UserType == Roles.AdminNT)
+            {
+                return null;
+            }
+            var companyExpried = _companyDetailService.CheckCompanyExpried(user.CompanyId);
             if (user.UserType == Roles.AdminCompany)
             {
-                return _companyDetailService.CheckCompanyExpried(user.CompanyId);
+                return companyExpried;
             }
-            if (user.UserType == Roles.Employee && (user.Status == Status.New || user.Status == Status.Expired))
+            else
             {
-                return new GenericResult(null, false, ErrorMsg.ACCOUNT_EXPRIED_NEW, ErrorCode.LOGIN_FAILED);
+                if (companyExpried == null)
+                {
+                    if (user.Status == Status.New || user.Status == Status.Expired)
+                    {
+                        return new GenericResult(null, false, ErrorMsg.ACCOUNT_EXPRIED_NEW, ErrorCode.EXPIRES_EMPLOYEE_CODE);
+                    }
+                }
+                return companyExpried;
             }
-            return null;
         }
         #endregion Private Method
     }
