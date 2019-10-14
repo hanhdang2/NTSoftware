@@ -138,7 +138,7 @@ namespace NTSoftware.Service
         public bool CheckCompanyExist(int id)
         {
             var company = _companyRepository.FindById(id);
-            return company == null;
+            return company == null?false:true;
         }
 
         #endregion OTHER_METHOD
